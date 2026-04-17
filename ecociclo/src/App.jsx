@@ -1,11 +1,14 @@
-import './App.css'
+import './App.css';
+import { Navigation } from './shared/components/Navigation/Navigation';
+import { Dashboard } from './modules/dashboard/pages/Dashboard';
 
 function App() {
   return (
-    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', width: '100vw' }}>
-      <h1>EcoCiclo</h1>
+    <div className="app-container">
+      <Navigation />
+      <Dashboard />
     </div>
-  )
+  );
 }
 
-export default App
+export default App;

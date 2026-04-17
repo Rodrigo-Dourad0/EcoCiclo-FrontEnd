@@ -1,0 +1,199 @@
+/* src/modules/dashboard/styles/Dashboard.css */
+
+.dashboard-main {
+  flex: 1;
+  background-color: #F8F9FA; /* Fundo cinza bem claro conforme a imagem */
+  min-height: 100vh;
+  overflow-y: auto;
+  position: relative;
+  font-family: var(--sans);
+}
+
+.dashboard-container {
+  padding: 16px 20px 40px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Top Header */
+.top-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.top-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #111827; /* Preto/Cinza escuro */
+  margin: 0;
+}
+
+.icon-button {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: #374151;
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Greeting Section */
+.greeting-section {
+  margin-bottom: 24px;
+  text-align: left;
+}
+
+.greeting-title {
+  font-size: 20px;
+  font-weight: 500;
+  color: #1F2937;
+  margin: 0 0 6px 0;
+  letter-spacing: -0.3px;
+}
+
+.greeting-subtitle {
+  font-size: 13px;
+  color: #6B7280;
+  font-weight: 400;
+  margin: 0;
+}
+
+/* Statistics section */
+.dashboard-stats {
+  display: flex;
+  gap: 12px;
+  width: 100%;
+}
+
+.stat-card {
+  flex: 1;
+  background: #FFFFFF;
+  border-radius: 14px;
+  padding: 16px 14px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05); /* Sombra bem leve igual o print */
+  border: 1px solid #E5E7EB; /* Borda bem fina e clara */
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  min-width: 110px; /* Suficiente para não apertar no desktop */
+}
+
+.stat-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.stat-icon-naked {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.stat-icon-naked.green {
+  color: #22C55E; /* Verde forte */
+}
+
+.stat-icon-naked.blue {
+  color: #3B82F6; /* Azul forte */
+}
+
+.stat-icon-naked.yellow {
+  color: #F59E0B; /* Amarelo/Laranja forte */
+}
+
+.stat-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: left;
+}
+
+.stat-label {
+  font-size: 11px;
+  font-weight: 500;
+  color: #6B7280; /* Cinza médio */
+  margin-bottom: 2px;
+}
+
+.stat-value {
+  font-size: 18px;
+  font-weight: 600;
+  color: #111827;
+  line-height: 1.1;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+  .dashboard-stats {
+    flex-wrap: wrap;
+  }
+  .stat-card {
+    flex: 1 1 calc(33.333% - 12px);
+  }
+}
+
+@media (max-width: 768px) {
+  .dashboard-main {
+    padding-bottom: 80px; /* Espaço pro menu inferior */
+  }
+  
+  .dashboard-container {
+    padding: 16px 16px 24px;
+  }
+
+  .top-title {
+    font-size: 16px;
+  }
+
+  .greeting-title {
+    font-size: 18px;
+  }
+
+  .greeting-subtitle {
+    font-size: 12px;
+  }
+
+  .dashboard-stats {
+    flex-direction: row;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding-bottom: 12px;
+    scroll-snap-type: x mandatory;
+    gap: 12px;
+    -webkit-overflow-scrolling: touch;
+    
+    /* Disfarçar scrollbar visualmente mantendo scroll */
+    scrollbar-width: none; 
+    -ms-overflow-style: none;
+  }
+  
+  .dashboard-stats::-webkit-scrollbar {
+    display: none;
+  }
+
+  .stat-card {
+    flex: 0 0 auto;
+    width: 30%; /* Mostra quase todos numa tela normal mobile mas dá pra arrastar */
+    min-width: 105px;
+    scroll-snap-align: center;
+    padding: 14px 12px;
+  }
+
+  .stat-label {
+    font-size: 10px;
+  }
+  
+  .stat-value {
+    font-size: 16px;
+  }
+
+  .stat-icon-naked svg {
+    width: 20px;
+    height: 20px;
+  }
+}
