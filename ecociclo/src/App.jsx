@@ -1,12 +1,10 @@
 import './App.css';
-import { Navigation } from './shared/components/Navigation/Navigation';
-import { Dashboard } from './modules/dashboard/pages/Dashboard';
+import CriarConta from './modules/auth/pages/CriarConta.jsx';
 
 function App() {
   return (
     <div className="app-container">
-      <Navigation />
-      <Dashboard />
+      <CriarConta />
     </div>
   );
 }
