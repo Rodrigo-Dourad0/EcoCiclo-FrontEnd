@@ -1,0 +1,847 @@
+/* ── RESET & VARIÁVEIS ──────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --ink:    #1d9e75;
+  --cream:  #f5f0e8;
+  --sand:   #e8dece;
+  --accent: #b5834a;
+  --muted:  #8a7f72;
+  --white:  #fdfaf5;
+  --green:  #4cde6a;
+}
+
+/* ── BODY ───────────────────────────────────────── */
+body {
+  font-family: 'DM Sans', sans-serif;
+  background-color: var(--cream);
+  min-height: 100vh;
+  display: flex;
+  overflow: hidden;
+}
+
+/* ── PAINEL ESQUERDO ────────────────────────────── */
+.panel-left {
+  position: relative;
+  width: 52%;
+  background-color: var(--ink);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 56px 64px;
+  overflow: hidden;
+}
+
+.panel-left::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 70% 60% at 20% 80%, rgba(181,131,74,.18) 0%, transparent 65%),
+    radial-gradient(ellipse 50% 50% at 90% 10%, rgba(181,131,74,.10) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+/* Anéis decorativos */
+.deco-ring {
+  position: absolute;
+  border-radius: 50%;
+  border: 1px solid rgba(255,255,255,.08);
+}
+
+.deco-ring.r1 { width: 500px; height: 500px; bottom: -120px; right: -160px; border-color: rgba(255,255,255,.06); }
+.deco-ring.r2 { width: 320px; height: 320px; bottom: -20px;  right: -40px;  border-color: rgba(255,255,255,.10); }
+.deco-ring.r3 { width: 140px; height: 140px; top: 100px;     left: -40px;   border-color: rgba(255,255,255,.06); }
+.deco-ring.r4 { width: 220px; height: 220px; top: -60px;     right: 60px;   border-color: rgba(255,255,255,.05); }
+.deco-ring.r5 { width:  80px; height:  80px; bottom: 180px;  left: 40px;    border-color: rgba(255,255,255,.08); }
+
+/* Marca */
+.brand {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.brand-mark {
+  width: 36px;
+  height: 36px;
+  background: #1db484;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.brand-mark svg {
+  width: 20px;
+  height: 20px;
+  fill: #fff;
+  stroke: none;
+}
+
+.brand-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--white);
+  letter-spacing: .5px;
+}
+
+/* Hero */
+.hero-copy {
+  position: relative;
+  z-index: 1;
+}
+
+.hero-label {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.45);
+  margin-bottom: 20px;
+}
+
+.hero-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(48px, 5vw, 72px);
+  font-weight: 300;
+  color: var(--white);
+  line-height: 1.1;
+  margin-bottom: 24px;
+}
+
+.hero-title em {
+  font-style: italic;
+  color: var(--accent);
+}
+
+.hero-sub {
+  font-size: 14px;
+  font-weight: 300;
+  color: rgba(255,255,255,.65);
+  line-height: 1.7;
+  max-width: 320px;
+}
+
+/* Depoimento */
+.testimonial {
+  position: relative;
+  z-index: 1;
+  border-left: 2px solid var(--accent);
+  padding-left: 20px;
+}
+
+.testimonial p {
+  font-size: 13px;
+  font-weight: 300;
+  color: rgba(255,255,255,.55);
+  line-height: 1.65;
+  font-style: italic;
+  margin-bottom: 16px;
+}
+
+.testimonial-footer {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.testimonial-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 600;
+  color: #fff;
+  letter-spacing: .5px;
+  flex-shrink: 0;
+}
+
+.testimonial-author {
+  font-size: 12px;
+  font-weight: 500;
+  color: rgba(255,255,255,.55);
+  letter-spacing: .5px;
+}
+
+/* ── GITHUB NO PAINEL ESQUERDO ──────────────────── */
+.left-github {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 20px;
+  padding: 12px 16px;
+  border: 1px solid rgba(255,255,255,.15);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background .2s, border-color .2s;
+  width: fit-content;
+}
+
+.left-github img {
+  width: 18px;
+  height: 18px;
+  filter: brightness(0) invert(1);
+}
+
+.left-github span {
+  font-size: 13px;
+  font-weight: 400;
+  color: rgba(255,255,255,.7);
+}
+
+.left-github:hover {
+  background: rgba(255,255,255,.08);
+  border-color: rgba(255,255,255,.3);
+}
+
+/* ── PAINEL DIREITO ─────────────────────────────── */
+.panel-right {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 32px;
+  background: var(--white);
+  position: relative;
+}
+
+.panel-right::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 280px;
+  height: 280px;
+  background: radial-gradient(circle, rgba(181,131,74,.07) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+/* ── MOBILE HEADER ──────────────────────────────── */
+.mobile-header {
+  display: none;
+}
+
+/* Card do formulário */
+.form-card {
+  width: 100%;
+  max-width: 380px;
+  position: relative;
+  z-index: 1;
+  animation: fadeUp .6s ease both;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Cabeçalho do form */
+.form-header {
+  margin-bottom: 40px;
+}
+
+.form-greeting {
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 10px;
+}
+
+.form-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 36px;
+  font-weight: 400;
+  color: var(--ink);
+  line-height: 1.1;
+}
+
+.form-sub {
+  font-size: 13px;
+  color: var(--muted);
+  margin-top: 8px;
+  font-weight: 300;
+}
+
+/* ── CAMPOS ─────────────────────────────────────── */
+.field {
+  margin-bottom: 20px;
+}
+
+.field label {
+  display: block;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 8px;
+}
+
+.input-wrap {
+  position: relative;
+}
+
+.input-wrap svg {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 15px;
+  height: 15px;
+  stroke: var(--muted);
+  fill: none;
+  stroke-width: 1.8;
+  transition: stroke .2s;
+  pointer-events: none;
+}
+
+input[type="email"],
+input[type="password"],
+input[type="text"] {
+  width: 100%;
+  padding: 13px 14px 13px 40px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 300;
+  color: var(--ink);
+  background: var(--cream);
+  border: 1.5px solid #1d9e75;
+  border-radius: 10px;
+  outline: none;
+  transition: border-color .2s, background .2s, transform .2s;
+}
+
+input[type="email"]:hover,
+input[type="password"]:hover,
+input[type="text"]:hover {
+  transform: scale(1.02);
+}
+
+input::placeholder {
+  color: rgba(138,127,114,.5);
+}
+
+input:focus {
+  border-color: #1d9e75;
+  background: #fff;
+}
+
+.input-wrap:focus-within svg {
+  stroke: #1d9e75;
+}
+
+/* Botão olho */
+.eye-btn {
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+}
+
+.eye-btn svg {
+  width: 16px;
+  height: 16px;
+  stroke: var(--muted);
+  fill: none;
+  stroke-width: 1.8;
+  position: static;
+  transform: none;
+  left: auto;
+  top: auto;
+  pointer-events: none;
+}
+
+/* Linha label + link */
+.field-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.field-row label {
+  margin-bottom: 0;
+}
+
+.field-link {
+  font-size: 11px;
+  color: #1d9e75;
+  text-decoration: none;
+  font-weight: 400;
+  transition: opacity .2s;
+}
+
+.field-link:hover {
+  opacity: .7;
+}
+
+/* ── LEMBRAR-ME ─────────────────────────────────── */
+.remember {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 28px;
+}
+
+.remember input[type="checkbox"] {
+  display: none;
+}
+
+.check-box {
+  width: 18px;
+  height: 18px;
+  border: 1.5px solid #1d9e75;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: border-color .2s, background .2s;
+  flex-shrink: 0;
+}
+
+.remember input:checked + .check-box {
+  border-color: #1d9e75;
+  background: #1d9e75;
+}
+
+.remember input:checked + .check-box::after {
+  content: '';
+  width: 9px;
+  height: 5px;
+  border-left: 1.5px solid #fff;
+  border-bottom: 1.5px solid #fff;
+  transform: rotate(-45deg) translateY(-1px);
+  display: block;
+}
+
+.remember-label {
+  font-size: 13px;
+  color: var(--muted);
+  font-weight: 300;
+  cursor: pointer;
+  user-select: none;
+}
+
+/* ── BOTÃO PRINCIPAL ────────────────────────────── */
+.btn-login {
+  width: 100%;
+  padding: 15px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: #fff;
+  background: var(--ink);
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: transform .15s, box-shadow .2s;
+}
+
+.btn-login::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(120deg, transparent 30%, rgba(181,131,74,.25) 50%, transparent 70%);
+  transform: translateX(-100%);
+  transition: transform .5s;
+}
+
+.btn-login:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 24px rgba(14,14,14,.18);
+}
+
+.btn-login:hover::after {
+  transform: translateX(100%);
+}
+
+.btn-login:active {
+  transform: translateY(0);
+}
+
+/* ── DIVISOR ────────────────────────────────────── */
+.divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 24px 0;
+}
+
+.divider hr {
+  flex: 1;
+  border: none;
+  border-top: 1px solid var(--sand);
+}
+
+.divider span {
+  font-size: 11px;
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+/* ── BOTÕES SOCIAIS ─────────────────────────────── */
+.social-row {
+  display: flex;
+  gap: 10px;
+}
+
+.btn-social {
+  flex: 1;
+  padding: 12px;
+  background: none;
+  border: 1.5px solid var(--sand);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  color: var(--ink);
+  font-weight: 400;
+  cursor: pointer;
+  transition: border-color .2s, background .2s;
+}
+
+.btn-social img {
+  width: 16px;
+  height: 16px;
+}
+
+.btn-social:hover {
+  border-color: var(--accent);
+  background: var(--cream);
+}
+
+/* ── LINK DE CADASTRO ───────────────────────────── */
+.signup-row {
+  text-align: center;
+  margin-top: 28px;
+  font-size: 13px;
+  color: var(--muted);
+  font-weight: 300;
+}
+
+.signup-row a {
+  color: #1d9e75;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.signup-row a:hover {
+  text-decoration: underline;
+}
+
+/* ── ACESSAR COMO ───────────────────────────────── */
+.role-options {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.role-option {
+  cursor: pointer;
+}
+
+.role-option input[type="radio"] {
+  display: none;
+}
+
+.role-box {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px;
+  border: 1.5px solid #1d9e75;
+  border-radius: 10px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--muted);
+  background: var(--cream);
+  transition: border-color .2s, background .2s, color .2s, transform .2s;
+}
+
+.role-box svg {
+  width: 15px;
+  height: 15px;
+  stroke: var(--muted);
+  fill: none;
+  stroke-width: 1.8;
+  flex-shrink: 0;
+  transition: stroke .2s;
+}
+
+.role-option input:checked + .role-box {
+  border-color: #1d9e75;
+  background: #fff;
+  color: var(--ink);
+}
+
+.role-option input:checked + .role-box svg {
+  stroke: var(--accent);
+}
+
+.role-box:hover {
+  border-color: #1d9e75;
+  background: #fff;
+  transform: scale(1.02);
+}
+
+/* ── VALIDAÇÃO ──────────────────────────────────── */
+input.input-erro {
+  border-color: #e53935 !important;
+  background: #fff5f5;
+}
+
+.erro-msg {
+  display: block;
+  margin-top: 6px;
+  font-size: 11px;
+  font-weight: 500;
+  color: #e53935;
+  letter-spacing: .3px;
+}
+
+/* ── RESPONSIVO (mobile) ────────────────────────── */
+@media (max-width: 768px) {
+  body {
+    justify-content: flex-start;
+    background: #f0f0f0;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+
+  .panel-left {
+    display: none;
+  }
+
+  .panel-right {
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 52px 24px 48px;
+    background: #f0f0f0;
+    min-height: 100vh;
+    width: 100%;
+  }
+
+  .panel-right::before {
+    display: none;
+  }
+
+  .mobile-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin-bottom: 32px;
+    width: 100%;
+  }
+
+  .mobile-brand-mark {
+    width: 68px;
+    height: 68px;
+    background: #1d9e75;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 18px;
+    box-shadow: 0 8px 24px rgba(76, 222, 106, .32);
+  }
+
+  .mobile-brand-mark svg {
+    width: 34px;
+    height: 34px;
+    fill: #fff;
+  }
+
+  .mobile-title {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 20px;
+    font-weight: 600;
+    color: #1a1a1a;
+    margin-bottom: 6px;
+  }
+
+  .mobile-sub {
+    font-size: 13px;
+    color: #999;
+    font-weight: 300;
+  }
+
+  .form-card {
+    background: transparent;
+    box-shadow: none;
+    padding: 0;
+    max-width: 100%;
+    width: 100%;
+  }
+
+  .form-header {
+    display: none;
+  }
+
+  .field label {
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0;
+    text-transform: none;
+    color: #333;
+  }
+
+  input[type="email"],
+  input[type="password"],
+  input[type="text"] {
+    background: #fff;
+    border: none;
+    border-radius: 14px;
+    padding: 15px 44px 15px 16px;
+    font-size: 15px;
+    box-shadow: 0 1px 6px rgba(0,0,0,.07);
+    color: #222;
+  }
+
+  input[type="email"] {
+    padding-left: 16px;
+  }
+
+  .input-wrap > svg:not(.eye-btn svg) {
+    display: none;
+  }
+
+  .icon-lock {
+    display: none;
+  }
+
+  .role-box {
+    background: #fff;
+    border: none;
+    border-radius: 14px;
+    font-size: 15px;
+    font-weight: 400;
+    color: #333;
+    box-shadow: 0 1px 6px rgba(0,0,0,.07);
+    padding: 15px 16px;
+    gap: 14px;
+  }
+
+  .role-box svg {
+    display: none;
+  }
+
+  .role-box::before {
+    content: '';
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    border: 2px solid #ccc;
+    flex-shrink: 0;
+    transition: border-color .2s, background .2s;
+  }
+
+  .role-option input:checked + .role-box {
+    border: none;
+    background: #fff;
+    color: #222;
+  }
+
+  .role-option input:checked + .role-box::before {
+    background: #1d9e75;
+    border-color: #1d9e75;
+  }
+
+  .field-link {
+    font-size: 13px;
+    color: #1d9e75;
+    font-weight: 500;
+  }
+
+  .remember {
+    display: none;
+  }
+
+  .btn-login {
+    background: #1d9e75;
+    border-radius: 50px;
+    font-size: 16px;
+    letter-spacing: 0;
+    text-transform: none;
+    font-weight: 600;
+    padding: 17px;
+    box-shadow: 0 6px 20px rgba(76, 222, 106, .38);
+    margin-top: 8px;
+  }
+
+  .btn-login::after {
+    display: none;
+  }
+
+  .btn-login:hover {
+    box-shadow: 0 10px 28px rgba(76, 222, 106, .45);
+  }
+
+  .divider span {
+    font-size: 12px;
+    color: #aaa;
+  }
+
+  .divider hr {
+    border-color: #ddd;
+  }
+
+  .btn-social {
+    background: #fff;
+    border: none;
+    border-radius: 14px;
+    box-shadow: 0 1px 6px rgba(0,0,0,.07);
+    font-size: 14px;
+    color: #333;
+    padding: 14px;
+  }
+
+  .btn-social:hover {
+    background: #f8f8f8;
+  }
+
+  .signup-row {
+    color: #999;
+  }
+
+  .signup-row a {
+    color: var(--green);
+  }
+
+  /* Validação no mobile */
+  input.input-erro {
+    border: 1.5px solid #e53935 !important;
+    background: #fff5f5 !important;
+    box-shadow: 0 0 0 3px rgba(229,57,53,.1) !important;
+  }
+}
