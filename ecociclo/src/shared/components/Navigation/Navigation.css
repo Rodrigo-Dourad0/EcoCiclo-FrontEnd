@@ -109,7 +109,7 @@
     flex-direction: row;
     justify-content: space-around;
     align-items: center;
-    width: 100%;
+    flex: 1;
     height: 100%;
   }
 
@@ -149,5 +149,102 @@
   .nav-item.active .nav-label {
     color: #22C55E;
     /* Verde forte exato do print */
+  }
+}
+
+/* ── Botões de autenticação ── */
+
+/* Desktop: ficam no rodapé da sidebar */
+@media (min-width: 769px) {
+  .nav-auth {
+    margin-top: auto;
+    padding: 24px 16px 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .nav-auth-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 11px 16px;
+    border-radius: 12px;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+    transition: all 0.2s ease;
+  }
+
+  .btn-login {
+    background-color: transparent;
+    border: 1.5px solid #22C55E;
+    color: #22C55E;
+  }
+
+  .btn-login:hover {
+    background-color: rgba(34, 197, 94, 0.08);
+  }
+
+  .btn-register {
+    background-color: #22C55E;
+    color: #ffffff;
+    border: 1.5px solid transparent;
+  }
+
+  .btn-register:hover {
+    background-color: #16A34A;
+  }
+}
+
+/* Mobile: botões de auth como ícones compactos na barra inferior */
+@media (max-width: 768px) {
+  .nav-auth {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    height: 100%;
+    gap: 0;
+    padding: 0;
+    margin: 0;
+  }
+
+  .nav-auth-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+    text-decoration: none;
+    padding: 8px 4px;
+    flex: 1;
+    font-size: 10px;
+    font-weight: 500;
+    border-radius: 0;
+    border: none;
+    background: transparent;
+    transition: color 0.2s ease;
+  }
+
+  .btn-login {
+    color: #22C55E;
+  }
+
+  .btn-login:hover {
+    color: #16A34A;
+    background: transparent;
+  }
+
+  .btn-register {
+    color: #3B82F6;
+    background: transparent;
+    border: none;
+  }
+
+  .btn-register:hover {
+    color: #2563EB;
+    background: transparent;
   }
 }

@@ -1,11 +1,18 @@
 import './App.css';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { Dashboard } from './modules/dashboard/pages/Dashboard.jsx';
+import Login from './modules/auth/pages/login.jsx';
 import CriarConta from './modules/auth/pages/CriarConta.jsx';
 
 function App() {
   return (
-    <div className="app-container">
-      <CriarConta />
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Dashboard />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/criar-conta" element={<CriarConta />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 

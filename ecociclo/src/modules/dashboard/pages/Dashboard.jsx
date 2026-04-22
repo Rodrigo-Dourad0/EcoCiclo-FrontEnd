@@ -1,6 +1,7 @@
 import React from 'react';
 import { Leaf, Package, Star, Bell } from 'lucide-react';
 import '../styles/Dashboard.css';
+import { Navigation } from '../../../shared/components/Navigation/Navigation.jsx';
 
 export function Dashboard() {
   const stats = [
@@ -28,9 +29,13 @@ export function Dashboard() {
   ];
 
   return (
-    <main className="dashboard-main">
-      <div className="dashboard-container">
-        
+    <>
+      <Navigation />
+      <main className="dashboard-main">
+        <div className="dashboard-container">
+
+
+
         {/* Top Header - Mobile like */}
         <header className="top-header">
           <h2 className="top-title">Dashboard</h2>
@@ -59,8 +64,8 @@ export function Dashboard() {
             </div>
           ))}
         </section>
-
       </div>
     </main>
+    </>
   );
 }
