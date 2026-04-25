@@ -6,7 +6,7 @@ import './Navigation.css';
 export function Navigation() {
   const navItems = [
     { icon: <Home size={22} />, label: 'Início', to: '/', active: true },
-    { icon: <Package size={22} />, label: 'Coletas', to: '#', active: false },
+    { icon: <Package size={22} />, label: 'Coletas', to: '/avaliar-coletor', active: false },
     { icon: <Gift size={22} />, label: 'Recompensas', to: '#', active: false },
     { icon: <Clock size={22} />, label: 'Histórico', to: '#', active: false },
     { icon: <User size={22} />, label: 'Perfil', to: '#', active: false },
