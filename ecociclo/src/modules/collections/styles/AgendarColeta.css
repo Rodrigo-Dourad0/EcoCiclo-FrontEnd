@@ -1,0 +1,434 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: #F2F2F2;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+
+.ac-desktop {
+  display: none;
+}
+
+.ac-screen {
+  width: 100%;
+  max-width: 430px;
+  min-height: 100vh;
+  background-color: #F2F2F2;
+  display: flex;
+  flex-direction: column;
+}
+
+.ac-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 20px 20px 16px;
+  background-color: #F2F2F2;
+}
+
+.ac-btn-voltar {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ac-btn-voltar svg {
+  width: 22px;
+  height: 22px;
+  stroke: #222;
+  fill: none;
+  stroke-width: 2.2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.ac-header h1 {
+  font-size: 20px;
+  font-weight: 600;
+  color: #1A1A1A;
+}
+
+.ac-body {
+  padding: 8px 20px 32px;
+  display: flex;
+  flex-direction: column;
+}
+
+.ac-subtitle {
+  font-size: 13px;
+  color: #888;
+  margin-bottom: 20px;
+}
+
+/* CAMPOS */
+.ac-field {
+  margin-bottom: 14px;
+  flex: 1;
+}
+
+.ac-field label {
+  display: block;
+  font-size: 14px;
+  font-weight: 500;
+  color: #1A1A1A;
+  margin-bottom: 6px;
+}
+
+.ac-field input,
+.ac-field textarea {
+  width: 100%;
+  padding: 13px 16px;
+  border: 1.5px solid #E0E0E0;
+  border-radius: 12px;
+  background-color: #ffffff;
+  font-size: 14px;
+  color: #1A1A1A;
+  font-family: 'Inter', sans-serif;
+  outline: none;
+  transition: border-color 0.2s;
+  resize: none;
+}
+
+.ac-field input::placeholder,
+.ac-field textarea::placeholder {
+  color: #ADADAD;
+}
+
+.ac-field input:focus,
+.ac-field textarea:focus {
+  border-color: #2DBF8A;
+}
+
+.ac-field input.input-erro,
+.ac-field select.input-erro {
+  border-color: #E24B4A;
+}
+
+/* SELECT */
+.ac-select-wrapper {
+  position: relative;
+}
+
+.ac-select-wrapper select {
+  width: 100%;
+  padding: 13px 40px 13px 16px;
+  border: 1.5px solid #E0E0E0;
+  border-radius: 12px;
+  background-color: #ffffff;
+  font-size: 14px;
+  color: #1A1A1A;
+  font-family: 'Inter', sans-serif;
+  outline: none;
+  appearance: none;
+  cursor: pointer;
+  transition: border-color 0.2s;
+}
+
+.ac-select-wrapper select:focus {
+  border-color: #2DBF8A;
+}
+
+.ac-select-wrapper select.input-erro {
+  border-color: #E24B4A;
+}
+
+.ac-select-wrapper select option[value=""] {
+  color: #ADADAD;
+}
+
+.ac-select-icon {
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 18px;
+  height: 18px;
+  stroke: #888;
+  fill: none;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  pointer-events: none;
+}
+
+/* DATA E HORÁRIO LADO A LADO */
+.ac-row {
+  display: flex;
+  flex-direction: row;
+  gap: 12px;
+}
+
+/* BANNER */
+.ac-banner {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px;
+  background-color: #F0FBF7;
+  border-radius: 12px;
+  margin-bottom: 20px;
+}
+
+.ac-banner svg {
+  width: 18px;
+  height: 18px;
+  stroke: #2DBF8A;
+  fill: none;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  flex-shrink: 0;
+}
+
+.ac-banner span {
+  font-size: 13px;
+  color: #1D9E75;
+  font-weight: 500;
+}
+
+/* BOTÃO */
+.ac-btn {
+  width: 100%;
+  padding: 15px;
+  background-color: #2DBF8A;
+  color: #ffffff;
+  border: none;
+  border-radius: 12px;
+  font-size: 15px;
+  font-weight: 600;
+  font-family: 'Inter', sans-serif;
+  cursor: pointer;
+  transition: background-color 0.2s, opacity 0.2s;
+  letter-spacing: 0.01em;
+}
+
+.ac-btn:hover {
+  background-color: #25A87A;
+}
+
+.ac-btn:active {
+  opacity: 0.88;
+}
+
+/* ERROS */
+.ac-erro {
+  font-size: 12px;
+  color: #E24B4A;
+  margin-top: 4px;
+  display: block;
+}
+
+.ac-obrigatorio {
+  color: #E24B4A;
+  margin-left: 2px;
+}
+
+/* Tablet (600px – 1023px)*/
+@media (min-width: 600px) and (max-width: 1023px) {
+
+  body {
+    background-color: #E8E8E8;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 40px 24px;
+  }
+
+  .ac-desktop {
+    display: none;
+  }
+
+  .ac-screen {
+    width: 100%;
+    max-width: 560px;
+    min-height: unset;
+    margin: 0 auto;
+    background-color: #ffffff;
+    border-radius: 20px;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+  }
+
+  .ac-header {
+    background-color: #ffffff;
+    padding: 20px 24px 16px;
+    border-bottom: 1px solid #F0F0F0;
+  }
+
+  .ac-body {
+    padding: 20px 24px 28px;
+    background-color: #ffffff;
+  }
+
+  .ac-field input,
+  .ac-field textarea {
+    background-color: #F9F9F9;
+  }
+
+  .ac-field input:focus,
+  .ac-field textarea:focus {
+    background-color: #ffffff;
+  }
+
+  .ac-select-wrapper select {
+    background-color: #F9F9F9;
+  }
+}
+
+/* Desktop (1024px+) */
+@media (min-width: 1024px) {
+
+  body {
+    align-items: stretch;
+    padding: 0;
+  }
+
+  .ac-screen {
+    display: none;
+  }
+
+  .ac-desktop {
+    display: flex;
+    width: 100%;
+    min-height: 100vh;
+  }
+
+  .ac-desktop-left {
+    width: 42%;
+    background-color: #1D9E75;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 60px 48px;
+  }
+
+  .ac-desktop-logo {
+    width: 52px;
+    height: 52px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 40px;
+  }
+
+  .ac-desktop-logo svg {
+    width: 26px;
+    height: 26px;
+    stroke: white;
+    fill: none;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .ac-desktop-left h2 {
+    font-size: 30px;
+    font-weight: 700;
+    color: #ffffff;
+    line-height: 1.3;
+    margin-bottom: 14px;
+  }
+
+  .ac-desktop-left p {
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.75);
+    line-height: 1.7;
+    margin-bottom: 40px;
+  }
+
+  .ac-desktop-features {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+
+  .ac-desktop-feature {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .ac-desktop-feature-icon {
+    width: 38px;
+    height: 38px;
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .ac-desktop-feature-icon svg {
+    width: 16px;
+    height: 16px;
+    stroke: white;
+    fill: none;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .ac-desktop-feature span {
+    font-size: 13px;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.88);
+  }
+
+  .ac-desktop-right {
+    width: 58%;
+    background-color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 60px 56px;
+    overflow-y: auto;
+  }
+
+  .ac-desktop-right h1 {
+    font-size: 24px;
+    font-weight: 700;
+    color: #1A1A1A;
+    margin-bottom: 4px;
+  }
+
+  .ac-desktop-right .ac-subtitle {
+    font-size: 13px;
+    color: #888;
+    margin-bottom: 24px;
+  }
+
+  .ac-desktop-right .ac-field input,
+  .ac-desktop-right .ac-field textarea {
+    background-color: #F9F9F9;
+    padding: 11px 14px;
+    font-size: 13px;
+    border-radius: 10px;
+  }
+
+  .ac-desktop-right .ac-field input:focus,
+  .ac-desktop-right .ac-field textarea:focus {
+    background-color: #ffffff;
+  }
+
+  .ac-desktop-right .ac-select-wrapper select {
+    background-color: #F9F9F9;
+    padding: 11px 40px 11px 14px;
+    font-size: 13px;
+    border-radius: 10px;
+  }
+}
