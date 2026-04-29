@@ -1,33 +1,19 @@
-import { useState } from "react";
 import "../styles/login.css";
+import { useLogin } from "../hooks/useLogin";
 
 function Login() {
-  const [showPwd, setShowPwd] = useState(false);
-  const [email, setEmail] = useState("");
-  const [senha, setSenha] = useState("");
-  const [emailErro, setEmailErro] = useState("");
-  const [senhaErro, setSenhaErro] = useState("");
-
-  const validarEmail = (valor) => {
-    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!valor) {
-      setEmailErro("O e-mail é obrigatório.");
-    } else if (!regex.test(valor)) {
-      setEmailErro("Digite um e-mail válido (ex: nome@email.com).");
-    } else {
-      setEmailErro("");
-    }
-  };
-
-  const validarSenha = (valor) => {
-    if (!valor) {
-      setSenhaErro("A senha é obrigatória.");
-    } else if (valor.length < 8) {
-      setSenhaErro("A senha deve ter no mínimo 8 caracteres.");
-    } else {
-      setSenhaErro("");
-    }
-  };
+  const {
+    showPwd,
+    setShowPwd,
+    email,
+    setEmail,
+    senha,
+    setSenha,
+    emailErro,
+    senhaErro,
+    validarEmail,
+    validarSenha,
+  } = useLogin();
 
   return (
     <>
@@ -87,7 +73,7 @@ function Login() {
           </div>
 
           <div className="field">
-            <label>E-mail</label>
+            <label>E-mail*</label>
             <div className="input-wrap">
               <input
                 type="email"
@@ -110,7 +96,7 @@ function Login() {
 
           <div className="field">
             <div className="field-row">
-              <label>Senha</label>
+              <label>Senha*</label>
               <a href="#" className="field-link">Esqueci minha senha</a>
             </div>
 
@@ -127,11 +113,11 @@ function Login() {
                 className={senhaErro ? "input-erro" : ""}
               />
 
-              <svg viewBox="0 0 24 24" className="icon-lock">
+             <svg viewBox="0 0 24 24" className="icon-lock">
                 <rect x="5" y="11" width="14" height="10" rx="2"/>
                 <path d="M8 11V7a4 4 0 0 1 8 0v4"/>
               </svg>
-
+              
               <button
                 className="eye-btn"
                 type="button"
@@ -150,6 +136,7 @@ function Login() {
                   </svg>
                 )}
               </button>
+
             </div>
             {senhaErro && <span className="erro-msg">{senhaErro}</span>}
           </div>
