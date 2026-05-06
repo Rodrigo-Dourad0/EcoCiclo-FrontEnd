@@ -15,11 +15,12 @@
   --green:  #4cde6a;
 }
 
-/* ── BODY ───────────────────────────────────────── */
-body {
+/* ── LOGIN PAGE ─────────────────────────────────── */
+.login-page {
   font-family: 'DM Sans', sans-serif;
   background-color: var(--cream);
   min-height: 100vh;
+  width: 100%;
   display: flex;
   overflow: hidden;
 }
@@ -310,9 +311,9 @@ body {
   pointer-events: none;
 }
 
-input[type="email"],
-input[type="password"],
-input[type="text"] {
+.login-page input[type="email"],
+.login-page input[type="password"],
+.login-page input[type="text"] {
   width: 100%;
   padding: 13px 14px 13px 40px;
   font-family: 'DM Sans', sans-serif;
@@ -326,22 +327,22 @@ input[type="text"] {
   transition: border-color .2s, background .2s, transform .2s;
 }
 
-input[type="email"]:hover,
-input[type="password"]:hover,
-input[type="text"]:hover {
+.login-page input[type="email"]:hover,
+.login-page input[type="password"]:hover,
+.login-page input[type="text"]:hover {
   transform: scale(1.02);
 }
 
-input::placeholder {
+.login-page input::placeholder {
   color: rgba(138,127,114,.5);
 }
 
-input:focus {
+.login-page input:focus {
   border-color: #1d9e75;
   background: #fff;
 }
 
-.input-wrap:focus-within svg {
+.login-page .input-wrap:focus-within svg {
   stroke: #1d9e75;
 }
 
@@ -443,8 +444,8 @@ input:focus {
   user-select: none;
 }
 
-/* ── BOTÃO PRINCIPAL ────────────────────────────── */
-.btn-login {
+/* ── BOTÃO PRINCIPAL (submit do login) ──────────── */
+.login-btn-submit {
   width: 100%;
   padding: 15px;
   font-family: 'DM Sans', sans-serif;
@@ -462,7 +463,7 @@ input:focus {
   transition: transform .15s, box-shadow .2s;
 }
 
-.btn-login::after {
+.login-btn-submit::after {
   content: '';
   position: absolute;
   inset: 0;
@@ -471,16 +472,16 @@ input:focus {
   transition: transform .5s;
 }
 
-.btn-login:hover {
+.login-btn-submit:hover {
   transform: translateY(-1px);
   box-shadow: 0 8px 24px rgba(14,14,14,.18);
 }
 
-.btn-login:hover::after {
+.login-btn-submit:hover::after {
   transform: translateX(100%);
 }
 
-.btn-login:active {
+.login-btn-submit:active {
   transform: translateY(0);
 }
 
@@ -613,6 +614,22 @@ input:focus {
   transform: scale(1.02);
 }
 
+/* Indicador visual (bolinha) para opção selecionada — desktop */
+.role-box::before {
+  content: '';
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: 2px solid #ccc;
+  flex-shrink: 0;
+  transition: border-color .2s, background .2s;
+}
+
+.role-option input:checked + .role-box::before {
+  background: #1d9e75;
+  border-color: #1d9e75;
+}
+
 /* ── VALIDAÇÃO ──────────────────────────────────── */
 input.input-erro {
   border-color: #e53935 !important;
@@ -630,7 +647,7 @@ input.input-erro {
 
 /* ── TABLET (768px – 1024px) ────────────────────── */
 @media (max-width: 1024px) and (min-width: 769px) {
-  body {
+  .login-page {
     background: #e0e0e0;
     justify-content: center;
     align-items: center;
@@ -675,7 +692,7 @@ input.input-erro {
 
 /* ── RESPONSIVO (mobile) ────────────────────────── */
 @media (max-width: 768px) {
-  body {
+  .login-page {
     justify-content: flex-start;
     background: #f0f0f0;
     overflow-y: auto;
@@ -761,9 +778,9 @@ input.input-erro {
     color: #333;
   }
 
-  input[type="email"],
-  input[type="password"],
-  input[type="text"] {
+  .login-page input[type="email"],
+  .login-page input[type="password"],
+  .login-page input[type="text"] {
     background: #fff;
     border: none;
     border-radius: 14px;
@@ -773,7 +790,7 @@ input.input-erro {
     color: #222;
   }
 
-  input[type="email"] {
+  .login-page input[type="email"] {
     padding-left: 16px;
   }
 
@@ -832,7 +849,7 @@ input.input-erro {
     display: none;
   }
 
-  .btn-login {
+  .login-btn-submit {
     background: #1d9e75;
     border-radius: 50px;
     font-size: 16px;
@@ -844,11 +861,11 @@ input.input-erro {
     margin-top: 8px;
   }
 
-  .btn-login::after {
+  .login-btn-submit::after {
     display: none;
   }
 
-  .btn-login:hover {
+  .login-btn-submit:hover {
     box-shadow: 0 10px 28px rgba(76, 222, 106, .45);
   }
 

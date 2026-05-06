@@ -16,7 +16,7 @@ function Login() {
   } = useLogin();
 
   return (
-    <>
+    <div className="login-page">
       <div className="panel-left">
         <div className="deco-ring r1"></div>
         <div className="deco-ring r2"></div>
@@ -172,14 +172,14 @@ function Login() {
             <span className="remember-label">Manter-me conectado</span>
           </label>
 
-          <button className="btn-login">Entrar</button>
+          <button className="login-btn-submit">Entrar</button>
 
           <p className="signup-row">
             Não tem conta? <a href="#">Criar agora</a>
           </p>
         </div>
       </div>
-    </>
+    </div>
   );
 }
 

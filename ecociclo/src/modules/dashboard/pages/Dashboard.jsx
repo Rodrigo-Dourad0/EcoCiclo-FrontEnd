@@ -29,7 +29,7 @@ export function Dashboard() {
   ];
 
   return (
-    <>
+    <div className="app-container">
       <Navigation />
       <main className="dashboard-main">
         <div className="dashboard-container">
@@ -66,6 +66,6 @@ export function Dashboard() {
         </section>
       </div>
     </main>
-    </>
+    </div>
   );
 }
