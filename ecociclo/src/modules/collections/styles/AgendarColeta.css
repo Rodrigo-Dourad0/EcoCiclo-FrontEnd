@@ -2,6 +2,11 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  max-width: 100%;
+}
+
+html{
+  overflow-x: hidden;
 }
 
 body {
@@ -11,6 +16,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: flex-start;
+  overflow-x: hidden;
 }
 
 
@@ -293,6 +299,8 @@ body {
   body {
     align-items: stretch;
     padding: 0;
+    display: block;
+    overflow: hidden;
   }
 
   .ac-screen {
@@ -303,6 +311,7 @@ body {
     display: flex;
     width: 100%;
     min-height: 100vh;
+    overflow: hidden;
   }
 
   .ac-desktop-left {
@@ -430,5 +439,9 @@ body {
     padding: 11px 40px 11px 14px;
     font-size: 13px;
     border-radius: 10px;
+  }
+
+  .ac-screen {
+    display: none;
   }
 }
