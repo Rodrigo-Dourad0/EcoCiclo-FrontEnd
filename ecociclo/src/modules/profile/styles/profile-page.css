@@ -146,6 +146,20 @@ body, #root {
   justify-content: center;
 }
 
+.profile-page__btn-voltar {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #111;
+  font-family: 'Nunito', 'Segoe UI', sans-serif;
+}
+
 .bottom-nav {
   position: fixed;
   bottom: 0;
@@ -493,7 +507,10 @@ body, #root {
     width: 40%;
     background-color: var(--verde-escuro);
     padding: 2.5rem 2rem;
-    min-height: 100vh;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
   }
 
   .profile-page__content--mobile {
@@ -502,6 +519,7 @@ body, #root {
 
   .profile-page__content--desktop {
     display: flex !important;
+    margin-left: 40%;
     flex-direction: column;
     flex: 1;
     width: 50%;

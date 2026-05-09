@@ -29,6 +29,14 @@ function ProfilePage() {
     navigate('/login')
   }
 
+  function handleNovoEndereco() {
+    navigate('/novo-endereco')
+  }
+
+  function handleVoltar() {
+    navigate(-1)
+  }
+
   return (
     <div className="profile-page">
 
@@ -70,7 +78,13 @@ function ProfilePage() {
       {!isDesktop && (
         <main className="profile-page__content profile-page__content--mobile">
           <header className="profile-page__header">
-            Detalhes do Perfil
+            <button onClick={handleVoltar} className="profile-page__btn-voltar">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none"
+                stroke="#111" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M19 12H5M12 5l-7 7 7 7" />
+              </svg>
+              <span>Detalhes do Perfil</span>
+            </button>
           </header>
 
           <div className="profile-page__body">
@@ -124,13 +138,40 @@ function ProfilePage() {
 
             <div className="profile-painel__secao">
               <h2 className="profile-painel__secao-titulo">Configurações</h2>
-              <button className="profile-painel__item">
+              <button className="profile-painel__item" onClick={handleNovoEndereco}>
                 <span className="profile-painel__item-esquerda">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="18" height="18">
                     <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
                     <circle cx="12" cy="10" r="3" />
                   </svg>
                   Gerenciar endereços
+                </span>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="16" height="16">
+                  <polyline points="9 18 15 12 9 6" />
+                </svg>
+              </button>
+            </div>
+
+            <div className="profile-painel__secao">
+              <h2 className="profile-painel__secao-titulo">Configurações</h2>
+              <button className="profile-painel__item" onClick={() => alert('Em breve!')}>
+                <span className="profile-painel__item-esquerda">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="18" height="18">
+                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+                    <circle cx="12" cy="10" r="3" />
+                  </svg>
+                  Gerenciar endereços
+                </span>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="16" height="16">
+                  <polyline points="9 18 15 12 9 6" />
+                </svg>
+              </button>
+              <button className="profile-painel__item" onClick={handleNovoEndereco}>
+                <span className="profile-painel__item-esquerda">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="18" height="18">
+                    <path d="M12 5v14M5 12h14" />
+                  </svg>
+                  Adicionar novo endereço
                 </span>
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="16" height="16">
                   <polyline points="9 18 15 12 9 6" />
