@@ -6,6 +6,7 @@ import CriarConta from './modules/auth/pages/CriarConta.jsx';
 import ProfilePage from './modules/profile/pages/ProfilePage.jsx';
 import AvaliarColetor from './modules/feedback/pages/Avaliarcoletor.jsx';
 import RecuperarSenha from './modules/auth/pages/RecuperarSenha.jsx';
+import NovoEndereco from './modules/profile/pages/NovoEndereco.jsx'; //
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Route path="/perfil" element={<ProfilePage />} />
         <Route path="/avaliar-coletor" element={<AvaliarColetor />} />
         <Route path="/recuperar-senha" element={<RecuperarSenha />} />
+        <Route path="/novo-endereco" element={<NovoEndereco />} />
       </Routes>
     </BrowserRouter>
   );

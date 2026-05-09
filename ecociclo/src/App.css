@@ -3,7 +3,7 @@
   flex-direction: row;
   width: 100%;
   flex: 1; /* Para ocupar todo o #root */
-  overflow: hidden;
+  overflow-y: auto;
 }
 
 @media (max-width: 768px) {
