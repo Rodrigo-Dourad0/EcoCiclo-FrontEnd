@@ -1,3 +1,12 @@
+/* ===== ROOT ===== */
+
+:root {
+  --verde-principal: #38bd93;
+  --verde-escuro: #1d9e75;
+  --verde-claro-bg: #e1f5ee;
+  --fonte: 'Nunito', 'Segoe UI', sans-serif;
+}
+
 /* ===== MOBILE (base) ===== */
 
 .avaliarcoletor-screen {
@@ -7,7 +16,7 @@
   width: 100%;
   min-height: 100svh;
   background-color: #f2f2f2;
-  font-family: 'Nunito', 'Segoe UI', sans-serif;
+  font-family: var(--fonte);
   box-sizing: border-box;
 }
 
@@ -45,7 +54,7 @@
   font-weight: 700;
   color: #111;
   margin: 0;
-  font-family: 'Nunito', 'Segoe UI', sans-serif;
+  font-family: var(--fonte);
 }
 
 .avaliarcoletor-body {
@@ -127,7 +136,7 @@
   resize: none;
   font-size: 14px;
   color: #333;
-  font-family: 'Nunito', 'Segoe UI', sans-serif;
+  font-family: var(--fonte);
   background-color: transparent;
   box-sizing: border-box;
   line-height: 1.6;
@@ -145,22 +154,22 @@
   font-size: 15px;
   font-weight: 700;
   width: 100%;
-  font-family: 'Nunito', 'Segoe UI', sans-serif;
+  font-family: var(--fonte);
   transition: background 0.2s;
   margin-top: 4px;
 }
 
 .avaliarcoletor-submit-btn.enabled {
-  background-color: #2ecc71;
+  background-color: var(--verde-principal);
   cursor: pointer;
 }
 
 .avaliarcoletor-submit-btn.enabled:hover {
-  background-color: #27ae60;
+  background-color: var(--verde-escuro);
 }
 
 .avaliarcoletor-submit-btn.disabled {
-  background-color: #a8dfc4;
+  background-color: color-mix(in srgb, var(--verde-principal) 45%, white 55%);
   cursor: not-allowed;
 }
 
@@ -189,7 +198,7 @@
   width: 60px;
   height: 60px;
   border-radius: 50%;
-  background-color: #e8f8f0;
+  background-color: var(--verde-claro-bg);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -211,7 +220,7 @@
 }
 
 .avaliarcoletor-modal-btn {
-  background-color: #2ecc71;
+  background-color: var(--verde-principal);
   color: #fff;
   border: none;
   border-radius: 50px;
@@ -220,29 +229,40 @@
   font-weight: 700;
   cursor: pointer;
   width: 100%;
-  font-family: 'Nunito', 'Segoe UI', sans-serif;
+  font-family: var(--fonte);
   transition: background 0.2s;
 }
 
 .avaliarcoletor-modal-btn:hover {
-  background-color: #27ae60;
+  background-color: var(--verde-escuro);
 }
 
 /* ===== TABLET (768px+) ===== */
 
-@media (min-width: 768px) {
+@media (min-width: 768px) and (max-width: 1023px) {
   .avaliarcoletor-screen {
-    flex-direction: row;
+    flex-direction: column;
+    align-items: center;
     background-color: #e8e8e8;
+    min-height: 100svh;
+    padding: 0;
   }
 
   .avaliarcoletor-main {
-    max-width: 620px;
-    background-color: #f2f2f2;
+    width: 100%;
+    max-width: 100%;
+    background-color: transparent;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
 
   .avaliarcoletor-header {
-    padding: 20px 28px 18px;
+    width: 100%;
+    padding: 20px 40px 18px;
+    background-color: #fff;
+    border-bottom: 1px solid #eee;
+    box-sizing: border-box;
   }
 
   .avaliarcoletor-header-title {
@@ -250,23 +270,50 @@
   }
 
   .avaliarcoletor-body {
-    padding: 32px 28px;
+    width: 100%;
+    max-width: 640px;
+    padding: 40px 32px 48px;
     gap: 20px;
+    box-sizing: border-box;
+  }
+
+  .avaliarcoletor-collector-info {
+    text-align: center;
+    padding-bottom: 12px;
+  }
+
+  .avaliarcoletor-collector-subtitle {
+    font-size: 14px;
   }
 
   .avaliarcoletor-collector-name {
-    font-size: 24px;
+    font-size: 26px;
   }
 
   .avaliarcoletor-card {
-    padding: 24px 28px;
+    padding: 28px 32px;
     border-radius: 20px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.07);
+  }
+
+  .avaliarcoletor-card-title {
+    font-size: 15px;
+    margin-bottom: 20px;
+  }
+
+  .avaliarcoletor-stars-row {
+    gap: 12px;
+  }
+
+  .avaliarcoletor-comment-textarea {
+    font-size: 15px;
+    min-height: 100px;
   }
 
   .avaliarcoletor-submit-btn {
     font-size: 16px;
-    padding: 17px;
+    padding: 18px;
+    max-width: 100%;
   }
 }
 
@@ -287,7 +334,7 @@
     min-width: 300px;
     flex-shrink: 0;
     padding: 60px 48px;
-    background-color: #2ecc71;
+    background-color: var(--verde-principal);
     box-sizing: border-box;
   }
 
@@ -308,7 +355,7 @@
     color: #fff;
     margin: 0 0 14px;
     line-height: 1.2;
-    font-family: 'Nunito', 'Segoe UI', sans-serif;
+    font-family: var(--fonte);
   }
 
   .avaliarcoletor-sidebar-subtitle {
@@ -316,19 +363,21 @@
     color: rgba(255, 255, 255, 0.85);
     margin: 0;
     line-height: 1.7;
-    font-family: 'Nunito', 'Segoe UI', sans-serif;
+    font-family: var(--fonte);
   }
 
   .avaliarcoletor-main {
     flex: 1;
-    max-width: 100%;
     background-color: #f2f2f2;
     display: flex;
     flex-direction: column;
+    align-items: center;
   }
 
   .avaliarcoletor-header {
-    padding: 24px 48px 22px;
+    width: 100%;
+    padding: 24px 64px 22px;
+    box-sizing: border-box;
   }
 
   .avaliarcoletor-header-title {
@@ -336,17 +385,31 @@
   }
 
   .avaliarcoletor-body {
-    padding: 40px 48px;
-    max-width: 560px;
-    gap: 20px;
+    width: 100%;
+    max-width: 580px;
+    padding: 48px 32px 64px;
+    gap: 22px;
+    box-sizing: border-box;
   }
 
   .avaliarcoletor-collector-info {
     text-align: left;
+    padding-bottom: 4px;
   }
 
   .avaliarcoletor-collector-name {
-    font-size: 26px;
+    font-size: 28px;
+  }
+
+  .avaliarcoletor-card {
+    padding: 28px 32px;
+    border-radius: 20px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.07);
+  }
+
+  .avaliarcoletor-card-title {
+    font-size: 15px;
+    margin-bottom: 20px;
   }
 
   .avaliarcoletor-stars-row {
@@ -354,7 +417,14 @@
     gap: 10px;
   }
 
+  .avaliarcoletor-comment-textarea {
+    min-height: 110px;
+    font-size: 15px;
+  }
+
   .avaliarcoletor-submit-btn {
-    max-width: 320px;
+    max-width: 100%;
+    font-size: 16px;
+    padding: 17px;
   }
 }
