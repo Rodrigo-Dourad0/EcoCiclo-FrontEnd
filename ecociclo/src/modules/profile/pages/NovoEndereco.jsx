@@ -15,7 +15,7 @@ function NovoEndereco() {
   } = useNovoEndereco();
 
   return (
-    <>
+    <div className="novo-endereco-wrapper">
       {/* LEFT */}
       <div className="panel-left">
         <div className="deco-ring r1"></div>
@@ -236,7 +236,7 @@ function NovoEndereco() {
           </button>
         </div>
       </div>
-    </>
+    </div>
   );
 }
 

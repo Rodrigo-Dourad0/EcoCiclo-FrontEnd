@@ -599,3 +599,10 @@ input.input-erro {
     transform: none;
   }
 }
+
+.novo-endereco-wrapper {
+  display: flex;
+  min-height: 100vh;
+  width: 100%;
+  overflow-y: auto;
+}
