@@ -1,4 +1,4 @@
-function ProfileCard({ usuario, onLogout }) {
+function ProfileCard({ usuario, onLogout, onNovoEndereco }) {
   return (
     <div className="profile-card-wrapper">
       <div className="profile-card">
@@ -47,13 +47,25 @@ function ProfileCard({ usuario, onLogout }) {
           </svg>
         </button>
 
-        <button className="profile-card__btn-acao">
+        <button className="profile-card__btn-acao" onClick={() => alert('Em breve!')}>
           <span className="profile-card__btn-acao-esquerda">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="18" height="18">
               <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
               <circle cx="12" cy="10" r="3" />
             </svg>
             Gerenciar endereços
+          </span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="18" height="18">
+            <polyline points="9 18 15 12 9 6" />
+          </svg>
+        </button>
+
+        <button className="profile-card__btn-acao" onClick={onNovoEndereco}>
+          <span className="profile-card__btn-acao-esquerda">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="18" height="18">
+              <path d="M12 5v14M5 12h14" />
+            </svg>
+            Adicionar novo endereço
           </span>
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="18" height="18">
             <polyline points="9 18 15 12 9 6" />

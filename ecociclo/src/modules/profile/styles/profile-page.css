@@ -160,27 +160,6 @@ body, #root {
   font-family: 'Nunito', 'Segoe UI', sans-serif;
 }
 
-.bottom-nav {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 60px;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  background: var(--branco);
-  border-top: 1px solid var(--cinza-borda);
-  z-index: 10;
-}
-
-.bottom-nav svg {
-  color: #777;
-}
-
-.bottom-nav .active svg {
-  color: var(--verde-principal);
-}
 
 /* ══════════════════════════════
    WRAPPER (card + botões)
