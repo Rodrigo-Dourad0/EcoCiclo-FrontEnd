@@ -1,7 +1,10 @@
 import "../styles/NovoEndereco.css";
+import { useNavigate } from "react-router-dom";
 import { useNovoEndereco } from "../hooks/useNovoEndereco";
 
 function NovoEndereco() {
+  const navigate = useNavigate();
+
   const {
     cep, setCep, cepErro, validarCep,
     rua, setRua, ruaErro, validarRua,
@@ -57,7 +60,7 @@ function NovoEndereco() {
 
         {/* Header mobile */}
         <div className="mobile-header">
-          <button className="mobile-back">
+          <button className="mobile-back" onClick={() => navigate(-1)}>
             <svg viewBox="0 0 24 24">
               <polyline points="15 18 9 12 15 6"/>
             </svg>

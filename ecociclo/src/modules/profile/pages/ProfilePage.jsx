@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import ProfileCard from '../components/ProfileCard.jsx'
 import '../styles/profile-page.css'
-import { Home, Search, Package, User } from 'lucide-react'
 
 function ProfilePage() {
   const [usuario, setUsuario] = useState({
@@ -34,7 +33,7 @@ function ProfilePage() {
   }
 
   function handleVoltar() {
-    navigate(-1)
+    navigate('/')
   }
 
   return (
@@ -88,15 +87,8 @@ function ProfilePage() {
           </header>
 
           <div className="profile-page__body">
-            <ProfileCard usuario={usuario} onLogout={handleLogout} />
+            <ProfileCard usuario={usuario} onLogout={handleLogout} onNovoEndereco={handleNovoEndereco} />
           </div>
-
-          <nav className="bottom-nav">
-            <Home size={22} />
-            <Search size={22} />
-            <Package size={22} />
-            <User size={22} />
-          </nav>
         </main>
       )}
 
