@@ -32,6 +32,10 @@ function ProfilePage() {
     navigate('/novo-endereco')
   }
 
+  function handleMinhasAvaliacoes() {
+    navigate('/minhas-avaliacoes')
+  }
+
   function handleVoltar() {
     navigate('/')
   }
@@ -87,7 +91,12 @@ function ProfilePage() {
           </header>
 
           <div className="profile-page__body">
-            <ProfileCard usuario={usuario} onLogout={handleLogout} onNovoEndereco={handleNovoEndereco} />
+            <ProfileCard
+              usuario={usuario}
+              onLogout={handleLogout}
+              onNovoEndereco={handleNovoEndereco}
+              onMinhasAvaliacoes={handleMinhasAvaliacoes}
+            />
           </div>
         </main>
       )}
@@ -95,6 +104,16 @@ function ProfilePage() {
       {isDesktop && (
         <main className="profile-page__content profile-page__content--desktop">
           <div className="profile-painel">
+
+            <header className="profile-painel__header">
+              <button className="btn-voltar" onClick={handleVoltar}>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M19 12H5M12 5l-7 7 7 7" />
+                </svg>
+                <span>Meu perfil</span>
+              </button>
+            </header>
 
             <div className="profile-painel__secao">
               <h2 className="profile-painel__secao-titulo">Informações pessoais</h2>
@@ -130,22 +149,6 @@ function ProfilePage() {
 
             <div className="profile-painel__secao">
               <h2 className="profile-painel__secao-titulo">Configurações</h2>
-              <button className="profile-painel__item" onClick={handleNovoEndereco}>
-                <span className="profile-painel__item-esquerda">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="18" height="18">
-                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
-                    <circle cx="12" cy="10" r="3" />
-                  </svg>
-                  Gerenciar endereços
-                </span>
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="16" height="16">
-                  <polyline points="9 18 15 12 9 6" />
-                </svg>
-              </button>
-            </div>
-
-            <div className="profile-painel__secao">
-              <h2 className="profile-painel__secao-titulo">Configurações</h2>
               <button className="profile-painel__item" onClick={() => alert('Em breve!')}>
                 <span className="profile-painel__item-esquerda">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="18" height="18">
@@ -164,6 +167,17 @@ function ProfilePage() {
                     <path d="M12 5v14M5 12h14" />
                   </svg>
                   Adicionar novo endereço
+                </span>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="16" height="16">
+                  <polyline points="9 18 15 12 9 6" />
+                </svg>
+              </button>
+              <button className="profile-painel__item" onClick={handleMinhasAvaliacoes}>
+                <span className="profile-painel__item-esquerda">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="18" height="18">
+                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+                  </svg>
+                  Minhas avaliações
                 </span>
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="16" height="16">
                   <polyline points="9 18 15 12 9 6" />

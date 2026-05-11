@@ -1,4 +1,4 @@
-function ProfileCard({ usuario, onLogout, onNovoEndereco }) {
+function ProfileCard({ usuario, onLogout, onNovoEndereco, onMinhasAvaliacoes }) {
   return (
     <div className="profile-card-wrapper">
       <div className="profile-card">
@@ -66,6 +66,18 @@ function ProfileCard({ usuario, onLogout, onNovoEndereco }) {
               <path d="M12 5v14M5 12h14" />
             </svg>
             Adicionar novo endereço
+          </span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="18" height="18">
+            <polyline points="9 18 15 12 9 6" />
+          </svg>
+        </button>
+
+        <button className="profile-card__btn-acao" onClick={onMinhasAvaliacoes}>
+          <span className="profile-card__btn-acao-esquerda">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="18" height="18">
+              <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+            </svg>
+            Minhas avaliações
           </span>
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="18" height="18">
             <polyline points="9 18 15 12 9 6" />
