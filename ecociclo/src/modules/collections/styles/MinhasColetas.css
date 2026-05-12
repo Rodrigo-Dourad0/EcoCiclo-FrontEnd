@@ -1,0 +1,572 @@
+/* ── RESET & VARIÁVEIS ──────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --ink:    #1d9e75;
+  --cream:  #f5f0e8;
+  --sand:   #e8dece;
+  --accent: #b5834a;
+  --muted:  #8a7f72;
+  --white:  #fdfaf5;
+}
+
+/* ── BODY ───────────────────────────────────────── */
+body {
+  font-family: 'DM Sans', sans-serif;
+  background-color: var(--cream);
+  min-height: 100vh;
+  display: flex;
+  overflow: hidden;
+}
+
+/* ── PAINEL ESQUERDO ────────────────────────────── */
+.panel-left {
+  position: relative;
+  width: 42%;
+  background-color: var(--ink);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 56px 64px;
+  overflow: hidden;
+}
+
+.panel-left::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 70% 60% at 20% 80%, rgba(181,131,74,.18) 0%, transparent 65%),
+    radial-gradient(ellipse 50% 50% at 90% 10%, rgba(181,131,74,.10) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+.deco-ring {
+  position: absolute;
+  border-radius: 50%;
+  border: 1px solid rgba(255,255,255,.08);
+}
+
+.deco-ring.r1 { width: 500px; height: 500px; bottom: -120px; right: -160px; border-color: rgba(255,255,255,.06); }
+.deco-ring.r2 { width: 320px; height: 320px; bottom: -20px;  right: -40px;  border-color: rgba(255,255,255,.10); }
+.deco-ring.r3 { width: 140px; height: 140px; top: 100px;     left: -40px;   border-color: rgba(255,255,255,.06); }
+.deco-ring.r4 { width: 220px; height: 220px; top: -60px;     right: 60px;   border-color: rgba(255,255,255,.05); }
+.deco-ring.r5 { width:  80px; height:  80px; bottom: 180px;  left: 40px;    border-color: rgba(255,255,255,.08); }
+
+.brand {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.brand-mark {
+  width: 36px;
+  height: 36px;
+  background: #1db484;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.brand-mark svg {
+  width: 20px;
+  height: 20px;
+  fill: #fff;
+  stroke: none;
+}
+
+.brand-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--white);
+  letter-spacing: .5px;
+}
+
+.hero-copy {
+  position: relative;
+  z-index: 1;
+}
+
+.hero-label {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.45);
+  margin-bottom: 20px;
+}
+
+.hero-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(48px, 5vw, 72px);
+  font-weight: 300;
+  color: var(--white);
+  line-height: 1.1;
+  margin-bottom: 24px;
+}
+
+.hero-title em {
+  font-style: italic;
+  color: var(--accent);
+}
+
+.hero-sub {
+  font-size: 14px;
+  font-weight: 300;
+  color: rgba(255,255,255,.65);
+  line-height: 1.7;
+  max-width: 300px;
+}
+
+.testimonial {
+  position: relative;
+  z-index: 1;
+  border-left: 2px solid var(--accent);
+  padding-left: 20px;
+}
+
+.testimonial p {
+  font-size: 13px;
+  font-weight: 300;
+  color: rgba(255,255,255,.55);
+  line-height: 1.65;
+  font-style: italic;
+  margin-bottom: 16px;
+}
+
+.testimonial-footer {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.testimonial-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 600;
+  color: #fff;
+  letter-spacing: .5px;
+  flex-shrink: 0;
+}
+
+.testimonial-author {
+  font-size: 12px;
+  font-weight: 500;
+  color: rgba(255,255,255,.55);
+  letter-spacing: .5px;
+}
+
+/* ── PAINEL DIREITO ─────────────────────────────── */
+.panel-right {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 32px;
+  background: var(--white);
+  position: relative;
+  overflow-y: auto;
+}
+
+.panel-right::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 280px;
+  height: 280px;
+  background: radial-gradient(circle, rgba(181,131,74,.07) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.mobile-header {
+  display: none;
+}
+
+/* ── FORM CARD ──────────────────────────────────── */
+.form-card {
+  width: 100%;
+  max-width: 520px;
+  position: relative;
+  z-index: 1;
+  animation: fadeUp .6s ease both;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.form-header {
+  margin-bottom: 32px;
+}
+
+.form-greeting {
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 10px;
+}
+
+.form-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 36px;
+  font-weight: 400;
+  color: var(--ink);
+  line-height: 1.1;
+}
+
+.form-sub {
+  font-size: 13px;
+  color: var(--muted);
+  margin-top: 8px;
+  font-weight: 300;
+}
+
+/* ── ABAS ───────────────────────────────────────── */
+.mc-abas {
+  display: flex;
+  gap: 4px;
+  background: #f0f0f0;
+  border-radius: 12px;
+  padding: 4px;
+  margin-bottom: 24px;
+}
+
+.mc-aba {
+  flex: 1;
+  padding: 10px 16px;
+  border: none;
+  background: none;
+  border-radius: 10px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--muted);
+  cursor: pointer;
+  transition: background .2s, color .2s, box-shadow .2s;
+}
+
+.mc-aba:hover {
+  color: #333;
+}
+
+.mc-aba--ativa {
+  background: #fff;
+  color: #1a1a1a;
+  font-weight: 600;
+  box-shadow: 0 2px 8px rgba(0,0,0,.08);
+}
+
+/* ── VAZIO ──────────────────────────────────────── */
+.mc-vazio {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 64px 0;
+  gap: 16px;
+}
+
+.mc-vazio-icone {
+  width: 52px;
+  height: 52px;
+  stroke: #ccc;
+  fill: none;
+  stroke-width: 1.5;
+}
+
+.mc-vazio p {
+  font-size: 14px;
+  color: #aaa;
+  font-weight: 300;
+}
+
+/* ── CARDS ──────────────────────────────────────── */
+.mc-lista {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.mc-card {
+  background: #fff;
+  border: 1px solid #efefef;
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 2px 10px rgba(0,0,0,.05);
+  transition: box-shadow .2s, transform .2s;
+}
+
+.mc-card:hover {
+  box-shadow: 0 4px 20px rgba(0,0,0,.10);
+  transform: translateY(-1px);
+}
+
+.mc-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+
+.mc-card-tipo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.mc-card-icone {
+  width: 20px;
+  height: 20px;
+  stroke: var(--ink);
+  fill: none;
+  stroke-width: 1.8;
+  flex-shrink: 0;
+}
+
+.mc-card-nome {
+  font-size: 15px;
+  font-weight: 600;
+  color: #1a1a1a;
+}
+
+/* ── BADGES ─────────────────────────────────────── */
+.mc-badge {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 4px 12px;
+  border-radius: 20px;
+  letter-spacing: .3px;
+}
+
+.mc-badge--agendadas {
+  background: #e8f4ff;
+  color: #2f80ed;
+}
+
+.mc-badge--coletadas {
+  background: #e6f9f2;
+  color: var(--ink);
+}
+
+.mc-badge--canceladas {
+  background: #fff0f0;
+  color: #e53935;
+}
+
+/* ── INFO ───────────────────────────────────────── */
+.mc-card-info {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+
+.mc-card-linha {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.mc-card-linha svg {
+  width: 14px;
+  height: 14px;
+  stroke: var(--muted);
+  fill: none;
+  stroke-width: 1.8;
+  flex-shrink: 0;
+}
+
+.mc-card-linha span {
+  font-size: 13px;
+  color: var(--muted);
+  font-weight: 300;
+}
+
+.mc-card-peso {
+  font-size: 13px;
+  color: #555;
+  font-weight: 400;
+  margin-bottom: 6px;
+}
+
+.mc-card-pontos {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--ink);
+  margin-bottom: 6px;
+}
+
+.mc-card-coletor {
+  font-size: 13px;
+  color: #555;
+  font-weight: 400;
+}
+
+/* ── TABLET (768px – 1024px) ────────────────────── */
+@media (max-width: 1024px) and (min-width: 769px) {
+  body {
+    background: #e0e0e0;
+    justify-content: center;
+    align-items: center;
+    overflow-y: auto;
+  }
+
+  .panel-left {
+    display: none;
+  }
+
+  .panel-right {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 48px 40px;
+    background: #fff;
+    border-radius: 20px;
+    box-shadow: 0 8px 40px rgba(0,0,0,.12);
+    max-width: 560px;
+    width: 90%;
+    min-height: auto;
+    margin: 40px auto;
+    overflow-y: auto;
+  }
+
+  .panel-right::before {
+    display: none;
+  }
+
+  .mobile-header {
+    display: none;
+  }
+
+  .form-card {
+    max-width: 100%;
+    width: 100%;
+  }
+
+  .form-header {
+    display: block;
+  }
+}
+
+/* ── MOBILE (até 768px) ─────────────────────────── */
+@media (max-width: 768px) {
+  body {
+    background: #e0e0e0;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+
+  .panel-left {
+    display: none;
+  }
+
+  .panel-right {
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 0 0 48px;
+    background: #fff;
+    border-radius: 20px;
+    box-shadow: 0 4px 24px rgba(0,0,0,.10);
+    max-width: 420px;
+    width: 90%;
+    min-height: auto;
+    margin: 32px auto;
+    overflow-y: auto;
+  }
+
+  .panel-right::before {
+    display: none;
+  }
+
+  .mobile-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    padding: 20px 20px 16px;
+    border-bottom: 1px solid #f0f0f0;
+  }
+
+  .mobile-back {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+    display: flex;
+    align-items: center;
+  }
+
+  .mobile-back svg {
+    width: 22px;
+    height: 22px;
+    stroke: #222;
+    fill: none;
+    stroke-width: 2;
+  }
+
+  .mobile-title {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 18px;
+    font-weight: 600;
+    color: #1a1a1a;
+  }
+
+  .form-card {
+    background: transparent;
+    box-shadow: none;
+    padding: 20px 20px 0;
+    max-width: 100%;
+    width: 100%;
+  }
+
+  .form-header {
+    display: none;
+  }
+
+  .mc-aba {
+    font-size: 13px;
+    padding: 9px 10px;
+  }
+
+  .mc-card {
+    border-radius: 14px;
+    padding: 16px;
+  }
+
+  .mc-card-nome {
+    font-size: 14px;
+  }
+
+  .mc-card-linha span {
+    font-size: 12px;
+  }
+
+  .mc-card-peso,
+  .mc-card-coletor {
+    font-size: 12px;
+  }
+
+  .mc-card-pontos {
+    font-size: 14px;
+  }
+}
