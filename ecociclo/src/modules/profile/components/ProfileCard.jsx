@@ -1,4 +1,4 @@
-function ProfileCard({ usuario, onLogout, onNovoEndereco, onMinhasAvaliacoes }) {
+function ProfileCard({ usuario, onLogout, onNovoEndereco, onMinhasAvaliacoes, onEditarPerfil }) {
   return (
     <div className="profile-card-wrapper">
       <div className="profile-card">
@@ -34,7 +34,7 @@ function ProfileCard({ usuario, onLogout, onNovoEndereco, onMinhasAvaliacoes }) 
       </div>
 
       <div className="profile-acoes">
-        <button className="profile-card__btn-acao">
+        <button className="profile-card__btn-acao" onClick={onEditarPerfil}>
           <span className="profile-card__btn-acao-esquerda">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="18" height="18">
               <circle cx="12" cy="12" r="3" />

@@ -1,0 +1,586 @@
+/* ══════════════════════════════════════════════════
+   EDITAR PERFIL — Estilos
+   Segue o mesmo padrão visual do NovoEndereco
+══════════════════════════════════════════════════ */
+
+/* ── VARIÁVEIS (reutilizando as do projeto) ───── */
+:root {
+  --ep-ink:    #1d9e75;
+  --ep-cream:  #f5f0e8;
+  --ep-sand:   #e8dece;
+  --ep-accent: #b5834a;
+  --ep-muted:  #8a7f72;
+  --ep-white:  #fdfaf5;
+}
+
+/* ── WRAPPER ──────────────────────────────────── */
+.editar-perfil-wrapper {
+  display: flex;
+  min-height: 100vh;
+  width: 100%;
+  overflow-y: auto;
+}
+
+/* ── PAINEL ESQUERDO ──────────────────────────── */
+.ep-panel-left {
+  position: relative;
+  width: 42%;
+  background-color: var(--ep-ink);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 40px;
+  padding: 56px 64px;
+  overflow: hidden;
+}
+
+.ep-panel-left::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 70% 60% at 20% 80%, rgba(181,131,74,.18) 0%, transparent 65%),
+    radial-gradient(ellipse 50% 50% at 90% 10%, rgba(181,131,74,.10) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+/* ── ANÉIS DECORATIVOS ────────────────────────── */
+.ep-deco-ring {
+  position: absolute;
+  border-radius: 50%;
+  border: 1px solid rgba(255,255,255,.08);
+}
+
+.ep-deco-ring.ep-r1 { width: 500px; height: 500px; bottom: -120px; right: -160px; border-color: rgba(255,255,255,.06); }
+.ep-deco-ring.ep-r2 { width: 320px; height: 320px; bottom: -20px;  right: -40px;  border-color: rgba(255,255,255,.10); }
+.ep-deco-ring.ep-r3 { width: 140px; height: 140px; top: 100px;     left: -40px;   border-color: rgba(255,255,255,.06); }
+.ep-deco-ring.ep-r4 { width: 220px; height: 220px; top: -60px;     right: 60px;   border-color: rgba(255,255,255,.05); }
+.ep-deco-ring.ep-r5 { width:  80px; height:  80px; bottom: 180px;  left: 40px;    border-color: rgba(255,255,255,.08); }
+
+/* ── BRAND ────────────────────────────────────── */
+.ep-brand {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.ep-brand-mark {
+  width: 36px;
+  height: 36px;
+  background: #1db484;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ep-brand-mark svg {
+  width: 20px;
+  height: 20px;
+  fill: #fff;
+  stroke: none;
+}
+
+.ep-brand-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--ep-white);
+  letter-spacing: .5px;
+}
+
+/* ── HERO COPY ────────────────────────────────── */
+.ep-hero-copy {
+  position: relative;
+  z-index: 1;
+}
+
+.ep-hero-label {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.45);
+  margin-bottom: 20px;
+}
+
+.ep-hero-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(48px, 5vw, 72px);
+  font-weight: 300;
+  color: var(--ep-white);
+  line-height: 1.1;
+  margin-bottom: 24px;
+}
+
+.ep-hero-title em {
+  font-style: italic;
+  color: var(--ep-accent);
+}
+
+.ep-hero-sub {
+  font-size: 14px;
+  font-weight: 300;
+  color: rgba(255,255,255,.65);
+  line-height: 1.7;
+  max-width: 300px;
+}
+
+
+/* ── PAINEL DIREITO ───────────────────────────── */
+.ep-panel-right {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 32px 32px;
+  background: var(--ep-white);
+  position: relative;
+  overflow-y: auto;
+}
+
+.ep-panel-right::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 280px;
+  height: 280px;
+  background: radial-gradient(circle, rgba(181,131,74,.07) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+/* ── HEADER MOBILE ────────────────────────────── */
+.ep-mobile-header {
+  display: none;
+}
+
+/* ── FORM CARD ────────────────────────────────── */
+.ep-form-card {
+  width: 100%;
+  max-width: 480px;
+  position: relative;
+  z-index: 1;
+  animation: epFadeUp .6s ease both;
+}
+
+@keyframes epFadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.ep-form-header {
+  margin-bottom: 24px;
+}
+
+.ep-form-greeting {
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--ep-accent);
+  margin-bottom: 10px;
+}
+
+.ep-form-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 36px;
+  font-weight: 400;
+  color: var(--ep-ink);
+  line-height: 1.1;
+}
+
+.ep-form-sub {
+  font-size: 13px;
+  color: var(--ep-muted);
+  margin-top: 8px;
+  font-weight: 300;
+}
+
+/* ── SEÇÃO DO AVATAR ──────────────────────────── */
+.ep-avatar-section {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 20px;
+  padding: 16px;
+  background: var(--ep-cream);
+  border-radius: 14px;
+  border: 1.5px solid var(--ep-ink);
+}
+
+.ep-avatar-preview {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: #e8f5e9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  color: var(--ep-ink);
+  overflow: hidden;
+}
+
+.ep-avatar-preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.ep-avatar-info {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.ep-avatar-nome {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--ep-ink);
+  margin: 0;
+}
+
+.ep-avatar-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--ep-ink);
+  background: rgba(29,158,117,.12);
+  border: 1px solid rgba(29,158,117,.25);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background .2s, transform .15s;
+  width: fit-content;
+}
+
+.ep-avatar-btn:hover {
+  background: rgba(29,158,117,.2);
+  transform: translateY(-1px);
+}
+
+/* ── CAMPOS ───────────────────────────────────── */
+.ep-field {
+  margin-bottom: 14px;
+}
+
+.ep-field label {
+  display: block;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--ep-muted);
+  margin-bottom: 8px;
+}
+
+.ep-input-wrap {
+  position: relative;
+}
+
+.ep-input-wrap svg {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 15px;
+  height: 15px;
+  stroke: var(--ep-muted);
+  fill: none;
+  stroke-width: 1.8;
+  transition: stroke .2s;
+  pointer-events: none;
+}
+
+.ep-input-wrap input {
+  width: 100%;
+  padding: 13px 14px 13px 40px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 300;
+  color: var(--ep-ink);
+  background: var(--ep-cream);
+  border: 1.5px solid var(--ep-ink);
+  border-radius: 10px;
+  outline: none;
+  transition: border-color .2s, background .2s, transform .2s;
+}
+
+.ep-input-wrap input:hover {
+  transform: scale(1.01);
+}
+
+.ep-input-wrap input:focus {
+  border-color: var(--ep-ink);
+  background: #fff;
+}
+
+.ep-input-wrap input::placeholder {
+  color: rgba(138,127,114,.5);
+}
+
+.ep-input-wrap:focus-within svg {
+  stroke: var(--ep-ink);
+}
+
+/* ── BOTÕES DE AÇÃO ───────────────────────────── */
+.ep-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.ep-btn-salvar {
+  width: 100%;
+  padding: 15px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: #fff;
+  background: var(--ep-ink);
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: transform .15s, box-shadow .2s;
+}
+
+.ep-btn-salvar:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 24px rgba(14,14,14,.18);
+}
+
+.ep-btn-salvar:active {
+  transform: translateY(0);
+}
+
+.ep-btn-cancelar {
+  width: 100%;
+  padding: 14px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--ep-muted);
+  background: transparent;
+  border: 1.5px solid var(--ep-sand);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background .2s, border-color .2s, transform .15s;
+}
+
+.ep-btn-cancelar:hover {
+  background: var(--ep-cream);
+  border-color: var(--ep-muted);
+  transform: translateY(-1px);
+}
+
+/* ══════════════════════════════════════════════════
+   TABLET (768px – 1024px)
+══════════════════════════════════════════════════ */
+@media (max-width: 1024px) and (min-width: 769px) {
+  .ep-panel-left {
+    display: none;
+  }
+
+  .ep-panel-right {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 48px 40px;
+    background: #fff;
+    border-radius: 20px;
+    box-shadow: 0 8px 40px rgba(0,0,0,.12);
+    max-width: 520px;
+    width: 90%;
+    min-height: auto;
+    margin: 40px auto;
+  }
+
+  .ep-panel-right::before {
+    display: none;
+  }
+
+  .ep-mobile-header {
+    display: none;
+  }
+
+  .ep-form-card {
+    max-width: 100%;
+    width: 100%;
+  }
+
+  .ep-form-header {
+    display: block;
+  }
+
+  .editar-perfil-wrapper {
+    background: #e0e0e0;
+    justify-content: center;
+    align-items: center;
+    overflow-y: auto;
+  }
+}
+
+/* ══════════════════════════════════════════════════
+   MOBILE (até 768px)
+══════════════════════════════════════════════════ */
+@media (max-width: 768px) {
+  .ep-panel-left {
+    display: none;
+  }
+
+  .editar-perfil-wrapper {
+    background: #f0f0f0;
+    flex-direction: column;
+  }
+
+  .ep-panel-right {
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 0 0 48px;
+    background: #f0f0f0;
+    min-height: 100vh;
+    width: 100%;
+    overflow-y: auto;
+  }
+
+  .ep-panel-right::before {
+    display: none;
+  }
+
+  /* Header mobile */
+  .ep-mobile-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    padding: 20px 20px 16px;
+    background: #f0f0f0;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+
+  .ep-mobile-back {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+    display: flex;
+    align-items: center;
+  }
+
+  .ep-mobile-back svg {
+    width: 22px;
+    height: 22px;
+    stroke: #222;
+    fill: none;
+    stroke-width: 2;
+  }
+
+  .ep-mobile-title {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 18px;
+    font-weight: 600;
+    color: #1a1a1a;
+  }
+
+  /* Form card */
+  .ep-form-card {
+    background: transparent;
+    box-shadow: none;
+    padding: 0 20px;
+    max-width: 100%;
+    width: 100%;
+  }
+
+  .ep-form-header {
+    display: none;
+  }
+
+  /* Avatar section */
+  .ep-avatar-section {
+    background: #fff;
+    border: none;
+    border-radius: 14px;
+    box-shadow: 0 1px 6px rgba(0,0,0,.07);
+    padding: 16px;
+  }
+
+  /* Labels */
+  .ep-field label {
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0;
+    text-transform: none;
+    color: #333;
+  }
+
+  /* Inputs */
+  .ep-input-wrap input {
+    background: #fff;
+    border: none;
+    border-radius: 14px;
+    padding: 15px 16px;
+    font-size: 15px;
+    box-shadow: 0 1px 6px rgba(0,0,0,.07);
+    color: #222;
+  }
+
+  .ep-input-wrap input:hover {
+    transform: none;
+  }
+
+  .ep-input-wrap svg {
+    display: none;
+  }
+
+  /* Botões */
+  .ep-btn-salvar {
+    background: #1d9e75;
+    border-radius: 50px;
+    font-size: 16px;
+    letter-spacing: 0;
+    text-transform: none;
+    font-weight: 600;
+    padding: 17px;
+    box-shadow: 0 6px 20px rgba(29,158,117,.35);
+    margin-top: 8px;
+  }
+
+  .ep-btn-salvar:hover {
+    box-shadow: 0 10px 28px rgba(29,158,117,.45);
+    transform: none;
+  }
+
+  .ep-btn-cancelar {
+    border-radius: 50px;
+    font-size: 15px;
+    letter-spacing: 0;
+    text-transform: none;
+    font-weight: 500;
+    padding: 15px;
+    background: #fff;
+    border-color: #ddd;
+    box-shadow: 0 1px 6px rgba(0,0,0,.07);
+  }
+
+  .ep-btn-cancelar:hover {
+    background: #f5f5f5;
+    transform: none;
+  }
+}

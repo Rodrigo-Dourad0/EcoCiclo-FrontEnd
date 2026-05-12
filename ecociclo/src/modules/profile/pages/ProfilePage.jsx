@@ -40,6 +40,10 @@ function ProfilePage() {
     navigate('/')
   }
 
+  function handleEditarPerfil() {
+    navigate('/editar-perfil')
+  }
+
   return (
     <div className="profile-page">
 
@@ -96,6 +100,7 @@ function ProfilePage() {
               onLogout={handleLogout}
               onNovoEndereco={handleNovoEndereco}
               onMinhasAvaliacoes={handleMinhasAvaliacoes}
+              onEditarPerfil={handleEditarPerfil}
             />
           </div>
         </main>
@@ -129,7 +134,7 @@ function ProfilePage() {
                   <p className="profile-painel__sub">{usuario.email}</p>
                   <p className="profile-painel__sub">{usuario.telefone}</p>
                 </div>
-                <button className="profile-painel__btn-editar">Editar</button>
+                <button className="profile-painel__btn-editar" onClick={handleEditarPerfil}>Editar</button>
               </div>
             </div>
 

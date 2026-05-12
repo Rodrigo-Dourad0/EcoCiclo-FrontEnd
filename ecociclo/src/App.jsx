@@ -7,6 +7,7 @@ import ProfilePage from './modules/profile/pages/ProfilePage.jsx';
 import AvaliarColetor from './modules/feedback/pages/Avaliarcoletor.jsx';
 import RecuperarSenha from './modules/auth/pages/RecuperarSenha.jsx';
 import NovoEndereco from './modules/profile/pages/NovoEndereco.jsx';
+import EditarPerfil from './modules/profile/pages/EditarPerfil.jsx';
 import AgendarColeta from './modules/collections/pages/AgendarColeta.jsx';
 import FinalizarColeta from './modules/collections/pages/FinalizarColeta.jsx';
 import MinhasAvaliacoes from './modules/feedback/pages/MinhasAvaliacoes.jsx';
@@ -22,6 +23,7 @@ function App() {
         <Route path="/avaliar-coletor" element={<AvaliarColetor />} />
         <Route path="/recuperar-senha" element={<RecuperarSenha />} />
         <Route path="/novo-endereco" element={<NovoEndereco />} />
+        <Route path="/editar-perfil" element={<EditarPerfil />} />
         <Route path="/agendar-coleta" element={<AgendarColeta />} />
         <Route path="/finalizar-coleta" element={<FinalizarColeta />} />
         <Route path="/minhas-avaliacoes" element={<MinhasAvaliacoes />} />
