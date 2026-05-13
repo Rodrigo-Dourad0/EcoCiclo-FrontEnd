@@ -1,5 +1,6 @@
 import "../styles/login.css";
 import { useLogin } from "../hooks/useLogin";
+import { Link } from "react-router-dom";
 
 function Login() {
   const {
@@ -97,7 +98,9 @@ function Login() {
           <div className="field">
             <div className="field-row">
               <label>Senha*</label>
-              <a href="#" className="field-link">Esqueci minha senha</a>
+              <Link to="/recuperar-senha" className="field-link">
+                Esqueci minha senha
+              </Link>
             </div>
 
             <div className="input-wrap">
@@ -141,31 +144,6 @@ function Login() {
             {senhaErro && <span className="erro-msg">{senhaErro}</span>}
           </div>
 
-          <div className="field">
-            <label>Acessar como</label>
-            <div className="role-options">
-              <label className="role-option">
-                <input type="radio" name="role" value="doador" defaultChecked />
-                <span className="role-box">
-                  <svg viewBox="0 0 24 24">
-                    <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
-                  </svg>
-                  Doador
-                </span>
-              </label>
-              <label className="role-option">
-                <input type="radio" name="role" value="coletor" />
-                <span className="role-box">
-                  <svg viewBox="0 0 24 24">
-                    <polyline points="22 12 16 12 14 15 10 15 8 12 2 12"/>
-                    <path d="M5.45 5.11L2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"/>
-                  </svg>
-                  Coletor
-                </span>
-              </label>
-            </div>
-          </div>
-
           <label className="remember">
             <input type="checkbox" />
             <span className="check-box"></span>
@@ -175,7 +153,7 @@ function Login() {
           <button className="login-btn-submit">Entrar</button>
 
           <p className="signup-row">
-            Não tem conta? <a href="#">Criar agora</a>
+            Não tem conta? <Link to="/criar-conta">Criar agora</Link>
           </p>
         </div>
       </div>
