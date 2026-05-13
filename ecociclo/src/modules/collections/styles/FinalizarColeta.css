@@ -5,7 +5,7 @@
 }
 
 html {
-  overflow-x: hidden;
+  overflow-x: clip;
 }
 
 body {
@@ -15,7 +15,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  overflow-x: hidden;
+  overflow-x: clip;
 }
 
 /* ========================
@@ -28,7 +28,6 @@ body {
 
 .fc-screen {
   width: 100%;
-  max-width: 430px;
   min-height: 100vh;
   background-color: #F2F2F2;
   display: flex;
@@ -322,6 +321,9 @@ input[type="number"] {
     align-items: flex-start;
     justify-content: center;
     padding: 40px 24px;
+    min-height: unset;  
+    height: auto;   
+    overflow-y: auto;
   }
 
   .fc-desktop {
@@ -336,7 +338,7 @@ input[type="number"] {
     background-color: #ffffff;
     border-radius: 20px;
     box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
-    overflow: hidden;
+    overflow-x: clip;
   }
 
   .fc-header {
@@ -377,7 +379,7 @@ input[type="number"] {
   body {
     display: block;
     padding: 0;
-    overflow: hidden;
+    overflow-x: clip;
   }
 
   .fc-screen {
@@ -387,8 +389,8 @@ input[type="number"] {
   .fc-desktop {
     display: flex;
     width: 100%;
-    min-height: 100vh;
-    overflow: hidden;
+    height: 100vh;
+  
   }
 
   .fc-desktop-left {

@@ -1,12 +1,11 @@
-* {
+*, *::before, *::after {
+  box-sizing: border-box;
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
-  max-width: 100%;
 }
 
 html{
-  overflow-x: hidden;
+  overflow-x: clip;
 }
 
 body {
@@ -16,7 +15,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  overflow-x: hidden;
+  overflow-x: clip; 
 }
 
 
@@ -26,7 +25,6 @@ body {
 
 .ac-screen {
   width: 100%;
-  max-width: 430px;
   min-height: 100vh;
   background-color: #F2F2F2;
   display: flex;
@@ -104,7 +102,7 @@ body {
   color: #1A1A1A;
   font-family: 'Inter', sans-serif;
   outline: none;
-  transition: border-color 0.2s;
+  transition: border-color 0.2s, transform 0.2s;
   resize: none;
 }
 
@@ -117,6 +115,13 @@ body {
 .ac-field textarea:focus {
   border-color: #2DBF8A;
 }
+
+.ac-field input:hover,
+.ac-field textarea:hover {
+  transform: scale(1.02);
+}
+
+
 
 .ac-field input.input-erro,
 .ac-field select.input-erro {
@@ -250,6 +255,9 @@ body {
     align-items: flex-start;
     justify-content: center;
     padding: 40px 24px;
+    min-height: unset; 
+    height: auto;    
+    overflow-x: clip; 
   }
 
   .ac-desktop {
@@ -264,7 +272,7 @@ body {
     background-color: #ffffff;
     border-radius: 20px;
     box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
-    overflow: hidden;
+    
   }
 
   .ac-header {
@@ -300,7 +308,7 @@ body {
     align-items: stretch;
     padding: 0;
     display: block;
-    overflow: hidden;
+    overflow-x: clip;
   }
 
   .ac-screen {
@@ -310,8 +318,8 @@ body {
   .ac-desktop {
     display: flex;
     width: 100%;
-    min-height: 100vh;
-    overflow: hidden;
+    height: 100vh;
+    overflow-x: clip;
   }
 
   .ac-desktop-left {
@@ -403,7 +411,7 @@ body {
     background-color: #ffffff;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    
     padding: 60px 56px;
     overflow-y: auto;
   }
@@ -427,11 +435,18 @@ body {
     padding: 11px 14px;
     font-size: 13px;
     border-radius: 10px;
+    transition: border-color 0.2s, transform 0.2s;
   }
 
   .ac-desktop-right .ac-field input:focus,
   .ac-desktop-right .ac-field textarea:focus {
     background-color: #ffffff;
+    transform: scale(1.02);
+  }
+
+  .ac-desktop-right .ac-field input:hover,
+  .ac-desktop-right .ac-field textarea:hover {
+    transform: scale(1.02);
   }
 
   .ac-desktop-right .ac-select-wrapper select {
