@@ -46,6 +46,12 @@ export default function CriarConta() {
           </div>
 
           <div className="cc-field">
+            <label htmlFor="endereco">Endereço <span className="cc-obrigatorio">*</span></label>
+            <input type="text" id="endereco" placeholder="Rua, número, bairro, cidade" value={form.endereco} onChange={handleChange} className={erros.endereco ? "input-erro" : ""} />
+            {erros.endereco && <span className="cc-erro">{erros.endereco}</span>}
+          </div>
+
+          <div className="cc-field">
             <label htmlFor="senha">Senha <span className="cc-obrigatorio">*</span></label>
             <input type="password" id="senha" placeholder="Mínimo 6 caracteres" value={form.senha} onChange={handleChange} className={erros.senha ? "input-erro" : ""} autoComplete="new-password" />
             {erros.senha && <span className="cc-erro">{erros.senha}</span>}
@@ -125,38 +131,46 @@ export default function CriarConta() {
           <p className="cc-subtitle">Preencha seus dados para criar sua conta</p>
 
           <div className="cc-row">
-            <div className="cc-field cc-full">
-              <label htmlFor="nome2">Nome completo <span className="cc-obrigatorio">*</span></label>
-              <input type="text" id="nome2" placeholder="Seu nome" value={form.nome} onChange={handleChange} className={erros.nome ? "input-erro" : ""} autoComplete="new-password" />
-              {erros.nome && <span className="cc-erro">{erros.nome}</span>}
-            </div>
-          </div>
+  <div className="cc-field cc-full">
+    <label htmlFor="nome2">Nome completo <span className="cc-obrigatorio">*</span></label>
+    <input type="text" id="nome2" placeholder="Seu nome" value={form.nome} onChange={handleChange} className={erros.nome ? "input-erro" : ""} autoComplete="new-password" />
+    {erros.nome && <span className="cc-erro">{erros.nome}</span>}
+  </div>
+</div>
 
-          <div className="cc-row">
-            <div className="cc-field">
-              <label htmlFor="email2">Email <span className="cc-obrigatorio">*</span></label>
-              <input type="email" id="email2" placeholder="seu@email.com" value={form.email} onChange={handleChange} className={erros.email ? "input-erro" : ""} autoComplete="off" />
-              {erros.email && <span className="cc-erro">{erros.email}</span>}
-            </div>
-            <div className="cc-field">
-              <label htmlFor="telefone2">Telefone <span className="cc-obrigatorio">*</span></label>
-              <input type="tel" id="telefone2" placeholder="(00) 00000-0000" maxLength={15} value={form.telefone} onChange={handleChange} className={erros.telefone ? "input-erro" : ""} autoComplete="off" />
-              {erros.telefone && <span className="cc-erro">{erros.telefone}</span>}
-            </div>
-          </div>
+<div className="cc-row">
+  <div className="cc-field">
+    <label htmlFor="email2">Email <span className="cc-obrigatorio">*</span></label>
+    <input type="email" id="email2" placeholder="seu@email.com" value={form.email} onChange={handleChange} className={erros.email ? "input-erro" : ""} autoComplete="off" />
+    {erros.email && <span className="cc-erro">{erros.email}</span>}
+  </div>
+  <div className="cc-field">
+    <label htmlFor="telefone2">Telefone <span className="cc-obrigatorio">*</span></label>
+    <input type="tel" id="telefone2" placeholder="(00) 00000-0000" maxLength={15} value={form.telefone} onChange={handleChange} className={erros.telefone ? "input-erro" : ""} autoComplete="off" />
+    {erros.telefone && <span className="cc-erro">{erros.telefone}</span>}
+  </div>
+</div>
 
-          <div className="cc-row">
-            <div className="cc-field">
-              <label htmlFor="senha2">Senha <span className="cc-obrigatorio">*</span></label>
-              <input type="password" id="senha2" placeholder="Mínimo 6 caracteres" value={form.senha} onChange={handleChange} className={erros.senha ? "input-erro" : ""} autoComplete="new-password" />
-              {erros.senha && <span className="cc-erro">{erros.senha}</span>}
-            </div>
-            <div className="cc-field">
-              <label htmlFor="confirmarSenha2">Confirmar senha <span className="cc-obrigatorio">*</span></label>
-              <input type="password" id="confirmarSenha2" placeholder="Digite novamente" value={form.confirmarSenha} onChange={handleChange} className={erros.confirmarSenha ? "input-erro" : ""} autoComplete="new-password" />
-              {erros.confirmarSenha && <span className="cc-erro">{erros.confirmarSenha}</span>}
-            </div>
-          </div>
+<div className="cc-row">
+  <div className="cc-field">
+    <label htmlFor="endereco2">Endereço <span className="cc-obrigatorio">*</span></label>
+    <input type="text" id="endereco2" placeholder="Rua, número, bairro, cidade" value={form.endereco} onChange={handleChange} className={erros.endereco ? "input-erro" : ""} />
+    {erros.endereco && <span className="cc-erro">{erros.endereco}</span>}
+  </div>
+</div>
+
+<div className="cc-row">
+  <div className="cc-field">
+    <label htmlFor="senha2">Senha <span className="cc-obrigatorio">*</span></label>
+    <input type="password" id="senha2" placeholder="Mínimo 6 caracteres" value={form.senha} onChange={handleChange} className={erros.senha ? "input-erro" : ""} autoComplete="new-password" />
+    {erros.senha && <span className="cc-erro">{erros.senha}</span>}
+  </div>
+  <div className="cc-field">
+    <label htmlFor="confirmarSenha2">Confirmar senha <span className="cc-obrigatorio">*</span></label>
+    <input type="password" id="confirmarSenha2" placeholder="Digite novamente" value={form.confirmarSenha} onChange={handleChange} className={erros.confirmarSenha ? "input-erro" : ""} autoComplete="new-password" />
+    {erros.confirmarSenha && <span className="cc-erro">{erros.confirmarSenha}</span>}
+  </div>
+</div>
 
           <p className="cc-tipo-label">Tipo de conta</p>
           <div className="cc-tipo-options">

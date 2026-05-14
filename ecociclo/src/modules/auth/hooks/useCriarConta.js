@@ -12,7 +12,8 @@ export default function useCriarConta() {
   const [erros, setErros] = useState({});
 
   function handleChange(e) {
-  const { id, value } = e.target;
+  const { id: rawId, value } = e.target;
+  const id = rawId.replace(/2$/, "");
 
   if (id === "telefone") {
     let v = value.replace(/\D/g, "");
