@@ -9,138 +9,77 @@ export default function CriarConta() {
     erros,
     handleChange,
     handleSubmit,
-  } = useCriarConta(); 
-
-  const camposFormulario = (
-    <div className="cc-form-area">
-      <p className="subtitle">Preencha seus dados para criar sua conta</p>
-
-      <div className="cc-row">
-        <div className="field cc-full">
-          <label htmlFor="nome">Nome completo <span className="ac-obrigatorio">*</span></label>
-          <input
-            type="text"
-            id="nome"
-            placeholder="Seu nome"
-            value={form.nome}
-            onChange={handleChange}
-            className={erros.nome ? "input-erro" : ""}
-          />
-          {erros.nome && <span className="erro">{erros.nome}</span>}
-        </div>
-      </div>
-
-      <div className="cc-row">
-        <div className="field">
-          <label htmlFor="email">Email <span className="ac-obrigatorio">*</span></label>
-          <input
-            type="email"
-            id="email"
-            placeholder="seu@email.com"
-            value={form.email}
-            onChange={handleChange}
-            className={erros.email ? "input-erro" : ""}
-          />
-          {erros.email && <span className="erro">{erros.email}</span>}
-        </div>
-        <div className="field">
-          <label htmlFor="telefone">Telefone <span className="ac-obrigatorio">*</span></label>
-          <input
-            type="tel"
-            id="telefone"
-            placeholder="(00) 00000-0000"
-            maxLength={15}
-            value={form.telefone}
-            onChange={handleChange}
-            className={erros.telefone ? "input-erro" : ""}
-          />
-          {erros.telefone && <span className="erro">{erros.telefone}</span>}
-        </div>
-      </div>
-
-      <div className="cc-row">
-        <div className="field">
-          <label htmlFor="senha">Senha <span className="ac-obrigatorio">*</span></label>
-          <input
-            type="password"
-            id="senha"
-            placeholder="Mínimo 6 caracteres"
-            value={form.senha}
-            onChange={handleChange}
-            className={erros.senha ? "input-erro" : ""}
-          />
-          {erros.senha && <span className="erro">{erros.senha}</span>}
-        </div>
-        <div className="field">
-          <label htmlFor="confirmarSenha">Confirmar senha <span className="ac-obrigatorio">*</span></label>
-          <input
-            type="password"
-            id="confirmarSenha"
-            placeholder="Digite novamente"
-            value={form.confirmarSenha}
-            onChange={handleChange}
-            className={erros.confirmarSenha ? "input-erro" : ""}
-          />
-          {erros.confirmarSenha && <span className="erro">{erros.confirmarSenha}</span>}
-        </div>
-      </div>
-
-      <p className="tipo-label">Tipo de conta</p>
-      <div className="tipo-options">
-        <div
-          className={`tipo-option ${tipo === "doador" ? "ativo" : ""}`}
-          onClick={() => setTipo("doador")}
-        >
-          <div className="radio-outer">
-            {tipo === "doador" && <div className="radio-inner" />}
-          </div>
-          <div className="tipo-info">
-            <span className="tipo-nome">Doador</span>
-            <span className="tipo-desc">Doar materiais recicláveis</span>
-          </div>
-        </div>
-        <div
-          className={`tipo-option ${tipo === "coletor" ? "ativo" : ""}`}
-          onClick={() => setTipo("coletor")}
-        >
-          <div className="radio-outer">
-            {tipo === "coletor" && <div className="radio-inner" />}
-          </div>
-          <div className="tipo-info">
-            <span className="tipo-nome">Coletor</span>
-            <span className="tipo-desc">Coletar materiais recicláveis</span>
-          </div>
-        </div>
-      </div>
-
-      <button className="btn-criar" onClick={handleSubmit}>
-        Criar conta
-      </button>
-
-      <p className="cc-login-link">
-        Já tem uma conta? <a href="/login">Entrar</a>
-      </p>
-    </div>
-  );
+  } = useCriarConta();
 
   return (
     <>
-      {/* LAYOUT MOBILE */}
-      <div className="screen">
-        <div className="header">
-          <button className="btn-voltar" onClick={() => window.history.back()}>
+      {/* MOBILE / TABLET */}
+      <div className="cc-screen">
+        <div className="cc-header">
+          <button className="cc-btn-voltar" onClick={() => window.history.back()}>
             <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
               <polyline points="15 18 9 12 15 6" />
             </svg>
           </button>
           <h1>Criar conta</h1>
         </div>
-        <div className="body">
-          {camposFormulario}
+
+        <div className="cc-body">
+          <p className="cc-subtitle">Preencha seus dados para criar sua conta</p>
+
+          <div className="cc-field">
+            <label htmlFor="nome">Nome completo <span className="cc-obrigatorio">*</span></label>
+            <input type="text" id="nome" placeholder="Seu nome" value={form.nome} onChange={handleChange} className={erros.nome ? "input-erro" : ""} autoComplete="new-password" />
+            {erros.nome && <span className="cc-erro">{erros.nome}</span>}
+          </div>
+
+          <div className="cc-field">
+            <label htmlFor="email">Email <span className="cc-obrigatorio">*</span></label>
+            <input type="email" id="email" placeholder="seu@email.com" value={form.email} onChange={handleChange} className={erros.email ? "input-erro" : ""} autoComplete="off" />
+            {erros.email && <span className="cc-erro">{erros.email}</span>}
+          </div>
+
+          <div className="cc-field">
+            <label htmlFor="telefone">Telefone <span className="cc-obrigatorio">*</span></label>
+            <input type="tel" id="telefone" placeholder="(00) 00000-0000" maxLength={15} value={form.telefone} onChange={handleChange} className={erros.telefone ? "input-erro" : ""} autoComplete="off" />
+            {erros.telefone && <span className="cc-erro">{erros.telefone}</span>}
+          </div>
+
+          <div className="cc-field">
+            <label htmlFor="senha">Senha <span className="cc-obrigatorio">*</span></label>
+            <input type="password" id="senha" placeholder="Mínimo 6 caracteres" value={form.senha} onChange={handleChange} className={erros.senha ? "input-erro" : ""} autoComplete="new-password" />
+            {erros.senha && <span className="cc-erro">{erros.senha}</span>}
+          </div>
+
+          <div className="cc-field">
+            <label htmlFor="confirmarSenha">Confirmar senha <span className="cc-obrigatorio">*</span></label>
+            <input type="password" id="confirmarSenha" placeholder="Digite a senha novamente" value={form.confirmarSenha} onChange={handleChange} className={erros.confirmarSenha ? "input-erro" : ""} autoComplete="new-password" />
+            {erros.confirmarSenha && <span className="cc-erro">{erros.confirmarSenha}</span>}
+          </div>
+
+          <p className="cc-tipo-label">Tipo de conta</p>
+          <div className="cc-tipo-options">
+            <div className={`cc-tipo-option ${tipo === "doador" ? "ativo" : ""}`} onClick={() => setTipo("doador")}>
+              <div className="cc-radio-outer">{tipo === "doador" && <div className="cc-radio-inner" />}</div>
+              <div className="cc-tipo-info">
+                <span className="cc-tipo-nome">Doador</span>
+                <span className="cc-tipo-desc">Doar materiais recicláveis</span>
+              </div>
+            </div>
+            <div className={`cc-tipo-option ${tipo === "coletor" ? "ativo" : ""}`} onClick={() => setTipo("coletor")}>
+              <div className="cc-radio-outer">{tipo === "coletor" && <div className="cc-radio-inner" />}</div>
+              <div className="cc-tipo-info">
+                <span className="cc-tipo-nome">Coletor</span>
+                <span className="cc-tipo-desc">Coletar materiais recicláveis</span>
+              </div>
+            </div>
+          </div>
+
+          <button className="cc-btn-criar" onClick={handleSubmit}>Criar conta</button>
         </div>
       </div>
 
-      {/* LAYOUT DESKTOP */}
+      {/* DESKTOP */}
       <div className="cc-desktop">
         <div className="cc-left">
           <div className="cc-logo">
@@ -183,7 +122,62 @@ export default function CriarConta() {
 
         <div className="cc-right">
           <h1>Criar conta</h1>
-          {camposFormulario}
+          <p className="cc-subtitle">Preencha seus dados para criar sua conta</p>
+
+          <div className="cc-row">
+            <div className="cc-field cc-full">
+              <label htmlFor="nome2">Nome completo <span className="cc-obrigatorio">*</span></label>
+              <input type="text" id="nome2" placeholder="Seu nome" value={form.nome} onChange={handleChange} className={erros.nome ? "input-erro" : ""} autoComplete="new-password" />
+              {erros.nome && <span className="cc-erro">{erros.nome}</span>}
+            </div>
+          </div>
+
+          <div className="cc-row">
+            <div className="cc-field">
+              <label htmlFor="email2">Email <span className="cc-obrigatorio">*</span></label>
+              <input type="email" id="email2" placeholder="seu@email.com" value={form.email} onChange={handleChange} className={erros.email ? "input-erro" : ""} autoComplete="off" />
+              {erros.email && <span className="cc-erro">{erros.email}</span>}
+            </div>
+            <div className="cc-field">
+              <label htmlFor="telefone2">Telefone <span className="cc-obrigatorio">*</span></label>
+              <input type="tel" id="telefone2" placeholder="(00) 00000-0000" maxLength={15} value={form.telefone} onChange={handleChange} className={erros.telefone ? "input-erro" : ""} autoComplete="off" />
+              {erros.telefone && <span className="cc-erro">{erros.telefone}</span>}
+            </div>
+          </div>
+
+          <div className="cc-row">
+            <div className="cc-field">
+              <label htmlFor="senha2">Senha <span className="cc-obrigatorio">*</span></label>
+              <input type="password" id="senha2" placeholder="Mínimo 6 caracteres" value={form.senha} onChange={handleChange} className={erros.senha ? "input-erro" : ""} autoComplete="new-password" />
+              {erros.senha && <span className="cc-erro">{erros.senha}</span>}
+            </div>
+            <div className="cc-field">
+              <label htmlFor="confirmarSenha2">Confirmar senha <span className="cc-obrigatorio">*</span></label>
+              <input type="password" id="confirmarSenha2" placeholder="Digite novamente" value={form.confirmarSenha} onChange={handleChange} className={erros.confirmarSenha ? "input-erro" : ""} autoComplete="new-password" />
+              {erros.confirmarSenha && <span className="cc-erro">{erros.confirmarSenha}</span>}
+            </div>
+          </div>
+
+          <p className="cc-tipo-label">Tipo de conta</p>
+          <div className="cc-tipo-options">
+            <div className={`cc-tipo-option ${tipo === "doador" ? "ativo" : ""}`} onClick={() => setTipo("doador")}>
+              <div className="cc-radio-outer">{tipo === "doador" && <div className="cc-radio-inner" />}</div>
+              <div className="cc-tipo-info">
+                <span className="cc-tipo-nome">Doador</span>
+                <span className="cc-tipo-desc">Doar materiais recicláveis</span>
+              </div>
+            </div>
+            <div className={`cc-tipo-option ${tipo === "coletor" ? "ativo" : ""}`} onClick={() => setTipo("coletor")}>
+              <div className="cc-radio-outer">{tipo === "coletor" && <div className="cc-radio-inner" />}</div>
+              <div className="cc-tipo-info">
+                <span className="cc-tipo-nome">Coletor</span>
+                <span className="cc-tipo-desc">Coletar materiais recicláveis</span>
+              </div>
+            </div>
+          </div>
+
+          <button className="cc-btn-criar" onClick={handleSubmit}>Criar conta</button>
+          <p className="cc-login-link">Já tem uma conta? <a href="/login">Entrar</a></p>
         </div>
       </div>
     </>
