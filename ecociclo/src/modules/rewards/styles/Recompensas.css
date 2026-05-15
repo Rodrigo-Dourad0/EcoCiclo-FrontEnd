@@ -1,0 +1,423 @@
+/* ══════════════════════════════════════════════════
+   RECOMPENSAS — Estilos
+   Segue o mesmo padrão visual do Dashboard
+══════════════════════════════════════════════════ */
+
+/* ── MAIN ─────────────────────────────────────── */
+.recompensas-main {
+  flex: 1;
+  background-color: #F8F9FA;
+  height: 100vh;
+  overflow-y: auto;
+  position: relative;
+  font-family: var(--sans);
+}
+
+.recompensas-container {
+  padding: 16px 20px 40px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* ── TOP HEADER ───────────────────────────────── */
+.rw-top-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.rw-top-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #111827;
+  margin: 0;
+}
+
+.rw-icon-button {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: #374151;
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ── SAUDAÇÃO ─────────────────────────────────── */
+.rw-greeting {
+  margin-bottom: 24px;
+  text-align: left;
+}
+
+.rw-greeting-title {
+  font-size: 20px;
+  font-weight: 500;
+  color: #1F2937;
+  margin: 0 0 6px 0;
+  letter-spacing: -0.3px;
+}
+
+.rw-greeting-subtitle {
+  font-size: 13px;
+  color: #6B7280;
+  font-weight: 400;
+  margin: 0;
+}
+
+/* ── RESUMO DE PONTOS ─────────────────────────── */
+.rw-pontos-resumo {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 20px;
+  background: #FFFFFF;
+  border-radius: 14px;
+  border: 1px solid #E5E7EB;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  margin-bottom: 20px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.rw-pontos-resumo:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.rw-pontos-icone {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #22C55E 0%, #16A34A 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 4px 14px rgba(34, 197, 94, 0.3);
+}
+
+.rw-pontos-icone svg {
+  width: 26px;
+  height: 26px;
+  color: #fff;
+}
+
+.rw-pontos-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.rw-pontos-valor {
+  font-size: 26px;
+  font-weight: 700;
+  color: #111827;
+  line-height: 1;
+}
+
+.rw-pontos-label {
+  font-size: 12px;
+  font-weight: 500;
+  color: #6B7280;
+}
+
+.rw-pontos-extra {
+  margin-left: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+}
+
+.rw-pontos-nivel {
+  font-size: 11px;
+  font-weight: 600;
+  color: #fff;
+  background: linear-gradient(135deg, #F59E0B, #D97706);
+  padding: 4px 12px;
+  border-radius: 20px;
+  letter-spacing: .3px;
+}
+
+.rw-pontos-proximo {
+  font-size: 10px;
+  color: #9CA3AF;
+}
+
+/* ── BARRA DE PROGRESSO ───────────────────────── */
+.rw-progresso {
+  margin-bottom: 28px;
+}
+
+.rw-progresso-label {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.rw-progresso-texto {
+  font-size: 12px;
+  font-weight: 500;
+  color: #6B7280;
+}
+
+.rw-progresso-valor {
+  font-size: 12px;
+  font-weight: 600;
+  color: #22C55E;
+}
+
+.rw-progresso-barra {
+  width: 100%;
+  height: 10px;
+  background: #E5E7EB;
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.rw-progresso-preenchimento {
+  height: 100%;
+  background: linear-gradient(90deg, #22C55E, #16A34A, #F59E0B);
+  border-radius: 20px;
+  transition: width .8s cubic-bezier(.4, 0, .2, 1);
+}
+
+/* ── TÍTULO DE SEÇÃO ──────────────────────────── */
+.rw-secao-titulo {
+  font-size: 14px;
+  font-weight: 600;
+  color: #374151;
+  margin: 0 0 14px;
+}
+
+/* ── LISTA DE RECOMPENSAS ─────────────────────── */
+.rw-lista {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 28px;
+}
+
+.rw-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px;
+  background: #FFFFFF;
+  border-radius: 14px;
+  border: 1px solid #E5E7EB;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  transition: all .25s ease;
+  cursor: default;
+}
+
+.rw-card:hover {
+  border-color: #22C55E;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(34, 197, 94, 0.12);
+}
+
+.rw-card-icone {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-size: 22px;
+}
+
+.rw-card-icone.verde   { background: rgba(34, 197, 94, 0.1); }
+.rw-card-icone.azul    { background: rgba(59, 130, 246, 0.1); }
+.rw-card-icone.amarelo { background: rgba(245, 158, 11, 0.1); }
+.rw-card-icone.roxo    { background: rgba(139, 92, 246, 0.1); }
+.rw-card-icone.rosa    { background: rgba(236, 72, 153, 0.1); }
+
+.rw-card-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.rw-card-nome {
+  font-size: 14px;
+  font-weight: 600;
+  color: #111827;
+}
+
+.rw-card-desc {
+  font-size: 12px;
+  color: #6B7280;
+  font-weight: 400;
+}
+
+.rw-card-badge {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 600;
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+.rw-card-badge.disponivel {
+  background: rgba(34, 197, 94, 0.1);
+  color: #22C55E;
+}
+
+.rw-card-badge.bloqueado {
+  background: rgba(107, 114, 128, 0.1);
+  color: #9CA3AF;
+}
+
+.rw-card-badge.resgatado {
+  background: rgba(59, 130, 246, 0.1);
+  color: #3B82F6;
+}
+
+.rw-card-badge svg {
+  width: 13px;
+  height: 13px;
+}
+
+/* ── HISTÓRICO DE RESGATES ────────────────────── */
+.rw-historico {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.rw-historico-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 16px;
+  background: #FFFFFF;
+  border-radius: 14px;
+  border: 1px solid #E5E7EB;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  transition: all .2s ease;
+}
+
+.rw-historico-item:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.rw-historico-esquerda {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.rw-historico-emoji {
+  font-size: 20px;
+}
+
+.rw-historico-info {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.rw-historico-nome {
+  font-size: 13px;
+  font-weight: 600;
+  color: #111827;
+}
+
+.rw-historico-data {
+  font-size: 11px;
+  color: #9CA3AF;
+}
+
+.rw-historico-pontos {
+  font-size: 13px;
+  font-weight: 600;
+}
+
+
+/* ══════════════════════════════════════════════════
+   RESPONSIVO
+══════════════════════════════════════════════════ */
+@media (max-width: 768px) {
+  .recompensas-main {
+    padding-bottom: 80px; /* Espaço pro menu inferior */
+  }
+
+  .recompensas-container {
+    padding: 16px 16px 24px;
+  }
+
+  .rw-top-title {
+    font-size: 16px;
+  }
+
+  .rw-greeting-title {
+    font-size: 18px;
+  }
+
+  .rw-greeting-subtitle {
+    font-size: 12px;
+  }
+
+  .rw-pontos-resumo {
+    flex-wrap: wrap;
+    gap: 12px;
+    padding: 16px;
+  }
+
+  .rw-pontos-icone {
+    width: 44px;
+    height: 44px;
+  }
+
+  .rw-pontos-icone svg {
+    width: 22px;
+    height: 22px;
+  }
+
+  .rw-pontos-valor {
+    font-size: 22px;
+  }
+
+  .rw-pontos-extra {
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+    margin-left: 0;
+    width: 100%;
+    padding-top: 8px;
+    border-top: 1px solid #E5E7EB;
+  }
+
+  .rw-progresso-barra {
+    height: 8px;
+  }
+
+  .rw-card {
+    padding: 14px;
+    gap: 12px;
+  }
+
+  .rw-card-icone {
+    width: 38px;
+    height: 38px;
+    font-size: 18px;
+  }
+
+  .rw-card-nome {
+    font-size: 13px;
+  }
+
+  .rw-card-desc {
+    font-size: 11px;
+  }
+}
