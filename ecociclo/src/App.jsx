@@ -12,6 +12,7 @@ import AgendarColeta from './modules/collections/pages/AgendarColeta.jsx';
 import FinalizarColeta from './modules/collections/pages/FinalizarColeta.jsx';
 import MinhasAvaliacoes from './modules/feedback/pages/MinhasAvaliacoes.jsx';
 import Recompensas from './modules/rewards/pages/Recompensas.jsx';
+import MinhasColetas from './modules/collections/pages/MinhasColetas.jsx';
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
         <Route path="/finalizar-coleta" element={<FinalizarColeta />} />
         <Route path="/minhas-avaliacoes" element={<MinhasAvaliacoes />} />
         <Route path="/recompensas" element={<Recompensas />} />
+        <Route path="/minhas-coletas" element={<MinhasColetas />} />
       </Routes>
     </BrowserRouter>
   );

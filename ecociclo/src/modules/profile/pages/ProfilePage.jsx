@@ -24,25 +24,12 @@ function ProfilePage() {
   }, [])
 
   const navigate = useNavigate()
-  function handleLogout() {
-    navigate('/login')
-  }
-
-  function handleNovoEndereco() {
-    navigate('/novo-endereco')
-  }
-
-  function handleMinhasAvaliacoes() {
-    navigate('/minhas-avaliacoes')
-  }
-
-  function handleVoltar() {
-    navigate('/')
-  }
-
-  function handleEditarPerfil() {
-    navigate('/editar-perfil')
-  }
+  function handleLogout() { navigate('/login') }
+  function handleNovoEndereco() { navigate('/novo-endereco') }
+  function handleMinhasAvaliacoes() { navigate('/minhas-avaliacoes') }
+  function handleMinhasColetas() { navigate('/minhas-coletas') }   // <-- novo
+  function handleVoltar() { navigate('/') }
+  function handleEditarPerfil() { navigate('/editar-perfil') }
 
   return (
     <div className="profile-page">
@@ -100,6 +87,7 @@ function ProfilePage() {
               onLogout={handleLogout}
               onNovoEndereco={handleNovoEndereco}
               onMinhasAvaliacoes={handleMinhasAvaliacoes}
+              onMinhasColetas={handleMinhasColetas}
               onEditarPerfil={handleEditarPerfil}
             />
           </div>
@@ -154,6 +142,7 @@ function ProfilePage() {
 
             <div className="profile-painel__secao">
               <h2 className="profile-painel__secao-titulo">Configurações</h2>
+
               <button className="profile-painel__item" onClick={() => alert('Em breve!')}>
                 <span className="profile-painel__item-esquerda">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="18" height="18">
@@ -166,6 +155,7 @@ function ProfilePage() {
                   <polyline points="9 18 15 12 9 6" />
                 </svg>
               </button>
+
               <button className="profile-painel__item" onClick={handleNovoEndereco}>
                 <span className="profile-painel__item-esquerda">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="18" height="18">
@@ -177,6 +167,22 @@ function ProfilePage() {
                   <polyline points="9 18 15 12 9 6" />
                 </svg>
               </button>
+
+              {/* Card: Minhas Coletas */}
+              <button className="profile-painel__item" onClick={handleMinhasColetas}>
+                <span className="profile-painel__item-esquerda">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="18" height="18">
+                    <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
+                    <polyline points="3.27 6.96 12 12.01 20.73 6.96" />
+                    <line x1="12" y1="22.08" x2="12" y2="12" />
+                  </svg>
+                  Minhas coletas
+                </span>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="16" height="16">
+                  <polyline points="9 18 15 12 9 6" />
+                </svg>
+              </button>
+
               <button className="profile-painel__item" onClick={handleMinhasAvaliacoes}>
                 <span className="profile-painel__item-esquerda">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="18" height="18">
@@ -188,6 +194,7 @@ function ProfilePage() {
                   <polyline points="9 18 15 12 9 6" />
                 </svg>
               </button>
+
             </div>
 
             <div className="profile-painel__secao profile-painel__secao--perigo">

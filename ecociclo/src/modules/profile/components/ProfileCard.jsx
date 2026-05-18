@@ -1,4 +1,4 @@
-function ProfileCard({ usuario, onLogout, onNovoEndereco, onMinhasAvaliacoes, onEditarPerfil }) {
+function ProfileCard({ usuario, onLogout, onNovoEndereco, onMinhasAvaliacoes, onMinhasColetas, onEditarPerfil }) {
   return (
     <div className="profile-card-wrapper">
       <div className="profile-card">
@@ -66,6 +66,21 @@ function ProfileCard({ usuario, onLogout, onNovoEndereco, onMinhasAvaliacoes, on
               <path d="M12 5v14M5 12h14" />
             </svg>
             Adicionar novo endereço
+          </span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="18" height="18">
+            <polyline points="9 18 15 12 9 6" />
+          </svg>
+        </button>
+
+        {/* Minhas Coletas */}
+        <button className="profile-card__btn-acao" onClick={onMinhasColetas}>
+          <span className="profile-card__btn-acao-esquerda">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="18" height="18">
+              <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
+              <polyline points="3.27 6.96 12 12.01 20.73 6.96" />
+              <line x1="12" y1="22.08" x2="12" y2="12" />
+            </svg>
+            Minhas coletas
           </span>
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="18" height="18">
             <polyline points="9 18 15 12 9 6" />
