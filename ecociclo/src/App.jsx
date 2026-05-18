@@ -13,6 +13,8 @@ import FinalizarColeta from './modules/collections/pages/FinalizarColeta.jsx';
 import MinhasAvaliacoes from './modules/feedback/pages/MinhasAvaliacoes.jsx';
 import Recompensas from './modules/rewards/pages/Recompensas.jsx';
 import MinhasColetas from './modules/collections/pages/MinhasColetas.jsx';
+import Historico from './modules/collections/pages/Historico.jsx';
+import DetalhesColeta from './modules/collections/pages/DetalhesColeta.jsx';
 
 function App() {
   return (
@@ -31,6 +33,8 @@ function App() {
         <Route path="/minhas-avaliacoes" element={<MinhasAvaliacoes />} />
         <Route path="/recompensas" element={<Recompensas />} />
         <Route path="/minhas-coletas" element={<MinhasColetas />} />
+        <Route path="/historico" element={<Historico />} />
+        <Route path="/detalhes-coleta" element={<DetalhesColeta />} />
       </Routes>
     </BrowserRouter>
   );

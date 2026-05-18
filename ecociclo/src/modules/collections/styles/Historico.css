@@ -1,0 +1,362 @@
+/* Historico.css — mobile first */
+
+:root {
+  --verde: #2dcc6f;
+  --verde-escuro: #22a85a;
+  --verde-claro: #e8faf1;
+  --verde-medio: #b7ecce;
+  --azul-agendada: #e8f0fe;
+  --azul-texto: #3a7bd5;
+  --vermelho-claro: #fff0f0;
+  --vermelho: #e84545;
+  --cinza-bg: #f4f5f7;
+  --cinza-card: #ffffff;
+  --cinza-borda: #e8eaed;
+  --cinza-texto: #6b7280;
+  --cinza-leve: #9ca3af;
+  --texto: #1a1d23;
+  --sombra-card: 0 1px 8px rgba(0, 0, 0, 0.07);
+  --sombra-hover: 0 4px 20px rgba(45, 204, 111, 0.13);
+  --radius: 14px;
+  --radius-sm: 10px;
+  --font: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* ── Tela principal ───────────────────────────────── */
+.historico-screen {
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
+  background: var(--cinza-bg);
+  font-family: var(--font);
+  color: var(--texto);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── Header ───────────────────────────────────────── */
+.historico-header {
+  background: #fff;
+  padding: 18px 16px 14px;
+  border-bottom: 1px solid var(--cinza-borda);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.historico-header h1 {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--texto);
+  letter-spacing: -0.3px;
+}
+
+/* ── Corpo scrollável ─────────────────────────────── */
+.historico-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+.historico-body::-webkit-scrollbar { display: none; }
+
+/* ── Card de resumo ───────────────────────────────── */
+.resumo-card {
+  background: #fff;
+  border-radius: var(--radius);
+  padding: 16px;
+  box-shadow: var(--sombra-card);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.resumo-topo {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.resumo-icone {
+  width: 36px;
+  height: 36px;
+  background: var(--verde-claro);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  color: var(--verde-escuro);
+}
+
+.resumo-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.resumo-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--texto);
+}
+
+.resumo-total {
+  font-size: 12px;
+  color: var(--cinza-texto);
+}
+
+.btn-avaliacoes {
+  width: 100%;
+  background: var(--cinza-bg);
+  border: 1.5px solid var(--cinza-borda);
+  border-radius: var(--radius-sm);
+  padding: 11px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--texto);
+  cursor: pointer;
+  font-family: var(--font);
+  transition: all 0.2s;
+  text-align: center;
+}
+
+.btn-avaliacoes:active {
+  background: var(--verde-claro);
+  border-color: var(--verde);
+  color: var(--verde-escuro);
+}
+
+@media (hover: hover) {
+  .btn-avaliacoes:hover {
+    background: var(--verde-claro);
+    border-color: var(--verde);
+    color: var(--verde-escuro);
+  }
+}
+
+/* ── Filtros ──────────────────────────────────────── */
+.filtros-wrapper {
+  display: flex;
+  gap: 8px;
+}
+
+.filtro-select {
+  flex: 1;
+  background: #fff;
+  border: 1.5px solid var(--cinza-borda);
+  border-radius: var(--radius-sm);
+  padding: 10px 30px 10px 12px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--texto);
+  font-family: var(--font);
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg width='12' height='7' viewBox='0 0 12 7' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L6 6L11 1' stroke='%236b7280' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  transition: border-color 0.2s;
+}
+
+.filtro-select:focus {
+  outline: none;
+  border-color: var(--verde);
+}
+
+/* ── Empty state ──────────────────────────────────── */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 60px 0 32px;
+}
+
+.empty-state svg {
+  color: var(--cinza-leve);
+  opacity: 0.45;
+}
+
+.empty-state p {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--cinza-texto);
+}
+
+.empty-state span {
+  font-size: 12px;
+  color: var(--cinza-leve);
+}
+
+/* ── Card de coleta ───────────────────────────────── */
+.coleta-card {
+  background: var(--cinza-card);
+  border-radius: var(--radius);
+  padding: 14px 14px 12px;
+  box-shadow: var(--sombra-card);
+  border: 1.5px solid transparent;
+  cursor: pointer;
+  transition: box-shadow 0.2s, transform 0.2s, border-color 0.2s;
+  animation: fadeUp 0.25s ease both;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.coleta-card:active { transform: scale(0.99); }
+
+@media (hover: hover) {
+  .coleta-card:hover {
+    box-shadow: var(--sombra-hover);
+    transform: translateY(-2px);
+    border-color: var(--verde-medio);
+  }
+}
+
+.coleta-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.coleta-tipo-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.icone-material {
+  width: 32px;
+  height: 32px;
+  background: var(--verde-claro);
+  border-radius: 9px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  color: var(--verde-escuro);
+}
+
+.coleta-tipo {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--texto);
+  letter-spacing: -0.2px;
+}
+
+/* badges */
+.badge {
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.badge-agendada  { background: var(--azul-agendada);  color: var(--azul-texto); }
+.badge-coletada  { background: var(--verde-claro);    color: var(--verde-escuro); }
+.badge-cancelada { background: var(--vermelho-claro); color: var(--vermelho); }
+
+/* detalhes */
+.coleta-detalhes {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.detalhe-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: var(--cinza-texto);
+  line-height: 1.3;
+}
+
+.detalhe-row svg { flex-shrink: 0; color: var(--cinza-leve); }
+
+.coleta-divider {
+  height: 1px;
+  background: var(--cinza-borda);
+  margin: 10px 0 8px;
+}
+
+.coleta-card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.pontos-badge {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--verde-escuro);
+}
+
+.coletor-info {
+  font-size: 12px;
+  color: var(--cinza-texto);
+}
+
+/* ── Bottom nav ───────────────────────────────────── */
+.bottom-nav {
+  background: #fff;
+  border-top: 1px solid var(--cinza-borda);
+  display: flex;
+  padding: 6px 0 env(safe-area-inset-bottom, 12px);
+  position: sticky;
+  bottom: 0;
+  z-index: 10;
+}
+
+.nav-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  padding: 6px 0;
+  cursor: pointer;
+  border: none;
+  background: none;
+  font-family: var(--font);
+  color: var(--cinza-leve);
+  font-size: 10px;
+  font-weight: 500;
+  -webkit-tap-highlight-color: transparent;
+  transition: color 0.15s;
+}
+
+.nav-item.ativo { color: var(--verde-escuro); }
+
+/* ── Tablet / Desktop ─────────────────────────────── */
+@media (min-width: 600px) {
+  .historico-header { padding: 20px 24px 16px; }
+  .historico-header h1 { font-size: 22px; }
+  .historico-body { padding: 16px 24px; }
+}
+
+@media (min-width: 900px) {
+  /* centraliza como "app mobile" em desktop */
+  .historico-screen {
+    max-width: 430px;
+    margin: 0 auto;
+    box-shadow: 0 0 40px rgba(0, 0, 0, 0.1);
+    border-radius: 0;
+  }
+}
