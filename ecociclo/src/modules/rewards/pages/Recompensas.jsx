@@ -1,4 +1,5 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom'
 import { Gift, Lock, Check, Leaf, Bell } from 'lucide-react'
 import '../styles/Recompensas.css'
 import { Navigation } from '../../../shared/components/Navigation/Navigation.jsx'
@@ -8,6 +9,8 @@ import { Navigation } from '../../../shared/components/Navigation/Navigation.jsx
  * recompensas disponíveis e histórico de resgates (dados mockados).
  */
 function Recompensas() {
+
+  const navigate = useNavigate()
 
   /* ── Dados mockados ──────────────────────────── */
   const pontosAtuais = 1250
@@ -104,11 +107,33 @@ function Recompensas() {
 
           {/* Top Header */}
           <header className="rw-top-header">
-            <h2 className="rw-top-title">Recompensas</h2>
-            <button className="rw-icon-button">
-              <Bell size={20} />
-            </button>
-          </header>
+              <h2 className="rw-top-title">Recompensas</h2>
+
+              <div style={{ display: 'flex', gap: '8px' }}>
+    
+               {/*botão provisório para acesso da tela Minhas Recompensas */}
+               <button
+                  className="rw-icon-button"
+                  onClick={() => navigate('/minhas-recompensas')}
+                  style={{
+                    fontSize: '12px',
+                    padding: '6px 10px',
+                    border: '1px solid #22C55E',
+                    borderRadius: '8px',
+                    color: '#22C55E',
+                    background: 'transparent',
+                    cursor: 'pointer'
+                  }}
+                >
+                   Minhas recompensas
+                </button>
+
+                <button className="rw-icon-button">
+                  <Bell size={20} />
+                </button>
+
+              </div>
+        </header>
 
           {/* Saudação */}
           <section className="rw-greeting">

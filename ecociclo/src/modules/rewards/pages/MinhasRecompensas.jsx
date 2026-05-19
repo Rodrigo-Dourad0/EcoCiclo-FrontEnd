@@ -1,8 +1,10 @@
 import "../styles/MinhasRecompensas.css";
 import useMinhasRecompensas from "../hooks/useMinhasRecompensas";
+import { Navigation } from "../../../shared/components/Navigation/Navigation";
 
 export default function MinhasRecompensas() {
   const { recompensas } = useMinhasRecompensas();
+  
 
   const CardRecompensa = ({ recompensa }) => (
     <div className="mr-card">
@@ -53,7 +55,8 @@ export default function MinhasRecompensas() {
   );
 
   return (
-    <>
+  <div className="mr-page">
+    <Navigation />
       {/* MOBILE / TABLET */}
       <div className="mr-screen">
         <div className="mr-header">
@@ -83,45 +86,6 @@ export default function MinhasRecompensas() {
 
       {/* DESKTOP */}
       <div className="mr-desktop">
-        <div className="mr-desktop-left">
-          <div className="mr-desktop-logo">
-            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-              <polyline points="23 6 13.5 15.5 8.5 10.5 1 18" />
-              <polyline points="17 6 23 6 23 12" />
-            </svg>
-          </div>
-          <h2>Suas<br />recompensas.</h2>
-          <p>Acompanhe todas as recompensas que você resgatou com seus pontos de coleta.</p>
-          <div className="mr-desktop-features">
-            <div className="mr-desktop-feature">
-              <div className="mr-desktop-feature-icon">
-                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                  <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
-                </svg>
-              </div>
-              <span>Recompensas resgatadas com seus pontos</span>
-            </div>
-            <div className="mr-desktop-feature">
-              <div className="mr-desktop-feature-icon">
-                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                  <polyline points="20 12 20 22 4 22 4 12" />
-                  <rect x="2" y="7" width="20" height="5" />
-                  <line x1="12" y1="22" x2="12" y2="7" />
-                </svg>
-              </div>
-              <span>Vouchers e produtos disponíveis</span>
-            </div>
-            <div className="mr-desktop-feature">
-              <div className="mr-desktop-feature-icon">
-                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
-                  <polyline points="22 4 12 14.01 9 11.01" />
-                </svg>
-              </div>
-              <span>Acompanhe o status de cada recompensa</span>
-            </div>
-          </div>
-        </div>
 
         <div className="mr-desktop-right">
           <h1>Minhas recompensas</h1>
@@ -141,6 +105,7 @@ export default function MinhasRecompensas() {
           </div>
         </div>
       </div>
-    </>
+            
+     </div>
   );
 }
