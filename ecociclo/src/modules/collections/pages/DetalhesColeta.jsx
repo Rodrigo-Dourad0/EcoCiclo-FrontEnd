@@ -103,12 +103,16 @@ function ScreenColetada({ coleta }) {
 }
 
 function ScreenColetorEmRota({ coleta }) {
+  const navigate = useNavigate()
+
   return (
     <>
       <MaterialCard coleta={coleta} />
       <PessoaCard pessoa={coleta.pessoa} />
       <div className="dc-btn-area">
-        <button className="dc-btn dc-btn--blue">📍 &nbsp; Ver rota</button>
+        <button className="dc-btn dc-btn--blue" onClick={() => navigate('/visualizar-rota')}>
+          📍 &nbsp; Ver rota
+        </button>
         <button className="dc-btn dc-btn--green">Finalizar coleta</button>
       </div>
     </>

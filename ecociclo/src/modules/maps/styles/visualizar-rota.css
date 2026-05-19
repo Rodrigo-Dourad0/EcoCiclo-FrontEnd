@@ -1,0 +1,367 @@
+/* ========================
+   LAYOUT GERAL
+======================== */
+.rota-page {
+  display: flex;
+  min-height: 100vh;
+  background-color: #f4f6f8;
+}
+
+/* ========================
+   SIDEBAR DESKTOP
+======================== */
+.rota-page__lateral {
+  width: 280px;
+  min-width: 280px;
+  background: linear-gradient(160deg, #166534 0%, #15803d 60%, #16a34a 100%);
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 32px 28px;
+  gap: 32px;
+}
+
+.rota-page__lateral-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 1.15rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.rota-page__lateral-logo-icone {
+  width: 34px;
+  height: 34px;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.rota-page__lateral-tag {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  opacity: 0.7;
+  margin: 0 0 8px;
+}
+
+.rota-page__lateral-titulo {
+  font-size: 1.55rem;
+  font-weight: 700;
+  line-height: 1.25;
+  margin: 0 0 12px;
+}
+
+.rota-page__lateral-titulo span {
+  opacity: 0.85;
+}
+
+.rota-page__lateral-desc {
+  font-size: 0.85rem;
+  opacity: 0.75;
+  line-height: 1.55;
+  margin: 0;
+}
+
+.rota-page__lateral-stats {
+  display: flex;
+  gap: 24px;
+  padding-top: 24px;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.rota-page__lateral-stat-valor {
+  font-size: 1.2rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.rota-page__lateral-stat-label {
+  font-size: 0.72rem;
+  opacity: 0.65;
+  margin-top: 2px;
+}
+
+/* ========================
+   CONTEÚDO PRINCIPAL
+======================== */
+.rota-page__content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.rota-page__content--mobile {
+  background: #f4f6f8;
+}
+
+.rota-page__content--desktop {
+  background: #f4f6f8;
+  padding: 32px;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+/* ========================
+   PAINEL INTERNO
+======================== */
+.rota-painel {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  background: #ffffff;
+  overflow: hidden;
+}
+
+.rota-page__content--desktop .rota-painel {
+  max-width: 480px;
+  width: 100%;
+  border-radius: 16px;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+  flex: unset;
+}
+
+/* ========================
+   HEADER
+======================== */
+.rota-painel__header {
+  padding: 16px 20px 12px;
+  background: #fff;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.rota-painel__btn-voltar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #111;
+  font-size: 1rem;
+  font-weight: 600;
+  padding: 0;
+}
+
+.rota-painel__btn-voltar:hover {
+  color: #16a34a;
+}
+
+/* ========================
+   MAPA SIMULADO
+======================== */
+.rota-mapa {
+  position: relative;
+  height: 220px;
+  background: #eef0f3;
+  overflow: hidden;
+}
+
+.rota-mapa__fundo {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  padding-bottom: 14px;
+}
+
+.rota-mapa__grade {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* Ponto azul (usuário) */
+.rota-mapa__origem {
+  position: absolute;
+  top: 28%;
+  left: 16%;
+}
+
+.rota-mapa__origem-dot {
+  width: 16px;
+  height: 16px;
+  background: #3b82f6;
+  border-radius: 50%;
+  border: 3px solid white;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
+}
+
+/* Pin destino */
+.rota-mapa__pin {
+  position: absolute;
+  bottom: 26%;
+  left: 50%;
+  transform: translateX(-50%);
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+}
+
+.rota-mapa__label {
+  font-size: 0.82rem;
+  color: #6b7280;
+  font-weight: 500;
+  margin: 0;
+  position: relative;
+  z-index: 1;
+}
+
+.rota-mapa__sublabel {
+  font-size: 0.72rem;
+  color: #9ca3af;
+  margin: 2px 0 0;
+  position: relative;
+  z-index: 1;
+}
+
+/* ========================
+   INFOS DA ROTA
+======================== */
+.rota-info {
+  padding: 20px 20px 0;
+  flex: 1;
+}
+
+.rota-info__secao {
+  padding-bottom: 16px;
+}
+
+.rota-info__linha {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 4px;
+}
+
+.rota-info__label {
+  font-size: 0.75rem;
+  color: #9ca3af;
+  font-weight: 500;
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.rota-info__valor {
+  font-size: 0.97rem;
+  font-weight: 600;
+  color: #111827;
+  margin: 2px 0 0;
+}
+
+.rota-info__sub {
+  font-size: 0.82rem;
+  color: #6b7280;
+  margin: 2px 0 0;
+}
+
+.rota-info__divider {
+  height: 1px;
+  background: #f0f0f0;
+  margin: 0 0 16px;
+}
+
+.rota-info__metricas {
+  display: flex;
+  gap: 20px;
+  padding-bottom: 16px;
+}
+
+.rota-info__metrica {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.88rem;
+  color: #374151;
+  font-weight: 500;
+}
+
+.rota-info__contato {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 20px;
+}
+
+.rota-info__btn-ligar {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background: #16a34a;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(22, 163, 74, 0.35);
+  transition: background 0.2s, transform 0.15s;
+  flex-shrink: 0;
+}
+
+.rota-info__btn-ligar:hover {
+  background: #15803d;
+  transform: scale(1.05);
+}
+
+/* ========================
+   FOOTER / BOTÃO INICIAR
+======================== */
+.rota-footer {
+  padding: 16px 20px 28px;
+  background: #fff;
+}
+
+.rota-footer__btn {
+  width: 100%;
+  background: #16a34a;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  padding: 15px 24px;
+  font-size: 0.97rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  transition: background 0.2s, transform 0.15s;
+  box-shadow: 0 2px 12px rgba(22, 163, 74, 0.3);
+}
+
+.rota-footer__btn:hover {
+  background: #15803d;
+  transform: translateY(-1px);
+}
+
+.rota-footer__btn:active {
+  transform: translateY(0);
+}
+
+/* ========================
+   RESPONSIVO MOBILE
+======================== */
+@media (max-width: 767px) {
+  .rota-page {
+    flex-direction: column;
+  }
+
+  .rota-painel {
+    min-height: 100vh;
+  }
+
+  .rota-mapa {
+    height: 200px;
+  }
+}
