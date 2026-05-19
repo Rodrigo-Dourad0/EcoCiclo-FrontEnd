@@ -20,10 +20,6 @@
   box-sizing: border-box;
 }
 
-.avaliarcoletor-sidebar {
-  display: none;
-}
-
 .avaliarcoletor-main {
   display: flex;
   flex-direction: column;
@@ -241,17 +237,13 @@
 
 @media (min-width: 768px) and (max-width: 1023px) {
   .avaliarcoletor-screen {
-    flex-direction: column;
     align-items: center;
     background-color: #e8e8e8;
-    min-height: 100svh;
-    padding: 0;
   }
 
   .avaliarcoletor-main {
     width: 100%;
     max-width: 100%;
-    background-color: transparent;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -260,8 +252,6 @@
   .avaliarcoletor-header {
     width: 100%;
     padding: 20px 40px 18px;
-    background-color: #fff;
-    border-bottom: 1px solid #eee;
     box-sizing: border-box;
   }
 
@@ -274,16 +264,6 @@
     max-width: 640px;
     padding: 40px 32px 48px;
     gap: 20px;
-    box-sizing: border-box;
-  }
-
-  .avaliarcoletor-collector-info {
-    text-align: center;
-    padding-bottom: 12px;
-  }
-
-  .avaliarcoletor-collector-subtitle {
-    font-size: 14px;
   }
 
   .avaliarcoletor-collector-name {
@@ -294,11 +274,6 @@
     padding: 28px 32px;
     border-radius: 20px;
     box-shadow: 0 2px 12px rgba(0, 0, 0, 0.07);
-  }
-
-  .avaliarcoletor-card-title {
-    font-size: 15px;
-    margin-bottom: 20px;
   }
 
   .avaliarcoletor-stars-row {
@@ -313,7 +288,6 @@
   .avaliarcoletor-submit-btn {
     font-size: 16px;
     padding: 18px;
-    max-width: 100%;
   }
 }
 
@@ -321,54 +295,11 @@
 
 @media (min-width: 1024px) {
   .avaliarcoletor-screen {
-    flex-direction: row;
     background-color: #f2f2f2;
-  }
-
-  .avaliarcoletor-sidebar {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: flex-start;
-    width: 360px;
-    min-width: 300px;
-    flex-shrink: 0;
-    padding: 60px 48px;
-    background-color: var(--verde-principal);
-    box-sizing: border-box;
-  }
-
-  .avaliarcoletor-sidebar-logo {
-    width: 52px;
-    height: 52px;
-    background-color: rgba(255, 255, 255, 0.25);
-    border-radius: 14px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 40px;
-  }
-
-  .avaliarcoletor-sidebar-title {
-    font-size: 28px;
-    font-weight: 800;
-    color: #fff;
-    margin: 0 0 14px;
-    line-height: 1.2;
-    font-family: var(--fonte);
-  }
-
-  .avaliarcoletor-sidebar-subtitle {
-    font-size: 15px;
-    color: rgba(255, 255, 255, 0.85);
-    margin: 0;
-    line-height: 1.7;
-    font-family: var(--fonte);
   }
 
   .avaliarcoletor-main {
     flex: 1;
-    background-color: #f2f2f2;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -389,7 +320,6 @@
     max-width: 580px;
     padding: 48px 32px 64px;
     gap: 22px;
-    box-sizing: border-box;
   }
 
   .avaliarcoletor-collector-info {
@@ -405,11 +335,6 @@
     padding: 28px 32px;
     border-radius: 20px;
     box-shadow: 0 2px 12px rgba(0, 0, 0, 0.07);
-  }
-
-  .avaliarcoletor-card-title {
-    font-size: 15px;
-    margin-bottom: 20px;
   }
 
   .avaliarcoletor-stars-row {

@@ -1,8 +1,8 @@
 import '../styles/DetalhesColeta.css';
 import { useNavigate } from 'react-router-dom';
 import { useDetalhesColeta, statusConfig, tabLabels } from '../hooks/useDetalhesColeta';
+import { Navigation } from '../../../shared/components/Navigation/Navigation';
 
-// ─── INFO ROW ─────────────────────────────────────────────────────────────────
 function InfoRow({ icon, label, value }) {
   return (
     <div className="dc-info-row">
@@ -15,7 +15,6 @@ function InfoRow({ icon, label, value }) {
   );
 }
 
-// ─── MATERIAL CARD ────────────────────────────────────────────────────────────
 function MaterialCard({ coleta }) {
   return (
     <div className="dc-card">
@@ -34,7 +33,6 @@ function MaterialCard({ coleta }) {
   );
 }
 
-// ─── PESSOA CARD ──────────────────────────────────────────────────────────────
 function PessoaCard({ pessoa }) {
   const titulo =
     pessoa.tipo === 'coletor'
@@ -64,7 +62,6 @@ function PessoaCard({ pessoa }) {
   );
 }
 
-// ─── TELAS POR STATUS ─────────────────────────────────────────────────────────
 function ScreenAgendada({ coleta }) {
   return (
     <>
@@ -103,8 +100,7 @@ function ScreenColetada({ coleta }) {
 }
 
 function ScreenColetorEmRota({ coleta }) {
-  const navigate = useNavigate()
-
+  const navigate = useNavigate();
   return (
     <>
       <MaterialCard coleta={coleta} />
@@ -141,78 +137,41 @@ function renderScreen(coleta) {
   }
 }
 
-// ─── SIDEBAR ESQUERDA (desktop) ───────────────────────────────────────────────
-function Sidebar({ status }) {
-  const info = {
-    agendada: {
-      titulo: 'Coleta agendada',
-      desc: 'Sua coleta está confirmada. Prepare os materiais para o horário marcado.',
-    },
-    coletada: {
-      titulo: 'Coleta realizada',
-      desc: 'Materiais coletados com sucesso. Obrigado por contribuir com o meio ambiente!',
-    },
-    agendada_coletor: {
-      titulo: 'Em rota de coleta',
-      desc: 'Você está a caminho. Finalize a coleta ao chegar no endereço.',
-    },
-    disponivel: {
-      titulo: 'Coleta disponível',
-      desc: 'Uma nova coleta está aguardando. Aceite para iniciar o processo.',
-    },
-  };
-
-  const { titulo, desc } = info[status] || info.agendada;
-
-  return (
-    <aside className="dc-sidebar">
-      <div className="dc-sidebar-icon">♻️</div>
-      <h2 className="dc-sidebar-title">{titulo}</h2>
-      <p className="dc-sidebar-desc">{desc}</p>
-    </aside>
-  );
-}
-
-// ─── COMPONENTE PRINCIPAL ─────────────────────────────────────────────────────
 export default function DetalhesColeta() {
   const { coletaAtiva, activeIndex, irParaColeta } = useDetalhesColeta();
   const { label, badgeClass } = statusConfig[coletaAtiva.status];
 
   return (
-    <div className="dc-wrapper">
-      {/* Sidebar verde — visível só no desktop via CSS */}
-      <Sidebar status={coletaAtiva.status} />
+    <div className="app-container">
+      <Navigation />
 
-      {/* Coluna direita */}
-      <div className="dc-phone">
-        {/* Tabs de navegação (teste) */}
-        <div className="dc-tabs">
-          {tabLabels.map((tabLabel, i) => (
-            <button
-              key={i}
-              className={`dc-tab-btn${activeIndex === i ? ' active' : ''}`}
-              onClick={() => irParaColeta(i)}
-            >
-              {tabLabel}
-            </button>
-          ))}
-        </div>
+      <div className="dc-wrapper">
+        <div className="dc-phone">
+          <div className="dc-tabs">
+            {tabLabels.map((tabLabel, i) => (
+              <button
+                key={i}
+                className={`dc-tab-btn${activeIndex === i ? ' active' : ''}`}
+                onClick={() => irParaColeta(i)}
+              >
+                {tabLabel}
+              </button>
+            ))}
+          </div>
 
-        {/* Header */}
-        <div className="dc-header">
-          <button className="dc-back-btn">←</button>
-          <span className="dc-header-title">Detalhes da coleta</span>
-        </div>
+          <div className="dc-header">
+            <button className="dc-back-btn">←</button>
+            <span className="dc-header-title">Detalhes da coleta</span>
+          </div>
 
-        {/* Status */}
-        <div className="dc-status-row">
-          <span className="dc-status-label">Status da coleta</span>
-          <span className={`dc-badge ${badgeClass}`}>{label}</span>
-        </div>
+          <div className="dc-status-row">
+            <span className="dc-status-label">Status da coleta</span>
+            <span className={`dc-badge ${badgeClass}`}>{label}</span>
+          </div>
 
-        {/* Conteúdo */}
-        <div key={activeIndex} className="dc-screen">
-          {renderScreen(coletaAtiva)}
+          <div key={activeIndex} className="dc-screen">
+            {renderScreen(coletaAtiva)}
+          </div>
         </div>
       </div>
     </div>

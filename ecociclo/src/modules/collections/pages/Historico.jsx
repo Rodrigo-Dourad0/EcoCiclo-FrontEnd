@@ -1,11 +1,10 @@
 // Historico.jsx
 import { useState, useMemo } from "react";
-import { Link, useLocation } from "react-router-dom";
-import { Home, Package, Gift, Clock, User } from "lucide-react";
 import "../styles/Historico.css";
 import { coletas, STATUS, PERIODOS } from "../hooks/useHistorico";
+import { Navigation } from "../../../shared/components/Navigation/Navigation";
 
-/* ── Ícones dos cards ────────────────────────────────── */
+/* ── icones dos cards ────────────────────────────────── */
 const IconBox = () => (
   <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
     <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
@@ -37,15 +36,6 @@ const IconWeight = () => (
     <line x1="12" y1="12" x2="12" y2="18"/>
   </svg>
 );
-
-/* ── Nav items (mesmas rotas do Navigation.jsx) ──────── */
-const NAV_ITEMS = [
-  { id: "inicio",      label: "Início",      icon: Home,    to: "/" },
-  { id: "coletas",     label: "Coletas",     icon: Package, to: "/avaliar-coletor" },
-  { id: "recompensas", label: "Recompensas", icon: Gift,    to: "#" },
-  { id: "historico",   label: "Histórico",   icon: Clock,   to: "/historico" },
-  { id: "perfil",      label: "Perfil",      icon: User,    to: "/perfil" },
-];
 
 /* ── Helpers ─────────────────────────────────────────── */
 function getBadgeClass(status) {
@@ -124,7 +114,6 @@ function CardColeta({ coleta, delay }) {
 
 /* ── Tela principal ──────────────────────────────────── */
 export default function Historico() {
-  const location = useLocation();
   const [statusFiltro, setStatusFiltro] = useState("Todos os status");
   const [periodoFiltro, setPeriodoFiltro] = useState(PERIODOS.TODOS);
 
@@ -138,76 +127,62 @@ export default function Historico() {
   }, [statusFiltro, periodoFiltro]);
 
   return (
-    <div className="historico-screen">
+    <div className="app-container">
+      <Navigation />
 
-      {/* Header */}
-      <header className="historico-header">
-        <h1>Histórico</h1>
-      </header>
+      <main className="historico-main">
+        <div className="historico-container">
 
-      {/* Conteúdo */}
-      <div className="historico-body">
+          {/* Header */}
+          <header className="historico-header">
+            <h1>Histórico</h1>
+          </header>
 
-        {/* Filtros */}
-        <div className="filtros-wrapper">
-          <select
-            className="filtro-select"
-            value={statusFiltro}
-            onChange={(e) => setStatusFiltro(e.target.value)}
-          >
-            <option>Todos os status</option>
-            <option>{STATUS.AGENDADA}</option>
-            <option>{STATUS.COLETADA}</option>
-            <option>{STATUS.CANCELADA}</option>
-          </select>
-
-          <select
-            className="filtro-select"
-            value={periodoFiltro}
-            onChange={(e) => setPeriodoFiltro(e.target.value)}
-          >
-            {Object.values(PERIODOS).map((p) => (
-              <option key={p}>{p}</option>
-            ))}
-          </select>
-        </div>
-
-        {/* Lista ou empty state */}
-        {coletasFiltradas.length === 0 ? (
-          <div className="empty-state">
-            <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
-              <polyline points="3.27 6.96 12 12.01 20.73 6.96"/>
-              <line x1="12" y1="22.08" x2="12" y2="12"/>
-            </svg>
-            <p>Nenhuma coleta encontrada</p>
-            <span>Tente ajustar os filtros</span>
-          </div>
-        ) : (
-          coletasFiltradas.map((c, i) => (
-            <CardColeta key={c.id} coleta={c} delay={i * 55} />
-          ))
-        )}
-      </div>
-
-      {/* Bottom Nav */}
-      <nav className="bottom-nav">
-        {NAV_ITEMS.map((item) => {
-          const Icon = item.icon;
-          const ativo = location.pathname === item.to;
-          return (
-            <Link
-              key={item.id}
-              to={item.to}
-              className={`nav-item${ativo ? " ativo" : ""}`}
+          {/* Filtros */}
+          <div className="filtros-wrapper">
+            <select
+              className="filtro-select"
+              value={statusFiltro}
+              onChange={(e) => setStatusFiltro(e.target.value)}
             >
-              <Icon size={22} />
-              {item.label}
-            </Link>
-          );
-        })}
-      </nav>
+              <option>Todos os status</option>
+              <option>{STATUS.AGENDADA}</option>
+              <option>{STATUS.COLETADA}</option>
+              <option>{STATUS.CANCELADA}</option>
+            </select>
 
+            <select
+              className="filtro-select"
+              value={periodoFiltro}
+              onChange={(e) => setPeriodoFiltro(e.target.value)}
+            >
+              {Object.values(PERIODOS).map((p) => (
+                <option key={p}>{p}</option>
+              ))}
+            </select>
+          </div>
+
+          {/* Lista ou empty state */}
+          {coletasFiltradas.length === 0 ? (
+            <div className="empty-state">
+              <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+                <polyline points="3.27 6.96 12 12.01 20.73 6.96"/>
+                <line x1="12" y1="22.08" x2="12" y2="12"/>
+              </svg>
+              <p>Nenhuma coleta encontrada</p>
+              <span>Tente ajustar os filtros</span>
+            </div>
+          ) : (
+            <div className="historico-lista">
+              {coletasFiltradas.map((c, i) => (
+                <CardColeta key={c.id} coleta={c} delay={i * 55} />
+              ))}
+            </div>
+          )}
+
+        </div>
+      </main>
     </div>
   );
 }
