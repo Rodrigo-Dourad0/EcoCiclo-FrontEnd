@@ -17,6 +17,7 @@ import Historico from './modules/collections/pages/Historico.jsx';
 import DetalhesColeta from './modules/collections/pages/DetalhesColeta.jsx';
 import VisualizarRota from './modules/maps/pages/VisualizarRota.jsx';
 import MinhasRecompensas from './modules/rewards/pages/MinhasRecompensas.jsx'
+import DetalhesRecompensa from './modules/rewards/pages/DetalhesRecompensa.jsx';
 
 function App() {
   return (
@@ -39,6 +40,7 @@ function App() {
         <Route path="/detalhes-coleta" element={<DetalhesColeta />} />
         <Route path="/visualizar-rota" element={<VisualizarRota />} />
         <Route path="/minhas-recompensas" element={<MinhasRecompensas />} />
+        <Route path="/detalhes-recompensas" element={<DetalhesRecompensa />} />
       </Routes>
     </BrowserRouter>
   );

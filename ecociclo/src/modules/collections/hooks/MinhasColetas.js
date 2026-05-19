@@ -59,11 +59,9 @@ export function useMinhasColetas() {
     ],
   };
 
-  const coletasFiltradas = coletas[abaAtiva];
-
   return {
     abaAtiva,
     setAbaAtiva,
-    coletasFiltradas,
+    coletasFiltradas: coletas[abaAtiva],
   };
 }

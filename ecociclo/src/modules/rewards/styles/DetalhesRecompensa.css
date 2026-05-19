@@ -1,0 +1,404 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.dr-page {
+  min-height: 100vh;
+  background: #f5f6f8;
+  font-family: "Poppins", sans-serif;
+}
+
+/* Ativa Recompensas no lugar de Início */
+.dr-page .nav-item.active {
+  background: transparent;
+}
+
+.dr-page .nav-item.active .nav-link,
+.dr-page .nav-item.active .nav-icon,
+.dr-page .nav-item.active .nav-label {
+  color: inherit;
+}
+
+.dr-page .nav-list .nav-item:nth-child(3) {
+  background: rgba(16, 185, 129, 0.12);
+  border-radius: 14px;
+}
+
+.dr-page .nav-list .nav-item:nth-child(3) .nav-link,
+.dr-page .nav-list .nav-item:nth-child(3) .nav-icon,
+.dr-page .nav-list .nav-item:nth-child(3) .nav-label {
+  color: #00d69f;
+}
+
+/* MOBILE FIRST */
+.dr-page .navigation {
+  width: 100%;
+  height: auto;
+  min-height: auto;
+  position: sticky;
+  top: 0;
+  z-index: 20;
+}
+
+.dr-main {
+  padding: 28px 20px 40px;
+}
+
+.dr-header {
+  margin-bottom: 26px;
+}
+
+.dr-kicker {
+  font-size: 13px;
+  font-weight: 700;
+  color: #64748b;
+  margin-bottom: 18px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.dr-header h1 {
+  font-size: 32px;
+  color: #020617;
+  margin-bottom: 6px;
+}
+
+.dr-header p {
+  font-size: 16px;
+  color: #64748b;
+}
+
+.dr-content {
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 22px;
+  padding: 22px;
+  max-width: 760px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.06);
+}
+
+.dr-icone-wrap {
+  background: #dcfce7;
+  color: #10b981;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 34px;
+  margin-bottom: 24px;
+}
+
+.dr-titulo-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 22px;
+}
+
+.dr-titulo {
+  font-size: 24px;
+  font-weight: 800;
+  color: #020617;
+  margin-bottom: 6px;
+}
+
+.dr-descricao {
+  font-size: 15px;
+  color: #64748b;
+}
+
+.dr-tipo-badge {
+  background: #f1f5f9;
+  color: #475569;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 7px 14px;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
+.dr-pontos-card,
+.dr-secao,
+.dr-validade-card {
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 16px;
+  padding: 18px;
+  margin-bottom: 16px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
+}
+
+.dr-pontos-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.dr-pontos-esquerda {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #10b981;
+  font-size: 17px;
+  font-weight: 800;
+}
+
+.dr-pontos-direita {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 2px;
+}
+
+.dr-pontos-direita span,
+.dr-validade-card span {
+  font-size: 12px;
+  color: #64748b;
+  font-weight: 600;
+}
+
+.dr-pontos-direita strong,
+.dr-validade-card strong {
+  font-size: 17px;
+  color: #020617;
+}
+
+.dr-secao h3 {
+  font-size: 16px;
+  color: #020617;
+  margin-bottom: 8px;
+}
+
+.dr-secao p {
+  font-size: 15px;
+  color: #334155;
+  line-height: 1.6;
+}
+
+.dr-validade-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  color: #64748b;
+}
+
+.dr-validade-card div {
+  display: flex;
+  flex-direction: column;
+}
+
+.dr-obs {
+  font-size: 13px;
+  color: #94a3b8;
+  line-height: 1.6;
+  margin-bottom: 24px;
+}
+
+.dr-btn,
+.dr-resgatado {
+  width: 100%;
+  height: 54px;
+  border-radius: 16px;
+  border: none;
+  font-size: 15px;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.dr-btn {
+  background: #10b981;
+  color: #fff;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.dr-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 22px rgba(16, 185, 129, 0.3);
+}
+
+.dr-btn--desabilitado {
+  background: #cbd5e1;
+  cursor: not-allowed;
+}
+
+.dr-btn--desabilitado:hover {
+  transform: none;
+  box-shadow: none;
+}
+
+.dr-resgatado {
+  background: #dcfce7;
+  color: #10b981;
+}
+
+/* CELULAR */
+@media (max-width: 699px) {
+  .dr-page .navigation {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 10px;
+    background: #12141b;
+    overflow-x: auto;
+    gap: 8px;
+  }
+
+  .dr-page .nav-logo {
+    display: none;
+  }
+
+  .dr-page .nav-list {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: auto;
+    flex-shrink: 0;
+  }
+
+  .dr-page .nav-item {
+    min-width: 62px;
+    padding: 0;
+    border-radius: 14px;
+  }
+
+  .dr-page .nav-link {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    padding: 8px 6px;
+    font-size: 11px;
+    text-align: center;
+  }
+
+  .dr-page .nav-icon svg {
+    width: 21px;
+    height: 21px;
+  }
+
+  .dr-page .nav-auth {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+  }
+
+  .dr-page .nav-auth-btn {
+    width: auto;
+    min-width: 76px;
+    padding: 9px 10px;
+    border-radius: 16px;
+    font-size: 11px;
+    gap: 5px;
+    box-shadow: none;
+  }
+
+  .dr-page .nav-auth-btn svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .dr-header h1 {
+    font-size: 30px;
+  }
+
+  .dr-content {
+    padding: 20px;
+  }
+
+  .dr-titulo-row {
+    flex-direction: column;
+  }
+
+  .dr-pontos-card {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .dr-pontos-direita {
+    align-items: flex-start;
+  }
+}
+
+/* TABLET: 700px até 1024px */
+@media (min-width: 700px) and (max-width: 1024px) {
+  .dr-page .navigation {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 28px;
+    background: #12141b;
+  }
+
+  .dr-page .nav-logo {
+    display: none;
+  }
+
+  .dr-page .nav-list {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .dr-page .nav-auth {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .dr-page .nav-auth-btn {
+    width: auto;
+    padding: 12px 20px;
+    border-radius: 16px;
+  }
+
+  .dr-main {
+    padding: 36px;
+  }
+
+  .dr-content {
+    padding: 28px;
+  }
+
+  .dr-header h1 {
+    font-size: 38px;
+  }
+}
+
+/* DESKTOP: 1025px+ */
+@media (min-width: 1025px) {
+  .dr-page {
+    display: flex;
+  }
+
+  .dr-page .navigation {
+    width: 300px;
+    min-height: 100vh;
+    height: 100vh;
+    position: sticky;
+    top: 0;
+    flex-shrink: 0;
+  }
+
+  .dr-main {
+    flex: 1;
+    padding: 48px 64px;
+  }
+
+  .dr-header h1 {
+    font-size: 42px;
+  }
+
+  .dr-content {
+    padding: 30px;
+  }
+}

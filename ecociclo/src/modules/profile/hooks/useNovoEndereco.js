@@ -19,13 +19,9 @@ export function useNovoEndereco() {
 
   const validarCep = (valor) => {
     const regex = /^\d{5}-?\d{3}$/;
-    if (!valor) {
-      setCepErro("O CEP é obrigatório.");
-    } else if (!regex.test(valor)) {
-      setCepErro("Digite um CEP válido (ex: 00000-000).");
-    } else {
-      setCepErro("");
-    }
+    if (!valor) setCepErro("O CEP é obrigatório.");
+    else if (!regex.test(valor)) setCepErro("Digite um CEP válido (ex: 00000-000).");
+    else setCepErro("");
   };
 
   const validarRua = (valor) => {
