@@ -16,6 +16,7 @@ import MinhasColetas from './modules/collections/pages/MinhasColetas.jsx';
 import Historico from './modules/collections/pages/Historico.jsx';
 import DetalhesColeta from './modules/collections/pages/DetalhesColeta.jsx';
 import VisualizarRota from './modules/maps/pages/VisualizarRota.jsx';
+import MinhasRecompensas from './modules/rewards/pages/MinhasRecompensas.jsx'
 
 function App() {
   return (
@@ -37,6 +38,7 @@ function App() {
         <Route path="/historico" element={<Historico />} />
         <Route path="/detalhes-coleta" element={<DetalhesColeta />} />
         <Route path="/visualizar-rota" element={<VisualizarRota />} />
+        <Route path="/minhas-recompensas" element={<MinhasRecompensas />} />
       </Routes>
     </BrowserRouter>
   );

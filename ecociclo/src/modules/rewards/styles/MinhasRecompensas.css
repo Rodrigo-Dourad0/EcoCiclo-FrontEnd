@@ -1,0 +1,418 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  overflow-x: clip;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: #F2F2F2;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  overflow-x: clip;
+}
+
+/* ========================
+   MOBILE — layout original
+   ======================== */
+
+.mr-desktop {
+  display: none;
+}
+
+.mr-screen {
+  width: 100%;
+  min-height: 100vh;
+  background-color: #F2F2F2;
+  display: flex;
+  flex-direction: column;
+}
+
+/* HEADER */
+.mr-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 20px 20px 16px;
+  background-color: #F2F2F2;
+}
+
+.mr-btn-voltar {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mr-btn-voltar svg {
+  width: 22px;
+  height: 22px;
+  stroke: #222;
+  fill: none;
+  stroke-width: 2.2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.mr-header h1 {
+  font-size: 20px;
+  font-weight: 600;
+  color: #1A1A1A;
+}
+
+/* BODY */
+.mr-body {
+  padding: 8px 20px 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* CARD */
+.mr-card {
+  background-color: #ffffff;
+  border: 1.5px solid #E0E0E0;
+  border-radius: 14px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.mr-card-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.mr-card-esquerda {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  flex: 1;
+}
+
+.mr-icone {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background-color: #E8F8F2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.mr-icone svg {
+  width: 20px;
+  height: 20px;
+  stroke: #2DBF8A;
+  fill: none;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.mr-card-info {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.mr-card-nome {
+  font-size: 14px;
+  font-weight: 600;
+  color: #1A1A1A;
+  line-height: 1.3;
+}
+
+.mr-card-data {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.mr-card-data svg {
+  width: 13px;
+  height: 13px;
+  stroke: #888;
+  fill: none;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.mr-card-data span {
+  font-size: 12px;
+  color: #888;
+}
+
+/* BADGE */
+.mr-badge {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 20px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.mr-badge-ativa {
+  background-color: #E8F8F2;
+  color: #1D9E75;
+}
+
+.mr-badge-utilizada {
+  background-color: #F0F0F0;
+  color: #888;
+}
+
+/* CARD BOTTOM */
+.mr-card-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 10px;
+  border-top: 1px solid #F0F0F0;
+}
+
+.mr-pontos {
+  font-size: 13px;
+  color: #555;
+  font-weight: 500;
+}
+
+.mr-codigo {
+  font-size: 12px;
+  font-weight: 600;
+  color: #555;
+  background-color: #F0F0F0;
+  padding: 4px 10px;
+  border-radius: 6px;
+  letter-spacing: 0.05em;
+}
+
+.mr-check-icon {
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mr-check-icon svg {
+  width: 20px;
+  height: 20px;
+  stroke: #AAAAAA;
+  fill: none;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* VAZIO */
+.mr-vazio {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 48px 0;
+  color: #AAAAAA;
+}
+
+.mr-vazio svg {
+  width: 40px;
+  height: 40px;
+  stroke: #CCCCCC;
+  fill: none;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.mr-vazio p {
+  font-size: 14px;
+  color: #AAAAAA;
+}
+
+/* ========================
+   TABLET (600px – 1023px)
+   ======================== */
+@media (min-width: 600px) and (max-width: 1023px) {
+
+  body {
+    background-color: #E8E8E8;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 40px 24px;
+    min-height: unset;  
+    height: auto;       
+    overflow-y: auto;
+  }
+
+  .mr-desktop {
+    display: none;
+  }
+
+  .mr-screen {
+    width: 100%;
+    max-width: 560px;
+    min-height: unset;
+    margin: 0 auto;
+    background-color: #ffffff;
+    border-radius: 20px;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+    overflow-x: clip;
+  }
+
+  .mr-header {
+    background-color: #ffffff;
+    padding: 20px 24px 16px;
+    border-bottom: 1px solid #F0F0F0;
+  }
+
+  .mr-body {
+    padding: 20px 24px 28px;
+    background-color: #ffffff;
+  }
+}
+
+/* ========================
+   DESKTOP (1024px+)
+   ======================== */
+@media (min-width: 1024px) {
+
+  body {
+    display: block;
+    padding: 0;
+    overflow: clip;
+  }
+
+  .mr-screen {
+    display: none;
+  }
+
+  .mr-desktop {
+    display: flex;
+    width: 100%;
+    height: 100vh;
+    overflow: clip;
+  }
+
+  .mr-desktop-left {
+    width: 42%;
+    background-color: #1D9E75;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 60px 48px;
+  }
+
+  .mr-desktop-logo {
+    width: 52px;
+    height: 52px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 40px;
+  }
+
+  .mr-desktop-logo svg {
+    width: 26px;
+    height: 26px;
+    stroke: white;
+    fill: none;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .mr-desktop-left h2 {
+    font-size: 30px;
+    font-weight: 700;
+    color: #ffffff;
+    line-height: 1.3;
+    margin-bottom: 14px;
+  }
+
+  .mr-desktop-left p {
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.75);
+    line-height: 1.7;
+    margin-bottom: 40px;
+  }
+
+  .mr-desktop-features {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+
+  .mr-desktop-feature {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .mr-desktop-feature-icon {
+    width: 38px;
+    height: 38px;
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .mr-desktop-feature-icon svg {
+    width: 16px;
+    height: 16px;
+    stroke: white;
+    fill: none;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .mr-desktop-feature span {
+    font-size: 13px;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.88);
+  }
+
+  .mr-desktop-right {
+    width: 58%;
+    background-color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    padding: 60px 56px;
+    overflow-y: auto;
+  }
+
+  .mr-desktop-right h1 {
+    font-size: 24px;
+    font-weight: 700;
+    color: #1A1A1A;
+    margin-bottom: 24px;
+  }
+
+  .mr-lista {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+}
