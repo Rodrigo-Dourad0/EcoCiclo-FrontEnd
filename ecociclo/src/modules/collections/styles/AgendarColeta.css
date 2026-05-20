@@ -38,6 +38,23 @@ body {
   
 }
 
+.ac-screen,
+.ac-desktop-right {
+  animation: acFadeUp 0.25s ease;
+}
+
+@keyframes acFadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 .ac-header {
   display: flex;
   align-items: center;

@@ -34,6 +34,23 @@ body {
   flex-direction: column;
 }
 
+.mr-screen,
+.mr-desktop-right {
+  animation: mrFadeUp 0.25s ease;
+}
+
+@keyframes mrFadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 /* estilos do Header*/
 .mr-header {
   display: flex;

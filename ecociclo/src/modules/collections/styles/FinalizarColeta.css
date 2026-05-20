@@ -38,6 +38,23 @@ body {
   flex-direction: column;
 }
 
+.fc-screen,
+.fc-desktop-right {
+  animation: fcFadeUp 0.25s ease;
+}
+
+@keyframes fcFadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 /* HEADER */
 .fc-header {
   display: flex;
