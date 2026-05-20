@@ -1,5 +1,6 @@
 import "../styles/AgendarColeta.css";
 import useAgendarColeta from "../hooks/useAgendarColeta";
+import { Navigation } from "../../../shared/components/Navigation/Navigation.jsx";
 
 export default function AgendarColeta() {
   const {
@@ -13,7 +14,10 @@ export default function AgendarColeta() {
 
   return (
     <>
+
+      <div className="ac-page">
       {/*mobile*/}
+      <Navigation />
       <div className="ac-screen">
         <div className="ac-header">
           <button className="ac-btn-voltar" onClick={() => window.history.back()}>
@@ -148,46 +152,6 @@ export default function AgendarColeta() {
 
       {/* DESKTOP */}
       <div className="ac-desktop">
-        <div className="ac-desktop-left">
-          <div className="ac-desktop-logo">
-            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-              <polyline points="23 6 13.5 15.5 8.5 10.5 1 18" />
-              <polyline points="17 6 23 6 23 12" />
-            </svg>
-          </div>
-          <h2>Agende sua<br />coleta agora.</h2>
-          <p>Selecione o tipo de material, data e endereço para que um coletor possa buscar seus recicláveis.</p>
-          <div className="ac-desktop-features">
-            <div className="ac-desktop-feature">
-              <div className="ac-desktop-feature-icon">
-                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                  <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
-                </svg>
-              </div>
-              <span>Ganhe pontos ao completar a coleta</span>
-            </div>
-            <div className="ac-desktop-feature">
-              <div className="ac-desktop-feature-icon">
-                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                  <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
-                  <line x1="16" y1="2" x2="16" y2="6" />
-                  <line x1="8" y1="2" x2="8" y2="6" />
-                  <line x1="3" y1="10" x2="21" y2="10" />
-                </svg>
-              </div>
-              <span>Escolha a melhor data e horário</span>
-            </div>
-            <div className="ac-desktop-feature">
-              <div className="ac-desktop-feature-icon">
-                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
-                  <circle cx="12" cy="10" r="3" />
-                </svg>
-              </div>
-              <span>Coleta no endereço que você escolher</span>
-            </div>
-          </div>
-        </div>
 
         <div className="ac-desktop-right">
           <h1>Agendar coleta</h1>
@@ -205,7 +169,7 @@ export default function AgendarColeta() {
                   className={erros.tipoMaterial ? "input-erro" : ""}
                 >
                   <option value="">Selecione o tipo</option>
-                  {tiposMaterial.map((tipo) => (
+                  {(tiposMaterial || []).map((tipo) => (
                     <option key={tipo} value={tipo}>{tipo}</option>
                   ))}
                 </select>
@@ -272,7 +236,7 @@ export default function AgendarColeta() {
                   className={erros.endereco ? "input-erro" : ""}
                 >
                   <option value="">Selecione o endereço</option>
-                  {enderecos.map((end) => (
+                  {(enderecos || []).map((end) => (
                     <option key={end} value={end}>{end}</option>
                   ))}
                 </select>
@@ -312,6 +276,7 @@ export default function AgendarColeta() {
           </div>
         </div>
       </div>
+    </div>
     </>
   );
 }
