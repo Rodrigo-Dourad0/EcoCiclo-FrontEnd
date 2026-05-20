@@ -18,8 +18,8 @@ function MinhasColetas() {
           <p>Acompanhe suas coletas agendadas, realizadas e canceladas.</p>
 
           <Link to="/detalhes-recompensas" className="mc-teste-link">
-    Testar DetalhesRecompensa
-  </Link>
+            Testar DetalhesRecompensa
+          </Link>
         </section>
 
         <section className="mc-content">
