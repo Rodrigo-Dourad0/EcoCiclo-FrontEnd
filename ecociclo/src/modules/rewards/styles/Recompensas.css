@@ -27,6 +27,12 @@
   margin-bottom: 24px;
 }
 
+.rw-header-esquerda {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
 .rw-top-title {
   font-size: 18px;
   font-weight: 600;
@@ -34,15 +40,326 @@
   margin: 0;
 }
 
-.rw-icon-button {
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  color: #374151;
-  padding: 8px;
+/* ── BOTÃO DE AJUDA (INTERROGAÇÃO) ────────────── */
+.rw-help-button {
   display: flex;
   align-items: center;
   justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 1.5px solid #D1D5DB;
+  background: #FFFFFF;
+  color: #9CA3AF;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  flex-shrink: 0;
+}
+
+.rw-help-button:hover {
+  color: #22C55E;
+  border-color: #22C55E;
+  background: rgba(34, 197, 94, 0.06);
+  transform: scale(1.08);
+}
+
+.rw-help-button svg {
+  width: 16px;
+  height: 16px;
+}
+
+/* ── BOTÃO "MINHAS RECOMPENSAS" (INTEGRADO) ───── */
+.rw-minhas-recompensas-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 8px 16px;
+  border: 1.5px solid #E5E7EB;
+  border-radius: 10px;
+  color: #374151;
+  background: #FFFFFF;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  letter-spacing: -0.1px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+}
+
+.rw-minhas-recompensas-btn svg {
+  flex-shrink: 0;
+}
+
+.rw-minhas-recompensas-btn svg:first-child {
+  color: #22C55E;
+}
+
+.rw-minhas-recompensas-btn svg:last-child {
+  color: #9CA3AF;
+  margin-left: 2px;
+  transition: transform 0.2s ease;
+}
+
+.rw-minhas-recompensas-btn:hover {
+  border-color: #22C55E;
+  color: #16A34A;
+  background: rgba(34, 197, 94, 0.04);
+  box-shadow: 0 2px 8px rgba(34, 197, 94, 0.12);
+  transform: translateY(-1px);
+}
+
+.rw-minhas-recompensas-btn:hover svg:last-child {
+  transform: translateX(2px);
+}
+
+/* ── MODAL DE AJUDA ──────────────────────────── */
+.rw-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  animation: rw-overlay-in 0.25s ease;
+  padding: 20px;
+}
+
+@keyframes rw-overlay-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.rw-modal {
+  background: #FFFFFF;
+  border-radius: 20px;
+  width: 100%;
+  max-width: 420px;
+  box-shadow:
+    0 24px 48px -12px rgba(0, 0, 0, 0.18),
+    0 0 0 1px rgba(0, 0, 0, 0.04);
+  animation: rw-modal-in 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  overflow: hidden;
+}
+
+@keyframes rw-modal-in {
+  from {
+    opacity: 0;
+    transform: scale(0.92) translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+/* ── Modal — Cabeçalho ─────────────────────────── */
+.rw-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 24px 0;
+}
+
+.rw-modal-icone-titulo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.rw-modal-icone {
+  width: 38px;
+  height: 38px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #22C55E 0%, #16A34A 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #FFFFFF;
+  box-shadow: 0 4px 12px rgba(34, 197, 94, 0.25);
+}
+
+.rw-modal-icone svg {
+  width: 20px;
+  height: 20px;
+}
+
+.rw-modal-titulo {
+  font-size: 17px;
+  font-weight: 700;
+  color: #111827;
+  margin: 0;
+  letter-spacing: -0.3px;
+}
+
+.rw-modal-fechar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: none;
+  background: #F3F4F6;
+  color: #6B7280;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.rw-modal-fechar:hover {
+  background: #E5E7EB;
+  color: #374151;
+  transform: rotate(90deg);
+}
+
+/* ── Modal — Corpo ─────────────────────────────── */
+.rw-modal-body {
+  padding: 16px 24px 4px;
+}
+
+.rw-modal-descricao {
+  font-size: 13px;
+  color: #6B7280;
+  margin: 0 0 20px;
+  line-height: 1.5;
+}
+
+/* ── Modal — Passos visuais ────────────────────── */
+.rw-modal-passos {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  position: relative;
+}
+
+/* Linha conectora vertical entre os passos */
+.rw-modal-passos::before {
+  content: '';
+  position: absolute;
+  left: 15px;
+  top: 32px;
+  bottom: 32px;
+  width: 2px;
+  background: linear-gradient(to bottom, #22C55E, #F59E0B);
+  border-radius: 2px;
+  opacity: 0.25;
+}
+
+.rw-modal-passo {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 12px 0;
+  position: relative;
+}
+
+.rw-modal-passo-numero {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #22C55E 0%, #16A34A 100%);
+  color: #FFFFFF;
+  font-size: 13px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 2px 8px rgba(34, 197, 94, 0.2);
+  z-index: 1;
+}
+
+.rw-modal-passo-conteudo {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  flex: 1;
+  background: #F9FAFB;
+  border-radius: 12px;
+  padding: 12px 14px;
+  border: 1px solid #F3F4F6;
+  transition: all 0.2s ease;
+}
+
+.rw-modal-passo-conteudo:hover {
+  background: #F0FDF4;
+  border-color: rgba(34, 197, 94, 0.15);
+}
+
+.rw-modal-passo-icone {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #22C55E;
+  flex-shrink: 0;
+  border: 1px solid #E5E7EB;
+}
+
+.rw-modal-passo-icone svg {
+  width: 18px;
+  height: 18px;
+}
+
+.rw-modal-passo-conteudo div:last-child {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding-top: 2px;
+}
+
+.rw-modal-passo-conteudo strong {
+  font-size: 13px;
+  font-weight: 600;
+  color: #111827;
+  line-height: 1.2;
+}
+
+.rw-modal-passo-conteudo span {
+  font-size: 12px;
+  color: #6B7280;
+  line-height: 1.4;
+}
+
+/* ── Modal — Rodapé ────────────────────────────── */
+.rw-modal-footer {
+  padding: 16px 24px 20px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.rw-modal-btn-entendi {
+  padding: 10px 28px;
+  border: none;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #22C55E 0%, #16A34A 100%);
+  color: #FFFFFF;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  box-shadow: 0 2px 8px rgba(34, 197, 94, 0.25);
+  letter-spacing: 0.1px;
+}
+
+.rw-modal-btn-entendi:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(34, 197, 94, 0.35);
+}
+
+.rw-modal-btn-entendi:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 6px rgba(34, 197, 94, 0.2);
 }
 
 /* ── SAUDAÇÃO ─────────────────────────────────── */
@@ -203,48 +520,38 @@
 .rw-card {
   display: flex;
   align-items: center;
-  gap: 14px;
+  justify-content: space-between;
   padding: 16px;
   background: #FFFFFF;
-  border-radius: 14px;
+  border-radius: 12px;
   border: 1px solid #E5E7EB;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-  transition: all .25s ease;
-  cursor: default;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .rw-card:hover {
-  border-color: #22C55E;
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(34, 197, 94, 0.12);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
 }
 
 .rw-card-icone {
-  width: 44px;
-  height: 44px;
-  border-radius: 12px;
+  font-size: 24px;
+  width: 48px;
+  height: 48px;
   display: flex;
   align-items: center;
   justify-content: center;
-  flex-shrink: 0;
-  font-size: 22px;
+  border-radius: 50%;
+  background: #E5E7EB;
 }
-
-.rw-card-icone.verde   { background: rgba(34, 197, 94, 0.1); }
-.rw-card-icone.azul    { background: rgba(59, 130, 246, 0.1); }
-.rw-card-icone.amarelo { background: rgba(245, 158, 11, 0.1); }
-.rw-card-icone.roxo    { background: rgba(139, 92, 246, 0.1); }
-.rw-card-icone.rosa    { background: rgba(236, 72, 153, 0.1); }
 
 .rw-card-info {
   flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
+  margin-left: 12px;
 }
 
 .rw-card-nome {
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 600;
   color: #111827;
 }
@@ -343,10 +650,34 @@
   font-weight: 600;
 }
 
+/* ── SEARCH BAR ───────────────────────────────── */
+.rw-recompensas-header {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 20px;
+}
 
-/* ══════════════════════════════════════════════════
-   RESPONSIVO
-══════════════════════════════════════════════════ */
+.rw-search {
+  padding: 10px;
+  border: 1px solid #E5E7EB;
+  border-radius: 8px;
+  font-size: 14px;
+  width: 100%;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.rw-categorias {
+  padding: 10px;
+  border: 1px solid #E5E7EB;
+  border-radius: 8px;
+  font-size: 14px;
+  background: #FFFFFF;
+  color: #374151;
+  cursor: pointer;
+}
+
+/* ── RESPONSIVO ───────────────────────────────── */
 @media (max-width: 768px) {
   .recompensas-main {
     padding-bottom: 80px; /* Espaço pro menu inferior */
@@ -356,8 +687,18 @@
     padding: 16px 16px 24px;
   }
 
+  .rw-top-header {
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
   .rw-top-title {
     font-size: 16px;
+  }
+
+  .rw-minhas-recompensas-btn {
+    font-size: 12px;
+    padding: 7px 12px;
   }
 
   .rw-greeting-title {
@@ -419,5 +760,27 @@
 
   .rw-card-desc {
     font-size: 11px;
+  }
+
+  /* Modal responsivo */
+  .rw-modal {
+    max-width: 100%;
+    border-radius: 16px;
+  }
+
+  .rw-modal-header {
+    padding: 16px 18px 0;
+  }
+
+  .rw-modal-body {
+    padding: 14px 18px 4px;
+  }
+
+  .rw-modal-footer {
+    padding: 14px 18px 18px;
+  }
+
+  .rw-modal-passo-conteudo {
+    padding: 10px 12px;
   }
 }

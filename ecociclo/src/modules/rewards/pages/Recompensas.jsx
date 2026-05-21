@@ -1,101 +1,36 @@
-import React from 'react'
-import { useNavigate } from 'react-router-dom'
-import { Gift, Lock, Check, Leaf, Bell } from 'lucide-react'
-import '../styles/Recompensas.css'
-import { Navigation } from '../../../shared/components/Navigation/Navigation.jsx'
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { Gift, Lock, Check, Leaf, HelpCircle, ChevronRight, X, Recycle, Star, ArrowRightLeft } from 'lucide-react';
+import '../styles/Recompensas.css';
+import { Navigation } from '../../../shared/components/Navigation/Navigation.jsx';
+import { useRecompensas } from '../hooks/useRecompensas';
 
-/**
- * Página de Recompensas — exibe pontos acumulados, nível,
- * recompensas disponíveis e histórico de resgates (dados mockados).
- */
 function Recompensas() {
+  const navigate = useNavigate();
+  const { pontosAtuais, proximoNivel, progresso, recompensas, historico } = useRecompensas();
+  const [categoria, setCategoria] = useState('Todas as categorias');
+  const [mostrarAjuda, setMostrarAjuda] = useState(false);
 
-  const navigate = useNavigate()
-
-  /* ── Dados mockados ──────────────────────────── */
-  const pontosAtuais = 1250
-  const proximoNivel = 1500
-  const progresso = Math.round((pontosAtuais / proximoNivel) * 100)
-
-  const recompensas = [
-    {
-      id: 1,
-      nome: 'Desconto 10% — Loja Eco',
-      desc: 'Válido em produtos sustentáveis',
-      emoji: '🛍️',
-      cor: 'verde',
-      custo: 500,
-      status: 'resgatado',
-    },
-    {
-      id: 2,
-      nome: 'Sacola Ecológica',
-      desc: 'Sacola reutilizável personalizada',
-      emoji: '🌿',
-      cor: 'azul',
-      custo: 800,
-      status: 'disponivel',
-    },
-    {
-      id: 3,
-      nome: 'Copo Térmico 350ml',
-      desc: 'Aço inoxidável, livre de BPA',
-      emoji: '☕',
-      cor: 'amarelo',
-      custo: 1200,
-      status: 'disponivel',
-    },
-    {
-      id: 4,
-      nome: 'Kit Composteira Doméstica',
-      desc: 'Transforme resíduos em adubo',
-      emoji: '🌱',
-      cor: 'roxo',
-      custo: 2000,
-      status: 'bloqueado',
-    },
-    {
-      id: 5,
-      nome: 'Voucher Restaurante Orgânico',
-      desc: 'R$50 em refeições orgânicas',
-      emoji: '🥗',
-      cor: 'rosa',
-      custo: 2500,
-      status: 'bloqueado',
-    },
-  ]
-
-  const historico = [
-    { id: 1, nome: 'Desconto 10% — Loja Eco', data: '12 Mai 2026', pontos: -500, emoji: '🛍️' },
-    { id: 2, nome: 'Coleta #22 completada', data: '08 Mai 2026', pontos: +120, emoji: '♻️' },
-    { id: 3, nome: 'Coleta #21 completada', data: '02 Mai 2026', pontos: +95, emoji: '♻️' },
-    { id: 4, nome: 'Bônus semanal', data: '28 Abr 2026', pontos: +50, emoji: '🎁' },
-  ]
-
-  /* ── Renderiza badge de status ───────────────── */
   function renderBadge(status, custo) {
     if (status === 'resgatado') {
       return (
         <span className="rw-card-badge resgatado">
-          <Check size={13} />
-          Resgatado
+          <Check size={13} /> Resgatado
         </span>
-      )
+      );
     }
     if (status === 'disponivel') {
       return (
         <span className="rw-card-badge disponivel">
-          <Gift size={13} />
-          {custo} pts
+          <Gift size={13} /> {custo} pts
         </span>
-      )
+      );
     }
     return (
       <span className="rw-card-badge bloqueado">
-        <Lock size={13} />
-        {custo} pts
+        <Lock size={13} /> {custo} pts
       </span>
-    )
+    );
   }
 
   return (
@@ -104,44 +39,108 @@ function Recompensas() {
 
       <main className="recompensas-main">
         <div className="recompensas-container">
-
-          {/* Top Header */}
+          {/* Cabeçalho com título, ajuda e botão de navegação integrados */}
           <header className="rw-top-header">
+            <div className="rw-header-esquerda">
               <h2 className="rw-top-title">Recompensas</h2>
+              <button
+                className="rw-help-button"
+                onClick={() => setMostrarAjuda(true)}
+                aria-label="Como funciona o sistema de recompensas"
+                title="Como funciona?"
+              >
+                <HelpCircle size={18} />
+              </button>
+            </div>
+            <button
+              className="rw-minhas-recompensas-btn"
+              onClick={() => navigate('/minhas-recompensas')}
+            >
+              <Gift size={16} />
+              Minhas recompensas
+              <ChevronRight size={16} />
+            </button>
+          </header>
 
-              <div style={{ display: 'flex', gap: '8px' }}>
-    
-               {/*botão provisório para acesso da tela Minhas Recompensas */}
-               <button
-                  className="rw-icon-button"
-                  onClick={() => navigate('/minhas-recompensas')}
-                  style={{
-                    fontSize: '12px',
-                    padding: '6px 10px',
-                    border: '1px solid #22C55E',
-                    borderRadius: '8px',
-                    color: '#22C55E',
-                    background: 'transparent',
-                    cursor: 'pointer'
-                  }}
-                >
-                   Minhas recompensas
-                </button>
+          {/* Modal de ajuda — como funciona o sistema de recompensas */}
+          {mostrarAjuda && (
+            <div className="rw-modal-overlay" onClick={() => setMostrarAjuda(false)}>
+              <div className="rw-modal" onClick={(e) => e.stopPropagation()}>
+                <div className="rw-modal-header">
+                  <div className="rw-modal-icone-titulo">
+                    <div className="rw-modal-icone">
+                      <HelpCircle size={22} />
+                    </div>
+                    <h3 className="rw-modal-titulo">Como funciona?</h3>
+                  </div>
+                  <button
+                    className="rw-modal-fechar"
+                    onClick={() => setMostrarAjuda(false)}
+                    aria-label="Fechar modal"
+                  >
+                    <X size={18} />
+                  </button>
+                </div>
 
-                <button className="rw-icon-button">
-                  <Bell size={20} />
-                </button>
+                <div className="rw-modal-body">
+                  <p className="rw-modal-descricao">
+                    Entenda como ganhar pontos e trocar por recompensas incríveis!
+                  </p>
 
+                  <div className="rw-modal-passos">
+                    <div className="rw-modal-passo">
+                      <div className="rw-modal-passo-numero">1</div>
+                      <div className="rw-modal-passo-conteudo">
+                        <div className="rw-modal-passo-icone">
+                          <Recycle size={20} />
+                        </div>
+                        <div>
+                          <strong>Recicle</strong>
+                          <span>Conclua uma reciclagem com sucesso na plataforma.</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="rw-modal-passo">
+                      <div className="rw-modal-passo-numero">2</div>
+                      <div className="rw-modal-passo-conteudo">
+                        <div className="rw-modal-passo-icone">
+                          <Star size={20} />
+                        </div>
+                        <div>
+                          <strong>Ganhe pontos</strong>
+                          <span>Cada reciclagem concluída gera pontos automaticamente para você.</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="rw-modal-passo">
+                      <div className="rw-modal-passo-numero">3</div>
+                      <div className="rw-modal-passo-conteudo">
+                        <div className="rw-modal-passo-icone">
+                          <ArrowRightLeft size={20} />
+                        </div>
+                        <div>
+                          <strong>Troque por recompensas</strong>
+                          <span>Use seus pontos acumulados para resgatar produtos e vouchers exclusivos.</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="rw-modal-footer">
+                  <button
+                    className="rw-modal-btn-entendi"
+                    onClick={() => setMostrarAjuda(false)}
+                  >
+                    Entendi!
+                  </button>
+                </div>
               </div>
-        </header>
+            </div>
+          )}
 
-          {/* Saudação */}
-          <section className="rw-greeting">
-            <h1 className="rw-greeting-title">Suas Recompensas 🎁</h1>
-            <p className="rw-greeting-subtitle">Acompanhe seus pontos e troque por prêmios exclusivos</p>
-          </section>
-
-          {/* Resumo de pontos */}
           <section className="rw-pontos-resumo">
             <div className="rw-pontos-icone">
               <Leaf size={28} />
@@ -156,7 +155,6 @@ function Recompensas() {
             </div>
           </section>
 
-          {/* Barra de progresso */}
           <section className="rw-progresso">
             <div className="rw-progresso-label">
               <span className="rw-progresso-texto">Progresso para o nível Ouro</span>
@@ -170,15 +168,28 @@ function Recompensas() {
             </div>
           </section>
 
-          {/* Recompensas disponíveis */}
-          <section>
-            <h3 className="rw-secao-titulo">Recompensas disponíveis</h3>
+          <section className="rw-recompensas">
+            <div className="rw-recompensas-header">
+              <input
+                type="text"
+                className="rw-search"
+                placeholder="Buscar recompensas..."
+              />
+              <select
+                className="rw-categorias"
+                value={categoria}
+                onChange={(e) => setCategoria(e.target.value)}
+              >
+                <option>Todas as categorias</option>
+                <option>Voucher</option>
+                <option>Produto</option>
+              </select>
+            </div>
+
             <div className="rw-lista">
               {recompensas.map((item) => (
                 <div key={item.id} className="rw-card">
-                  <div className={`rw-card-icone ${item.cor}`}>
-                    {item.emoji}
-                  </div>
+                  <div className={`rw-card-icone ${item.cor}`}>{item.emoji}</div>
                   <div className="rw-card-info">
                     <span className="rw-card-nome">{item.nome}</span>
                     <span className="rw-card-desc">{item.desc}</span>
@@ -188,35 +199,10 @@ function Recompensas() {
               ))}
             </div>
           </section>
-
-          {/* Histórico de resgates */}
-          <section>
-            <h3 className="rw-secao-titulo">Histórico recente</h3>
-            <div className="rw-historico">
-              {historico.map((item) => (
-                <div key={item.id} className="rw-historico-item">
-                  <div className="rw-historico-esquerda">
-                    <span className="rw-historico-emoji">{item.emoji}</span>
-                    <div className="rw-historico-info">
-                      <span className="rw-historico-nome">{item.nome}</span>
-                      <span className="rw-historico-data">{item.data}</span>
-                    </div>
-                  </div>
-                  <span
-                    className="rw-historico-pontos"
-                    style={{ color: item.pontos > 0 ? '#22C55E' : '#dc2626' }}
-                  >
-                    {item.pontos > 0 ? '+' : ''}{item.pontos} pts
-                  </span>
-                </div>
-              ))}
-            </div>
-          </section>
-
         </div>
       </main>
     </div>
-  )
+  );
 }
 
-export default Recompensas
+export default Recompensas;
