@@ -30,76 +30,10 @@ body, #root {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  height: 100vh;
+  overflow: hidden;
   font-family: Arial, Helvetica, sans-serif;
   background-color: var(--cinza-fundo);
-}
-
-.profile-page__lateral {
-  display: none !important;
-}
-
-.profile-page__lateral-logo {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  font-size: 1.1rem;
-  font-weight: 600;
-  color: var(--branco);
-}
-
-.profile-page__lateral-logo-icone {
-  width: 32px;
-  height: 32px;
-  background: rgba(255, 255, 255, 0.2);
-  border-radius: 8px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.profile-page__lateral-tag {
-  font-size: 0.7rem;
-  letter-spacing: 2px;
-  opacity: 0.75;
-  text-transform: uppercase;
-  margin-bottom: 1rem;
-  color: var(--branco);
-}
-
-.profile-page__lateral-titulo {
-  font-size: 2rem;
-  font-weight: 700;
-  line-height: 1.2;
-  margin-bottom: 1rem;
-  color: var(--branco);
-}
-
-.profile-page__lateral-titulo span {
-  color: var(--verde-medio);
-}
-
-.profile-page__lateral-desc {
-  font-size: 0.85rem;
-  opacity: 0.8;
-  line-height: 1.6;
-  color: var(--branco);
-}
-
-.profile-page__lateral-stats {
-  display: flex;
-  gap: 1.5rem;
-}
-
-.profile-page__lateral-stat-valor {
-  font-size: 1.4rem;
-  font-weight: 700;
-  color: var(--branco);
-}
-
-.profile-page__lateral-stat-label {
-  font-size: 0.72rem;
-  opacity: 0.7;
-  color: var(--branco);
 }
 
 /* ══════════════════════════════
@@ -110,9 +44,12 @@ body, #root {
   display: flex;
   flex-direction: column;
   flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
   width: 100%;
-  min-height: 100dvh;
-  padding: 60px 1rem 60px;
+  /* padding-bottom deixa espaço para a bottom nav do Navigation */
+  min-height: 0;
+  padding: 60px 1rem 80px;
   box-sizing: border-box;
 }
 
@@ -160,7 +97,6 @@ body, #root {
   font-family: 'Nunito', 'Segoe UI', sans-serif;
 }
 
-
 /* ══════════════════════════════
    WRAPPER (card + botões)
 ══════════════════════════════ */
@@ -205,7 +141,6 @@ body, #root {
   justify-content: center;
   flex-shrink: 0;
   color: var(--verde-principal);
-  overflow: hidden;
 }
 
 .profile-card__avatar img {
@@ -490,42 +425,29 @@ body, #root {
   background: var(--vermelho-claro);
 }
 
-/* ══════════════════════════════
-   DESKTOP (min-width: 768px)
-══════════════════════════════ */
 
 @media (min-width: 768px) {
   .profile-page {
     flex-direction: row;
-    align-items: stretch;
-    min-height: 100vh;
-  }
-
-  .profile-page__lateral {
-    display: flex !important;
-    flex-direction: column;
-    justify-content: space-between;
-    width: 40%;
-    background-color: var(--verde-escuro);
-    padding: 2.5rem 2rem;
     height: 100vh;
-    position: fixed;
-    top: 0;
-    left: 0;
+    overflow: hidden;
+    align-items: stretch;
+    min-height: 0;
   }
 
   .profile-page__content--mobile {
-    display: none;
+    display: none !important;
   }
 
   .profile-page__content--desktop {
     display: flex !important;
-    margin-left: 40%;
+    margin-left: 100px;
     flex-direction: column;
     flex: 1;
-    width: 50%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    min-height: 0;
     padding: 2rem 1.5rem;
-    min-height: 100vh;
     box-sizing: border-box;
   }
 

@@ -28,23 +28,20 @@
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  overflow: hidden;
   background-color: var(--eco-cinza-bg);
   font-family: "Nunito", "Segoe UI", sans-serif;
   color: var(--eco-preto);
 }
 
-/* =========================================
-   SIDEBAR
-   ========================================= */
-.avaliacoes-sidebar {
-  display: none;
-}
 
 /* =========================================
    CONTEÚDO PRINCIPAL
    ========================================= */
 .avaliacoes-conteudo {
   flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
   display: flex;
   flex-direction: column;
   padding: 0 16px 32px;
@@ -373,51 +370,20 @@
 @media (min-width: 768px) {
   .minhas-avaliacoes {
     flex-direction: row;
-  }
-
-  .avaliacoes-sidebar {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-    width: 40%;
-    min-height: 100vh;
-    background-color: #1d9e75;
-    padding: 48px 32px;
-    color: #fff;
-    flex-shrink: 0;
-    position: fixed;
-    top: 0;
-    left: 0;
-    bottom: 0;
-  }
-
-  .avaliacoes-sidebar__icone {
-    width: 56px;
-    height: 56px;
-    background: rgba(255, 255, 255, 0.2);
-    border-radius: 14px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.6rem;
-  }
-
-  .avaliacoes-sidebar__titulo {
-    font-size: 1.6rem;
-    font-weight: 800;
-    line-height: 1.2;
-  }
-
-  .avaliacoes-sidebar__desc {
-    font-size: 0.9rem;
-    line-height: 1.6;
-    opacity: 0.85;
+    height: 100vh;
+    overflow: hidden;
   }
 
   .avaliacoes-conteudo {
-    margin-left: 40%;
-    padding: 32px 48px;
-    max-width: 720px;
+    display: flex !important;
+    margin-left: 100px;
+    flex-direction: column;
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 2rem 1.5rem;
+    min-height: 0;
+    box-sizing: border-box;
   }
 
   .resumo {

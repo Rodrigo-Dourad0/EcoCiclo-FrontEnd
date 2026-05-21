@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom"
 import CardAvaliacao from "../components/CardAvaliacao.jsx"
 import ResumoEstrelas from "../components/ResumoEstrelas.jsx"
 import FiltrosBotoes from "../components/FiltrosBotoes.jsx"
+import { Navigation } from '../../../shared/components/navigation/Navigation.jsx'
 import "../styles/MinhasAvaliacoes.css"
 
 const avaliacoesData = [
@@ -53,15 +54,8 @@ export default function MinhasAvaliacoes() {
 
   return (
     <div className="minhas-avaliacoes">
-      <aside className="avaliacoes-sidebar">
-        <div className="avaliacoes-sidebar__icone">
-          <span>⭐</span>
-        </div>
-        <h2 className="avaliacoes-sidebar__titulo">Minhas avaliações</h2>
-        <p className="avaliacoes-sidebar__desc">
-          Veja o histórico de todas as suas avaliações para os coletores do EcoCiclo.
-        </p>
-      </aside>
+
+      <Navigation />
 
       <main className="avaliacoes-conteudo">
         <header className="avaliacoes-conteudo__header">

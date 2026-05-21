@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import ProfileCard from '../components/ProfileCard.jsx'
+import { Navigation } from '../../../shared/components/navigation/Navigation.jsx'
 import '../styles/profile-page.css'
 
 function ProfilePage() {
@@ -27,48 +28,17 @@ function ProfilePage() {
   function handleLogout() { navigate('/login') }
   function handleNovoEndereco() { navigate('/novo-endereco') }
   function handleMinhasAvaliacoes() { navigate('/minhas-avaliacoes') }
-  function handleMinhasColetas() { navigate('/minhas-coletas') }   // <-- novo
+  function handleMinhasColetas() { navigate('/minhas-coletas') }
   function handleVoltar() { navigate('/') }
   function handleEditarPerfil() { navigate('/editar-perfil') }
 
   return (
     <div className="profile-page">
 
-      {isDesktop && (
-        <aside className="profile-page__lateral">
-          <div className="profile-page__lateral-logo">
-            <div className="profile-page__lateral-logo-icone">
-              <svg viewBox="0 0 24 24" fill="white" width="18" height="18">
-                <path d="M21 3C10 4 4 10 3 21c11-1 17-7 18-18z" />
-              </svg>
-            </div>
-            EcoCiclo
-          </div>
+      {/* Navigation lateral (desktop) ou bottom bar (mobile) */}
+      <Navigation />
 
-          <div>
-            <p className="profile-page__lateral-tag">Sua conta</p>
-            <h2 className="profile-page__lateral-titulo">
-              Olá,<br />
-              <span>{usuario.nome}</span>
-            </h2>
-            <p className="profile-page__lateral-desc">
-              Gerencie seus dados, endereços e preferências de coleta em um só lugar.
-            </p>
-          </div>
-
-          <div className="profile-page__lateral-stats">
-            <div>
-              <div className="profile-page__lateral-stat-valor">⭐ {usuario.avaliacao}</div>
-              <div className="profile-page__lateral-stat-label">Avaliação</div>
-            </div>
-            <div>
-              <div className="profile-page__lateral-stat-valor">{usuario.coletas}</div>
-              <div className="profile-page__lateral-stat-label">Coletas</div>
-            </div>
-          </div>
-        </aside>
-      )}
-
+      {/* MOBILE */}
       {!isDesktop && (
         <main className="profile-page__content profile-page__content--mobile">
           <header className="profile-page__header">
@@ -94,6 +64,7 @@ function ProfilePage() {
         </main>
       )}
 
+      {/* DESKTOP */}
       {isDesktop && (
         <main className="profile-page__content profile-page__content--desktop">
           <div className="profile-painel">
@@ -168,7 +139,6 @@ function ProfilePage() {
                 </svg>
               </button>
 
-              {/* Card: Minhas Coletas */}
               <button className="profile-painel__item" onClick={handleMinhasColetas}>
                 <span className="profile-painel__item-esquerda">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="18" height="18">
@@ -194,7 +164,6 @@ function ProfilePage() {
                   <polyline points="9 18 15 12 9 6" />
                 </svg>
               </button>
-
             </div>
 
             <div className="profile-painel__secao profile-painel__secao--perigo">
