@@ -474,21 +474,32 @@
 @media (min-width: 1025px) {
   .dr-page {
     display: flex;
+    min-height: 100vh;
     padding-bottom: 0;
+    overflow-y: auto;
   }
 
   .dr-page .navigation {
     width: 300px;
     min-height: 100vh;
-    height: 100vh;
-    position: sticky;
+    height: auto;
+
+    position: fixed;
+    left: 0;
     top: 0;
+    bottom: 0;
+
     flex-shrink: 0;
   }
 
   .dr-main {
     flex: 1;
+    min-height: 100vh;
+
+    margin-left: 300px;
     padding: 48px 64px;
+
+    overflow-y: visible;
   }
 
   .dr-header h1 {

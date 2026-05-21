@@ -4,10 +4,23 @@
   padding: 0;
 }
 
+html,
+body,
+#root {
+  min-height: 100%;
+  overflow-y: auto !important;
+  overflow-x: hidden;
+}
+
+body {
+  display: block !important;
+}
+
 .mc-page {
   min-height: 100vh;
   background: #f5f6f8;
   font-family: "Poppins", sans-serif;
+  overflow-y: auto;
 }
 
 /* Corrige o item ativo: tira do Início e coloca em Perfil */
@@ -200,10 +213,11 @@
   font-weight: 800;
 }
 
-/* CELULAR: navbar embaixo */
+/* CELULAR */
 @media (max-width: 699px) {
   .mc-page {
-    padding-bottom: 92px;
+    padding-bottom: 120px;
+    overflow-y: auto;
   }
 
   .mc-page .navigation {
@@ -212,13 +226,16 @@
     right: 0;
     bottom: 0;
     top: auto;
+
     display: flex;
     align-items: center;
     justify-content: space-around;
+
     padding: 10px;
     background: #12141b;
     overflow-x: auto;
     gap: 8px;
+
     box-shadow: 0 -6px 24px rgba(0, 0, 0, 0.18);
   }
 
@@ -244,6 +261,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
+
     gap: 5px;
     padding: 8px 6px;
     font-size: 11px;
@@ -259,12 +277,10 @@
     display: flex;
     align-items: center;
     gap: 8px;
-    margin-left: 4px;
   }
 
   .mc-page .nav-auth-btn {
     width: auto;
-    height: auto;
     min-width: 68px;
     padding: 9px 10px;
     border-radius: 14px;
@@ -287,10 +303,11 @@
   }
 }
 
-/* TABLET: navbar igual celular */
+/* TABLET */
 @media (min-width: 700px) and (max-width: 1024px) {
   .mc-page {
     padding-bottom: 136px;
+    overflow-y: auto;
   }
 
   .mc-page .navigation {
@@ -311,10 +328,13 @@
 
     padding: 10px 16px !important;
     background: #12141b;
+
     overflow-x: auto;
     overflow-y: hidden;
+
     gap: 8px;
     z-index: 999;
+
     box-shadow: 0 -6px 24px rgba(0, 0, 0, 0.18);
   }
 
@@ -330,18 +350,20 @@
 
     width: auto !important;
     height: auto !important;
+
     gap: 8px !important;
     margin: 0 !important;
     padding: 0 !important;
-    flex-shrink: 0;
   }
 
   .mc-page .nav-item {
     width: auto !important;
     min-width: 62px;
     height: auto !important;
+
     padding: 0 !important;
     margin: 0 !important;
+
     border-radius: 14px;
   }
 
@@ -353,6 +375,7 @@
 
     gap: 5px;
     padding: 8px 6px !important;
+
     font-size: 11px;
     text-align: center;
   }
@@ -366,23 +389,25 @@
     display: flex !important;
     flex-direction: row !important;
     align-items: center !important;
+
     gap: 8px !important;
 
     width: auto !important;
     height: auto !important;
-    margin: 0 !important;
-    flex-shrink: 0;
   }
 
   .mc-page .nav-auth-btn {
     width: auto !important;
     height: auto !important;
+
     min-width: 68px;
 
     padding: 9px 10px !important;
     border-radius: 14px;
+
     font-size: 11px;
     gap: 5px;
+
     box-shadow: none;
   }
 
@@ -403,25 +428,37 @@
     font-size: 38px;
   }
 }
-/* DESKTOP: 1025px+ */
+
+/* DESKTOP */
 @media (min-width: 1025px) {
   .mc-page {
     display: flex;
+    min-height: 100vh;
+    overflow-y: auto;
   }
 
   .mc-page .navigation {
-    width: 300px;
-    min-height: 100vh;
-    height: 100vh;
-    position: sticky;
-    top: 0;
-    flex-shrink: 0;
-  }
+  width: 300px;
+  min-height: 100vh;
+  height: auto;
+
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
+
+  flex-shrink: 0;
+}
 
   .mc-main {
-    flex: 1;
-    padding: 48px 64px;
-  }
+  flex: 1;
+  min-height: 100vh;
+
+  margin-left: 300px;
+  padding: 48px 64px;
+
+  overflow-y: visible;
+}
 
   .mc-content {
     max-width: 980px;
