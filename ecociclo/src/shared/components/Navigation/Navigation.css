@@ -15,8 +15,10 @@
     position: sticky;
     top: 0;
     left: 0;
+    align-self: flex-start;
     padding: 24px 0;
     border-right: 1px solid var(--border);
+    overflow-y: auto;
   }
 
   .nav-logo {
