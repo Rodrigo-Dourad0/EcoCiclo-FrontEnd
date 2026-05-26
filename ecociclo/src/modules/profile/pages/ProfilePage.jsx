@@ -30,6 +30,7 @@ function ProfilePage() {
   function handleMinhasAvaliacoes() { navigate('/minhas-avaliacoes') }
   function handleMinhasColetas() { navigate('/minhas-coletas') }
   function handleVoltar() { navigate('/') }
+  function handleMeusEnderecos() { navigate('/meus-enderecos') }
   function handleEditarPerfil() { navigate('/editar-perfil') }
 
   return (
@@ -114,7 +115,7 @@ function ProfilePage() {
             <div className="profile-painel__secao">
               <h2 className="profile-painel__secao-titulo">Configurações</h2>
 
-              <button className="profile-painel__item" onClick={() => alert('Em breve!')}>
+              <button className="profile-painel__item" onClick={handleMeusEnderecos}>
                 <span className="profile-painel__item-esquerda">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="18" height="18">
                     <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
