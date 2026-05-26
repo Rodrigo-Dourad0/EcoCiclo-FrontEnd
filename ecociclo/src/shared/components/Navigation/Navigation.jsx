@@ -1,15 +1,17 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { Home, Package, Gift, Clock, User, LogIn, UserPlus } from 'lucide-react';
 import './Navigation.css';
 
 export function Navigation() {
+  const location = useLocation();
+  
   const navItems = [
-    { icon: <Home size={22} />, label: 'Início', to: '/', active: true },
-    { icon: <Package size={22} />, label: 'Coletas', to: '/agendar-coleta', active: false },
-    { icon: <Gift size={22} />, label: 'Recompensas', to: '/recompensas', active: false },
-    { icon: <Clock size={22} />, label: 'Histórico', to: '/historico', active: false },
-    { icon: <User size={22} />, label: 'Perfil', to: '/perfil', active: false },
+    { icon: <Home size={22} />, label: 'Início', to: '/' },
+    { icon: <Package size={22} />, label: 'Coletas', to: '/agendar-coleta' },
+    { icon: <Gift size={22} />, label: 'Recompensas', to: '/recompensas' },
+    { icon: <Clock size={22} />, label: 'Histórico', to: '/historico' },
+    { icon: <User size={22} />, label: 'Perfil', to: '/perfil' },
   ];
 
   return (
@@ -19,14 +21,18 @@ export function Navigation() {
       </div>
 
       <ul className="nav-list">
-        {navItems.map((item, index) => (
-          <li key={index} className={`nav-item ${item.active ? 'active' : ''}`}>
-            <Link to={item.to} className="nav-link">
-              <span className="nav-icon">{item.icon}</span>
-              <span className="nav-label">{item.label}</span>
-            </Link>
-          </li>
-        ))}
+        {navItems.map((item, index) => {
+          const normalize = (p) => (p ? p.replace(/\/+$/g, '') : '/') || '/';
+          const isActive = normalize(location.pathname) === normalize(item.to);
+          return (
+            <li key={index} className={`nav-item ${isActive ? 'active' : ''}`}>
+              <Link to={item.to} className="nav-link">
+                <span className="nav-icon">{item.icon}</span>
+                <span className="nav-label">{item.label}</span>
+              </Link>
+            </li>
+          );
+        })}
       </ul>
 
       {/* Botões de autenticação — visíveis apenas na sidebar (desktop) */}
