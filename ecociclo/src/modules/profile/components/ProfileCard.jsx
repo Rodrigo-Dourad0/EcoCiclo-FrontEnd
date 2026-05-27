@@ -1,4 +1,14 @@
-function ProfileCard({ usuario, onLogout, onNovoEndereco, onMinhasAvaliacoes, onMinhasColetas, onEditarPerfil }) {
+import { RenderIcon } from './RenderIcon.jsx'
+
+function ProfileCard({ 
+  usuario, 
+  tipoUsuario,
+  alternarTipoUsuario,
+  configuracoes,
+  onLogout, 
+  onEditarPerfil,
+  executarAcao
+}) {
   return (
     <div className="profile-card-wrapper">
       <div className="profile-card">
@@ -15,6 +25,7 @@ function ProfileCard({ usuario, onLogout, onNovoEndereco, onMinhasAvaliacoes, on
           </div>
           <div className="profile-card__info">
             <h2 className="profile-card__nome">{usuario.nome}</h2>
+            <p className="profile-card__tipo-usuario">{usuario.tipoUsuario}</p>
             <p className="profile-card__email">{usuario.email}</p>
             <p className="profile-card__telefone">{usuario.telefone}</p>
           </div>
@@ -47,57 +58,35 @@ function ProfileCard({ usuario, onLogout, onNovoEndereco, onMinhasAvaliacoes, on
           </svg>
         </button>
 
-        <button className="profile-card__btn-acao" onClick={() => alert('Em breve!')}>
+        <button 
+          className="profile-card__btn-alternar"
+          onClick={alternarTipoUsuario}
+          title={`Alternar para ${tipoUsuario === 'Coletor' ? 'Administrador' : 'Coletor'}`}
+        >
           <span className="profile-card__btn-acao-esquerda">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="18" height="18">
-              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
-              <circle cx="12" cy="10" r="3" />
-            </svg>
-            Gerenciar endereços
+            <RenderIcon iconName="users" width={18} height={18} />
+            {tipoUsuario === 'Coletor' ? 'Modo Admin' : 'Modo Coletor'}
           </span>
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="18" height="18">
             <polyline points="9 18 15 12 9 6" />
           </svg>
         </button>
 
-        <button className="profile-card__btn-acao" onClick={onNovoEndereco}>
-          <span className="profile-card__btn-acao-esquerda">
+        {configuracoes.map((config) => (
+          <button 
+            key={config.id}
+            className="profile-card__btn-acao" 
+            onClick={() => executarAcao(config.action)}
+          >
+            <span className="profile-card__btn-acao-esquerda">
+              <RenderIcon iconName={config.icon} width={18} height={18} />
+              {config.label}
+            </span>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="18" height="18">
-              <path d="M12 5v14M5 12h14" />
+              <polyline points="9 18 15 12 9 6" />
             </svg>
-            Adicionar novo endereço
-          </span>
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="18" height="18">
-            <polyline points="9 18 15 12 9 6" />
-          </svg>
-        </button>
-
-        {/* Minhas Coletas */}
-        <button className="profile-card__btn-acao" onClick={onMinhasColetas}>
-          <span className="profile-card__btn-acao-esquerda">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="18" height="18">
-              <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
-              <polyline points="3.27 6.96 12 12.01 20.73 6.96" />
-              <line x1="12" y1="22.08" x2="12" y2="12" />
-            </svg>
-            Minhas coletas
-          </span>
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="18" height="18">
-            <polyline points="9 18 15 12 9 6" />
-          </svg>
-        </button>
-
-        <button className="profile-card__btn-acao" onClick={onMinhasAvaliacoes}>
-          <span className="profile-card__btn-acao-esquerda">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="18" height="18">
-              <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
-            </svg>
-            Minhas avaliações
-          </span>
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="18" height="18">
-            <polyline points="9 18 15 12 9 6" />
-          </svg>
-        </button>
+          </button>
+        ))}
 
         <button className="profile-card__btn-sair" onClick={onLogout}>
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="18" height="18">

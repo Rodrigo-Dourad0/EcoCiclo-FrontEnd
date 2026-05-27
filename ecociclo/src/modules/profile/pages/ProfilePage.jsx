@@ -1,20 +1,20 @@
-import { useState, useEffect } from 'react'
+import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { useProfilePage } from '../hooks/useProfilePage.js'
 import ProfileCard from '../components/ProfileCard.jsx'
+import { RenderIcon } from '../components/RenderIcon.jsx'
 import { Navigation } from '../../../shared/components/navigation/Navigation.jsx'
 import '../styles/profile-page.css'
 
 function ProfilePage() {
-  const [usuario, setUsuario] = useState({
-    nome: 'João Silva',
-    email: 'joao.silva@gmail.com',
-    telefone: '(11) 98765-4321',
-    avatar: null,
-    avaliacao: 4.8,
-    coletas: 24,
-  })
-
-  const [isDesktop, setIsDesktop] = useState(window.innerWidth >= 768)
+  const {
+    usuario,
+    tipoUsuario,
+    alternarTipoUsuario,
+    isDesktop,
+    setIsDesktop,
+    configuracoes
+  } = useProfilePage()
 
   useEffect(() => {
     const handleResize = () => {
@@ -22,16 +22,31 @@ function ProfilePage() {
     }
     window.addEventListener('resize', handleResize)
     return () => window.removeEventListener('resize', handleResize)
-  }, [])
+  }, [setIsDesktop])
 
   const navigate = useNavigate()
+  
+  // Mapeamento de ações
+  const acoes = {
+    onMeusEnderecos: () => navigate('/meus-enderecos'),
+    onNovoEndereco: () => navigate('/novo-endereco'),
+    onMinhasAvaliacoes: () => navigate('/minhas-avaliacoes'),
+    onMinhasColetas: () => navigate('/minhas-coletas'),
+    onGerenciarRecompensas: () => alert('Gerenciar Recompensas - em desenvolvimento'),
+    onGerenciarUsuarios: () => alert('Gerenciar Usuários - em desenvolvimento'),
+    onValidarColetores: () => alert('Validar Coletores - em desenvolvimento'),
+  }
+
   function handleLogout() { navigate('/login') }
-  function handleNovoEndereco() { navigate('/novo-endereco') }
-  function handleMinhasAvaliacoes() { navigate('/minhas-avaliacoes') }
-  function handleMinhasColetas() { navigate('/minhas-coletas') }
   function handleVoltar() { navigate('/') }
-  function handleMeusEnderecos() { navigate('/meus-enderecos') }
   function handleEditarPerfil() { navigate('/editar-perfil') }
+
+  // Executa a ação baseado no nome armazenado
+  const executarAcao = (nomeAcao) => {
+    if (acoes[nomeAcao]) {
+      acoes[nomeAcao]()
+    }
+  }
 
   return (
     <div className="profile-page">
@@ -55,11 +70,12 @@ function ProfilePage() {
           <div className="profile-page__body">
             <ProfileCard
               usuario={usuario}
+              tipoUsuario={tipoUsuario}
+              alternarTipoUsuario={alternarTipoUsuario}
+              configuracoes={configuracoes}
               onLogout={handleLogout}
-              onNovoEndereco={handleNovoEndereco}
-              onMinhasAvaliacoes={handleMinhasAvaliacoes}
-              onMinhasColetas={handleMinhasColetas}
               onEditarPerfil={handleEditarPerfil}
+              executarAcao={executarAcao}
             />
           </div>
         </main>
@@ -91,6 +107,7 @@ function ProfilePage() {
                 </div>
                 <div>
                   <p className="profile-painel__nome">{usuario.nome}</p>
+                  <p className="profile-painel__tipo-usuario">{usuario.tipoUsuario}</p>
                   <p className="profile-painel__sub">{usuario.email}</p>
                   <p className="profile-painel__sub">{usuario.telefone}</p>
                 </div>
@@ -98,73 +115,49 @@ function ProfilePage() {
               </div>
             </div>
 
-            <div className="profile-painel__secao">
-              <h2 className="profile-painel__secao-titulo">Atividade</h2>
-              <div className="profile-painel__stats">
-                <div className="profile-painel__stat">
-                  <span className="profile-painel__stat-valor">⭐ {usuario.avaliacao}</span>
-                  <span className="profile-painel__stat-label">Avaliação média</span>
-                </div>
-                <div className="profile-painel__stat">
-                  <span className="profile-painel__stat-valor">{usuario.coletas}</span>
-                  <span className="profile-painel__stat-label">Coletas realizadas</span>
+            {tipoUsuario === 'Coletor' && (
+              <div className="profile-painel__secao">
+                <h2 className="profile-painel__secao-titulo">Atividade</h2>
+                <div className="profile-painel__stats">
+                  <div className="profile-painel__stat">
+                    <span className="profile-painel__stat-valor">⭐ {usuario.avaliacao}</span>
+                    <span className="profile-painel__stat-label">Avaliação média</span>
+                  </div>
+                  <div className="profile-painel__stat">
+                    <span className="profile-painel__stat-valor">{usuario.coletas}</span>
+                    <span className="profile-painel__stat-label">Coletas realizadas</span>
+                  </div>
                 </div>
               </div>
-            </div>
+            )}
 
             <div className="profile-painel__secao">
-              <h2 className="profile-painel__secao-titulo">Configurações</h2>
+              <div className="profile-painel__config-header">
+                <h2 className="profile-painel__secao-titulo">Configurações</h2>
+                <button 
+                  className="profile-painel__btn-alternar"
+                  onClick={alternarTipoUsuario}
+                  title={`Alternar para ${tipoUsuario === 'Coletor' ? 'Administrador' : 'Coletor'}`}
+                >
+                  {tipoUsuario === 'Coletor' ? 'Modo Admin' : 'Modo Coletor'}
+                </button>
+              </div>
 
-              <button className="profile-painel__item" onClick={handleMeusEnderecos}>
-                <span className="profile-painel__item-esquerda">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="18" height="18">
-                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
-                    <circle cx="12" cy="10" r="3" />
+              {configuracoes.map((config) => (
+                <button 
+                  key={config.id}
+                  className="profile-painel__item" 
+                  onClick={() => executarAcao(config.action)}
+                >
+                  <span className="profile-painel__item-esquerda">
+                    <RenderIcon iconName={config.icon} width={18} height={18} />
+                    {config.label}
+                  </span>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="16" height="16">
+                    <polyline points="9 18 15 12 9 6" />
                   </svg>
-                  Gerenciar endereços
-                </span>
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="16" height="16">
-                  <polyline points="9 18 15 12 9 6" />
-                </svg>
-              </button>
-
-              <button className="profile-painel__item" onClick={handleNovoEndereco}>
-                <span className="profile-painel__item-esquerda">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="18" height="18">
-                    <path d="M12 5v14M5 12h14" />
-                  </svg>
-                  Adicionar novo endereço
-                </span>
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="16" height="16">
-                  <polyline points="9 18 15 12 9 6" />
-                </svg>
-              </button>
-
-              <button className="profile-painel__item" onClick={handleMinhasColetas}>
-                <span className="profile-painel__item-esquerda">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="18" height="18">
-                    <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
-                    <polyline points="3.27 6.96 12 12.01 20.73 6.96" />
-                    <line x1="12" y1="22.08" x2="12" y2="12" />
-                  </svg>
-                  Minhas coletas
-                </span>
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="16" height="16">
-                  <polyline points="9 18 15 12 9 6" />
-                </svg>
-              </button>
-
-              <button className="profile-painel__item" onClick={handleMinhasAvaliacoes}>
-                <span className="profile-painel__item-esquerda">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="18" height="18">
-                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
-                  </svg>
-                  Minhas avaliações
-                </span>
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="16" height="16">
-                  <polyline points="9 18 15 12 9 6" />
-                </svg>
-              </button>
+                </button>
+              ))}
             </div>
 
             <div className="profile-painel__secao profile-painel__secao--perigo">

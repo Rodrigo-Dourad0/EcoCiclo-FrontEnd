@@ -425,6 +425,87 @@ body, #root {
   background: var(--vermelho-claro);
 }
 
+/* ══════════════════════════════
+   TIPO DE USUÁRIO
+══════════════════════════════ */
+
+.profile-card__tipo-usuario {
+  font-size: 0.75rem;
+  color: var(--verde-principal);
+  font-weight: 600;
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.profile-painel__tipo-usuario {
+  font-size: 0.75rem;
+  color: var(--verde-principal);
+  font-weight: 600;
+  margin: 2px 0;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* ══════════════════════════════
+   BOTÃO ALTERNAR TIPO DE USUÁRIO
+══════════════════════════════ */
+
+.profile-painel__config-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.profile-painel__btn-alternar {
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  border: 1px solid var(--verde-principal);
+  background: var(--verde-claro);
+  color: var(--verde-principal);
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.profile-painel__btn-alternar:hover {
+  background: var(--verde-principal);
+  color: var(--branco);
+}
+
+.profile-card__btn-alternar {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.8rem 1rem;
+  border-radius: 10px;
+  border: 1px solid var(--verde-principal);
+  background: var(--verde-claro);
+  color: var(--verde-principal);
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.profile-card__btn-alternar:hover {
+  background: var(--verde-principal);
+  color: var(--branco);
+}
+
+.profile-card__btn-alternar .profile-card__btn-acao-esquerda {
+  color: var(--verde-principal);
+}
+
+.profile-card__btn-alternar:hover .profile-card__btn-acao-esquerda {
+  color: var(--branco);
+}
+
 
 @media (min-width: 768px) {
   .profile-page {
