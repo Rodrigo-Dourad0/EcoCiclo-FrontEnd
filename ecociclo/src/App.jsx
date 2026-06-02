@@ -25,8 +25,9 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Dashboard />} />
+        <Route path="/" element={<Login />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/criar-conta" element={<CriarConta />} />
         <Route path="/perfil" element={<ProfilePage />} />
         <Route path="/avaliar-coletor" element={<AvaliarColetor />} />

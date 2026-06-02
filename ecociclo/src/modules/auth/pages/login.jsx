@@ -1,8 +1,10 @@
 import "../styles/login.css";
 import { useLogin } from "../hooks/useLogin";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function Login() {
+  const navigate = useNavigate();
+
   const {
     showPwd,
     setShowPwd,
@@ -15,6 +17,15 @@ function Login() {
     validarEmail,
     validarSenha,
   } = useLogin();
+
+  const handleLogin = () => {
+  const emailValido = validarEmail(email);
+  const senhaValida = validarSenha(senha);
+
+  if (emailValido && senhaValida) {
+    navigate("/dashboard");
+  }
+};
 
   return (
     <div className="login-page">
@@ -197,7 +208,10 @@ function Login() {
             <span className="remember-label">Manter-me conectado</span>
           </label>
 
-          <button className="login-btn-submit">
+          <button
+  className="login-btn-submit"
+  onClick={handleLogin}
+>
             <span>Entrar</span>
             <svg viewBox="0 0 24 24" className="btn-arrow">
               <line x1="5" y1="12" x2="19" y2="12"/>

@@ -9,23 +9,34 @@ export function useLogin() {
 
   const validarEmail = (valor) => {
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
     if (!valor) {
       setEmailErro("O e-mail é obrigatório.");
-    } else if (!regex.test(valor)) {
-      setEmailErro("Digite um e-mail válido (ex: nome@email.com).");
-    } else {
-      setEmailErro("");
+      return false;
     }
+
+    if (!regex.test(valor)) {
+      setEmailErro("Digite um e-mail válido (ex: nome@email.com).");
+      return false;
+    }
+
+    setEmailErro("");
+    return true;
   };
 
   const validarSenha = (valor) => {
     if (!valor) {
       setSenhaErro("A senha é obrigatória.");
-    } else if (valor.length < 8) {
-      setSenhaErro("A senha deve ter no mínimo 8 caracteres.");
-    } else {
-      setSenhaErro("");
+      return false;
     }
+
+    if (valor.length < 8) {
+      setSenhaErro("A senha deve ter no mínimo 8 caracteres.");
+      return false;
+    }
+
+    setSenhaErro("");
+    return true;
   };
 
   return {
