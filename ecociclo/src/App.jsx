@@ -20,6 +20,7 @@ import MinhasRecompensas from './modules/rewards/pages/MinhasRecompensas.jsx'
 import DetalhesRecompensa from './modules/rewards/pages/DetalhesRecompensa.jsx';
 import MeusEnderecos from './modules/profile/pages/MeusEnderecos.jsx';
 import GerenciarRecompensa from './modules/rewards/pages/GerenciarRecompensa.jsx';
+import ValidarColetores from "./modules/auth/pages/ValidarColetores.jsx";
 
 function App() {
   return (
@@ -46,6 +47,7 @@ function App() {
         <Route path="/detalhes-recompensas" element={<DetalhesRecompensa />} />
         <Route path="/meus-enderecos" element={<MeusEnderecos />} />
         <Route path="/gerenciar-recompensa" element={<GerenciarRecompensa />} />
+        <Route path="/validar-coletores" element={<ValidarColetores />} />
       </Routes>
     </BrowserRouter>
   );

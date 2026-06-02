@@ -34,7 +34,7 @@ function ProfilePage() {
     onMinhasColetas: () => navigate('/minhas-coletas'),
     onGerenciarRecompensas: () => navigate('/gerenciar-recompensa'),
     onGerenciarUsuarios: () => alert('Gerenciar Usuários - em desenvolvimento'),
-    onValidarColetores: () => alert('Validar Coletores - em desenvolvimento'),
+    onValidarColetores: () => navigate('/validar-coletores'),
   }
 
   function handleLogout() { navigate('/login') }
