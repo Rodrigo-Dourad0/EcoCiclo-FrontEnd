@@ -32,7 +32,7 @@ function ProfilePage() {
     onNovoEndereco: () => navigate('/novo-endereco'),
     onMinhasAvaliacoes: () => navigate('/minhas-avaliacoes'),
     onMinhasColetas: () => navigate('/minhas-coletas'),
-    onGerenciarRecompensas: () => alert('Gerenciar Recompensas - em desenvolvimento'),
+    onGerenciarRecompensas: () => navigate('/gerenciar-recompensa'),
     onGerenciarUsuarios: () => alert('Gerenciar Usuários - em desenvolvimento'),
     onValidarColetores: () => alert('Validar Coletores - em desenvolvimento'),
   }

@@ -1,11 +1,11 @@
 import { Link } from "react-router-dom";
-import { Calendar, MapPin, Package } from "lucide-react";
+import { Calendar, MapPin, Package, User, Weight } from "lucide-react";
 import { Navigation } from "../../../shared/components/Navigation/Navigation.jsx";
 import { useMinhasColetas } from "../hooks/MinhasColetas";
 import "../styles/MinhasColetas.css";
 
 function MinhasColetas() {
-  const { abaAtiva, setAbaAtiva, coletasFiltradas } = useMinhasColetas();
+  const { abaAtiva, setAbaAtiva, coletasFiltradas, contagens } = useMinhasColetas();
 
   return (
     <div className="mc-page">
@@ -24,61 +24,94 @@ function MinhasColetas() {
 
         <section className="mc-content">
           <div className="mc-abas">
-            <button
-              className={`mc-aba ${abaAtiva === "agendadas" ? "mc-aba--ativa" : ""}`}
-              onClick={() => setAbaAtiva("agendadas")}
-            >
-              Agendadas
-            </button>
-
-            <button
-              className={`mc-aba ${abaAtiva === "coletadas" ? "mc-aba--ativa" : ""}`}
-              onClick={() => setAbaAtiva("coletadas")}
-            >
-              Coletadas
-            </button>
-
-            <button
-              className={`mc-aba ${abaAtiva === "canceladas" ? "mc-aba--ativa" : ""}`}
-              onClick={() => setAbaAtiva("canceladas")}
-            >
-              Canceladas
-            </button>
+            {["agendadas", "coletadas", "canceladas"].map((aba) => (
+              <button
+                key={aba}
+                className={`mc-aba ${abaAtiva === aba ? "mc-aba--ativa" : ""}`}
+                onClick={() => setAbaAtiva(aba)}
+              >
+                <span className="mc-aba-label">
+                  {aba.charAt(0).toUpperCase() + aba.slice(1)}
+                </span>
+                <span className={`mc-aba-count ${abaAtiva === aba ? "mc-aba-count--ativa" : ""}`}>
+                  {contagens[aba]}
+                </span>
+              </button>
+            ))}
           </div>
 
           <div className="mc-lista">
-            {coletasFiltradas.map((coleta) => (
-              <article className="mc-card" key={coleta.id}>
-                <div className="mc-card-header">
-                  <div className="mc-card-title">
-                    <Package size={22} />
-                    <h3>{coleta.tipo}</h3>
+            {coletasFiltradas.length === 0 && (
+              <div className="mc-empty">
+                <Package size={40} strokeWidth={1.2} />
+                <p>Nenhuma coleta encontrada.</p>
+              </div>
+            )}
+
+            {coletasFiltradas.map((coleta, index) => (
+              <article className="mc-card" key={coleta.id} style={{ animationDelay: `${index * 60}ms` }}>
+                {/* Stripe lateral colorida por status */}
+                <div className={`mc-card-stripe mc-card-stripe--${abaAtiva}`} />
+
+                <div className="mc-card-inner">
+                  {/* Cabeçalho */}
+                  <div className="mc-card-header">
+                    <div className="mc-card-title">
+                      <div className={`mc-icon-wrap mc-icon-wrap--${abaAtiva}`}>
+                        <Package size={18} />
+                      </div>
+                      <h3>{coleta.tipo}</h3>
+                    </div>
+                    <span className={`mc-badge mc-badge--${abaAtiva}`}>
+                      {coleta.status}
+                    </span>
                   </div>
 
-                  <span className={`mc-badge mc-badge--${abaAtiva}`}>
-                    {coleta.status}
-                  </span>
-                </div>
+                  {/* Separador */}
+                  <div className="mc-divider" />
 
-                <div className="mc-info">
-                  <div className="mc-info-line">
-                    <Calendar size={16} />
-                    <span>{coleta.data}</span>
+                  {/* Corpo */}
+                  <div className="mc-card-body">
+                    <div className="mc-meta-grid">
+                      <div className="mc-meta-item">
+                        <Calendar size={14} className="mc-meta-icon" />
+                        <div>
+                          <span className="mc-meta-label">Data e hora</span>
+                          <span className="mc-meta-value">{coleta.data}</span>
+                        </div>
+                      </div>
+
+                      <div className="mc-meta-item">
+                        <MapPin size={14} className="mc-meta-icon" />
+                        <div>
+                          <span className="mc-meta-label">Endereço</span>
+                          <span className="mc-meta-value">{coleta.endereco}</span>
+                        </div>
+                      </div>
+
+                      <div className="mc-meta-item">
+                        <Weight size={14} className="mc-meta-icon" />
+                        <div>
+                          <span className="mc-meta-label">Peso estimado</span>
+                          <span className="mc-meta-value mc-meta-value--strong">{coleta.peso}</span>
+                        </div>
+                      </div>
+
+                      <div className="mc-meta-item">
+                        <User size={14} className="mc-meta-icon" />
+                        <div>
+                          <span className="mc-meta-label">Coletor</span>
+                          <span className="mc-meta-value mc-meta-value--strong">{coleta.coletor}</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    {coleta.pontos && (
+                      <div className="mc-pontos-wrap">
+                        <span className="mc-pontos">+{coleta.pontos} pontos</span>
+                      </div>
+                    )}
                   </div>
-
-                  <div className="mc-info-line">
-                    <MapPin size={16} />
-                    <span>{coleta.endereco}</span>
-                  </div>
-                </div>
-
-                <div className="mc-details">
-                  <p>Peso estimado: <strong>{coleta.peso}</strong></p>
-                  <p>Coletor: <strong>{coleta.coletor}</strong></p>
-
-                  {coleta.pontos && (
-                    <p className="mc-pontos">+{coleta.pontos} pontos</p>
-                  )}
                 </div>
               </article>
             ))}

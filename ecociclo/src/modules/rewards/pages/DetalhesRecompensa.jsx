@@ -1,11 +1,16 @@
-import { Gift, Star, Calendar, Check } from "lucide-react";
+import { Gift, Star, Calendar, Check, Tag, Info, AlertCircle } from "lucide-react";
 import { Navigation } from "../../../shared/components/Navigation/Navigation.jsx";
-import { useDetalhesRecompensa } from "../hooks/DetalhesRecompensa";
+import { useDetalhesRecompensa } from "../hooks/useDetalhesRecompensa";
 import "../styles/DetalhesRecompensa.css";
 
 function DetalhesRecompensa() {
   const { recompensa, resgatado, podeResgatar, handleResgatar } =
     useDetalhesRecompensa();
+
+  const progresso = Math.min(
+    (recompensa.pontosUsuario / recompensa.pontosNecessarios) * 100,
+    100
+  );
 
   return (
     <div className="dr-page">
@@ -19,46 +24,98 @@ function DetalhesRecompensa() {
         </section>
 
         <section className="dr-content">
-          <div className="dr-icone-wrap">
-            <Gift size={56} />
+
+          {/* ── Hero Banner ── */}
+          <div className="dr-hero">
+            <div className="dr-hero-bg" />
+            <div className="dr-hero-icon">
+              <Gift size={48} />
+            </div>
+            <span className="dr-tipo-badge">
+              <Tag size={11} />
+              {recompensa.tipo}
+            </span>
           </div>
 
-          <div className="dr-titulo-row">
+          {/* ── Identidade ── */}
+          <div className="dr-identity">
             <div>
               <h2 className="dr-titulo">{recompensa.titulo}</h2>
               <p className="dr-descricao">{recompensa.descricao}</p>
             </div>
-
-            <span className="dr-tipo-badge">{recompensa.tipo}</span>
           </div>
 
+          <div className="dr-divider" />
+
+          {/* ── Card de Pontos ── */}
           <div className="dr-pontos-card">
-            <div className="dr-pontos-esquerda">
-              <Star size={20} />
-              <span>{recompensa.pontosNecessarios} pontos</span>
+            <div className="dr-pontos-col">
+              <span className="dr-pontos-label">Pontos necessários</span>
+              <div className="dr-pontos-value">
+                <Star size={16} className="dr-star" />
+                <strong>{recompensa.pontosNecessarios}</strong>
+                <span>pts</span>
+              </div>
             </div>
 
-            <div className="dr-pontos-direita">
-              <span>Seus pontos</span>
-              <strong>{recompensa.pontosUsuario}</strong>
+            <div className="dr-pontos-sep" />
+
+            <div className="dr-pontos-col dr-pontos-col--user">
+              <span className="dr-pontos-label">Seus pontos</span>
+              <div className="dr-pontos-value">
+                <strong className={podeResgatar ? "dr-pts-ok" : "dr-pts-low"}>
+                  {recompensa.pontosUsuario}
+                </strong>
+                <span>pts</span>
+              </div>
+            </div>
+
+            {/* Barra de progresso */}
+            <div className="dr-progress-wrap">
+              <div className="dr-progress-track">
+                <div
+                  className="dr-progress-fill"
+                  style={{ width: `${progresso}%` }}
+                />
+              </div>
+              <span className="dr-progress-label">
+                {podeResgatar
+                  ? "Você tem pontos suficientes!"
+                  : `Faltam ${recompensa.pontosNecessarios - recompensa.pontosUsuario} pontos`}
+              </span>
             </div>
           </div>
 
-          <div className="dr-secao">
-            <h3>Sobre esta recompensa</h3>
-            <p>{recompensa.sobre}</p>
-          </div>
+          {/* ── Grid de infos ── */}
+          <div className="dr-info-grid">
+            <div className="dr-info-card">
+              <div className="dr-info-icon">
+                <Info size={15} />
+              </div>
+              <div>
+                <span className="dr-info-label">Sobre</span>
+                <p className="dr-info-text">{recompensa.sobre}</p>
+              </div>
+            </div>
 
-          <div className="dr-validade-card">
-            <Calendar size={22} />
-            <div>
-              <span>Válido até</span>
-              <strong>{recompensa.validade}</strong>
+            <div className="dr-info-card">
+              <div className="dr-info-icon dr-info-icon--calendar">
+                <Calendar size={15} />
+              </div>
+              <div>
+                <span className="dr-info-label">Validade</span>
+                <p className="dr-info-text dr-info-text--strong">{recompensa.validade}</p>
+              </div>
             </div>
           </div>
 
-          <p className="dr-obs">{recompensa.observacao}</p>
+          {/* ── Observação ── */}
+          <div className="dr-obs-card">
+            <AlertCircle size={15} className="dr-obs-icon" />
+            <p className="dr-obs">{recompensa.observacao}</p>
+          </div>
 
+          {/* ── Botão ── */}
           {resgatado ? (
             <div className="dr-resgatado">
               <Check size={20} />
@@ -70,10 +127,11 @@ function DetalhesRecompensa() {
               onClick={handleResgatar}
               disabled={!podeResgatar}
             >
-              <Gift size={20} />
+              <Gift size={18} />
               {podeResgatar ? "Resgatar recompensa" : "Pontos insuficientes"}
             </button>
           )}
+
         </section>
       </main>
     </div>
