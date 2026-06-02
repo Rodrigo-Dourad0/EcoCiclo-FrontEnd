@@ -26,10 +26,37 @@ export default function useAgendarColeta() {
     "Rua do Comércio, 789 - Vila Nova",
   ];
 
+  // ── Validadores individuais ──────────────────────────────────────────────
+  const validarCampo = (campo, value) => {
+    switch (campo) {
+      case "tipoMaterial":
+        return value ? "" : "Selecione o tipo de material.";
+      case "pesoEstimado":
+        if (!value) return "Informe o peso estimado.";
+        if (Number(value) <= 0) return "O peso deve ser maior que zero.";
+        return "";
+      case "data": {
+        if (!value) return "Informe a data da coleta.";
+        const regex = /^\d{2}\/\d{2}\/\d{4}$/;
+        if (!regex.test(value)) return "Digite uma data válida (dd/mm/aaaa).";
+        return "";
+      }
+      case "horario": {
+        if (!value) return "Informe o horário da coleta.";
+        const regex = /^\d{2}:\d{2}$/;
+        if (!regex.test(value)) return "Digite um horário válido (hh:mm).";
+        return "";
+      }
+      case "endereco":
+        return value ? "" : "Selecione o endereço de coleta.";
+      default:
+        return "";
+    }
+  };
+
+  // ── onChange ─────────────────────────────────────────────────────────────
   function handleChange(e) {
     const { id, value } = e.target;
-
-    // normaliza o id removendo o "2" do final (versão desktop)
     const campo = id.replace(/2$/, "");
 
     if (campo === "data") {
@@ -40,7 +67,10 @@ export default function useAgendarColeta() {
         v = v.replace(/(\d{2})(\d{2})(\d{0,4})/, "$1/$2/$3");
       }
       setForm((prev) => ({ ...prev, data: v }));
-      setErros((prev) => ({ ...prev, data: v.length === 10 ? "" : "Informe uma data válida." }));
+      // só limpa o erro se já está completo; não dispara erro enquanto digita
+      if (erros.data && v.length === 10) {
+        setErros((prev) => ({ ...prev, data: "" }));
+      }
       return;
     }
 
@@ -48,48 +78,46 @@ export default function useAgendarColeta() {
       let v = value.replace(/\D/g, "");
       v = v.replace(/(\d{2})(\d{0,2})/, "$1:$2");
       setForm((prev) => ({ ...prev, horario: v }));
-      setErros((prev) => ({ ...prev, horario: v.length === 5 ? "" : "Informe um horário válido." }));
+      if (erros.horario && v.length === 5) {
+        setErros((prev) => ({ ...prev, horario: "" }));
+      }
       return;
     }
 
     setForm((prev) => ({ ...prev, [campo]: value }));
 
-    setErros((prev) => {
-      const novos = { ...prev };
-
-      if (campo === "tipoMaterial") {
-        novos.tipoMaterial = value ? "" : "Selecione o tipo de material.";
-      }
-      if (campo === "pesoEstimado") {
-        novos.pesoEstimado = value && Number(value) > 0 ? "" : "Informe um peso válido.";
-      }
-      if (campo === "endereco") {
-        novos.endereco = value ? "" : "Selecione o endereço de coleta.";
-      }
-      if (campo === "observacoes") {
-        novos.observacoes = "";
-      }
-
-      return novos;
-    });
+    // limpa erro ao corrigir o campo
+    if (erros[campo]) {
+      setErros((prev) => ({ ...prev, [campo]: validarCampo(campo, value) }));
+    }
   }
 
+  // ── onBlur: dispara erro ao sair do campo ─────────────────────────────────
+  function handleBlur(e) {
+    const { id, value } = e.target;
+    const campo = id.replace(/2$/, "");
+    if (campo === "observacoes") return;
+    const erro = validarCampo(campo, value);
+    setErros((prev) => ({ ...prev, [campo]: erro }));
+  }
+
+  // ── Submit: valida tudo ───────────────────────────────────────────────────
   function validar() {
+    const campos = ["tipoMaterial", "pesoEstimado", "data", "horario", "endereco"];
     const novosErros = {};
-
-    if (!form.tipoMaterial) novosErros.tipoMaterial = "Selecione o tipo de material.";
-    if (!form.pesoEstimado || Number(form.pesoEstimado) <= 0) novosErros.pesoEstimado = "Informe um peso válido.";
-    if (!form.data) novosErros.data = "Informe a data da coleta.";
-    if (!form.horario) novosErros.horario = "Informe o horário da coleta.";
-    if (!form.endereco) novosErros.endereco = "Selecione o endereço de coleta.";
-
+    campos.forEach((campo) => {
+      const erro = validarCampo(campo, form[campo]);
+      if (erro) novosErros[campo] = erro;
+    });
     setErros(novosErros);
     return Object.keys(novosErros).length === 0;
   }
 
   function handleSubmit() {
     if (validar()) {
-      alert(`Coleta agendada com sucesso!\nMaterial: ${form.tipoMaterial}\nData: ${form.data} às ${form.horario}`);
+      alert(
+        `Coleta agendada com sucesso!\nMaterial: ${form.tipoMaterial}\nData: ${form.data} às ${form.horario}`
+      );
     }
   }
 
@@ -99,6 +127,7 @@ export default function useAgendarColeta() {
     tiposMaterial,
     enderecos,
     handleChange,
+    handleBlur,
     handleSubmit,
   };
 }
