@@ -8,22 +8,39 @@ export default function useFinalizarColeta() {
   });
   const [erros, setErros] = useState({});
 
-  // ID da coleta normalmente viria via props ou rota, aqui fixo pra exemplo
   const idColeta = "#003";
 
+  // ── Validador individual ─────────────────────────────────────────────────
+  const validarCampo = (campo, value) => {
+    switch (campo) {
+      case "pesoReal":
+        if (!value) return "Informe o peso real coletado.";
+        if (Number(value) <= 0) return "O peso deve ser maior que zero.";
+        return "";
+      default:
+        return "";
+    }
+  };
+
+  // ── onChange ─────────────────────────────────────────────────────────────
   function handleChange(e) {
     const { id, value } = e.target;
     const campo = id.replace(/2$/, "");
 
     setForm((prev) => ({ ...prev, [campo]: value }));
 
-    setErros((prev) => {
-      const novos = { ...prev };
-      if (campo === "pesoReal") {
-        novos.pesoReal = value && Number(value) > 0 ? "" : "Informe um peso válido.";
-      }
-      return novos;
-    });
+    // atualiza erro em tempo real só se o campo já tinha erro visível
+    if (erros[campo] !== undefined) {
+      setErros((prev) => ({ ...prev, [campo]: validarCampo(campo, value) }));
+    }
+  }
+
+  // ── onBlur: dispara erro ao sair do campo ────────────────────────────────
+  function handleBlur(e) {
+    const { id, value } = e.target;
+    const campo = id.replace(/2$/, "");
+    if (campo === "observacoes") return;
+    setErros((prev) => ({ ...prev, [campo]: validarCampo(campo, value) }));
   }
 
   function handleFotos(e) {
@@ -31,11 +48,11 @@ export default function useFinalizarColeta() {
     setForm((prev) => ({ ...prev, fotos: [...prev.fotos, ...arquivos] }));
   }
 
+  // ── Submit: valida tudo ───────────────────────────────────────────────────
   function validar() {
     const novosErros = {};
-    if (!form.pesoReal || Number(form.pesoReal) <= 0) {
-      novosErros.pesoReal = "Informe o peso real coletado.";
-    }
+    const erro = validarCampo("pesoReal", form.pesoReal);
+    if (erro) novosErros.pesoReal = erro;
     setErros(novosErros);
     return Object.keys(novosErros).length === 0;
   }
@@ -51,6 +68,7 @@ export default function useFinalizarColeta() {
     erros,
     idColeta,
     handleChange,
+    handleBlur,
     handleFotos,
     handleSubmit,
   };

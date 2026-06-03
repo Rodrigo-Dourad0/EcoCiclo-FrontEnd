@@ -1,111 +1,132 @@
 import "../styles/MinhasRecompensas.css";
 import useMinhasRecompensas from "../hooks/useMinhasRecompensas";
 import { Navigation } from "../../../shared/components/Navigation/Navigation";
+import { Gift, Star, Calendar, Hash, CheckCircle, Clock } from "lucide-react";
 
 export default function MinhasRecompensas() {
   const { recompensas } = useMinhasRecompensas();
-  
 
-  const CardRecompensa = ({ recompensa }) => (
-    <div className="mr-card">
-      <div className="mr-card-top">
-        <div className="mr-card-esquerda">
-          <div className="mr-icone">
-            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-              <polyline points="20 12 20 22 4 22 4 12" />
-              <rect x="2" y="7" width="20" height="5" />
-              <line x1="12" y1="22" x2="12" y2="7" />
-              <path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z" />
-              <path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z" />
-            </svg>
+  const ativas    = recompensas.filter((r) => r.status === "ativa").length;
+  const utilizadas = recompensas.filter((r) => r.status === "utilizada").length;
+
+  const CardRecompensa = ({ recompensa, i }) => (
+    <article
+      className={`mr-card ${recompensa.status === "utilizada" ? "mr-card--utilizada" : ""}`}
+      style={{ animationDelay: `${i * 55}ms` }}
+    >
+      {/* Foto / Placeholder */}
+      <div className="mr-card-foto">
+        {recompensa.foto ? (
+          <img src={recompensa.foto} alt={recompensa.nome} />
+        ) : (
+          <div className="mr-card-foto-placeholder">
+            <Gift size={28} />
           </div>
-          <div className="mr-card-info">
-            <span className="mr-card-nome">{recompensa.nome}</span>
-            <div className="mr-card-data">
-              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
-                <line x1="16" y1="2" x2="16" y2="6" />
-                <line x1="8" y1="2" x2="8" y2="6" />
-                <line x1="3" y1="10" x2="21" y2="10" />
-              </svg>
-              <span>{recompensa.data}</span>
-            </div>
-          </div>
-        </div>
-        <span className={`mr-badge ${recompensa.status === "ativa" ? "mr-badge-ativa" : "mr-badge-utilizada"}`}>
+        )}
+        <span className={`mr-badge ${recompensa.status === "ativa" ? "mr-badge--ativa" : "mr-badge--utilizada"}`}>
           {recompensa.status === "ativa" ? "Ativa" : "Utilizada"}
         </span>
       </div>
 
-      <div className="mr-card-bottom">
-        <span className="mr-pontos">{recompensa.pontos} pontos</span>
-        {recompensa.status === "ativa" && recompensa.codigo && (
-          <span className="mr-codigo">{recompensa.codigo}</span>
-        )}
-        {recompensa.status === "utilizada" && (
-          <div className="mr-check-icon">
-            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
-              <polyline points="22 4 12 14.01 9 11.01" />
-            </svg>
-          </div>
-        )}
-      </div>
-    </div>
-  );
+      {/* Conteúdo */}
+      <div className="mr-card-body">
+        <div className="mr-card-top">
+          <h3 className="mr-card-nome">{recompensa.nome}</h3>
 
-  return (
-  <div className="mr-page">
-    <Navigation />
-      {/* MOBILE / TABLET */}
-      <div className="mr-screen">
-        <div className="mr-header">
-          <button className="mr-btn-voltar" onClick={() => window.history.back()}>
-            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-              <polyline points="15 18 9 12 15 6" />
-            </svg>
-          </button>
-          <h1>Minhas recompensas</h1>
+          <div className="mr-card-meta">
+            <div className="mr-meta-item">
+              <Star size={13} className="mr-meta-icon mr-meta-icon--star" />
+              <span><strong>{recompensa.pontos}</strong> pontos</span>
+            </div>
+            <div className="mr-meta-item">
+              <Calendar size={13} className="mr-meta-icon" />
+              <span>{recompensa.data}</span>
+            </div>
+          </div>
         </div>
 
-        <div className="mr-body">
-          {recompensas.length === 0 ? (
-            <div className="mr-vazio">
-              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <polyline points="20 12 20 22 4 22 4 12" />
-                <rect x="2" y="7" width="20" height="5" />
-                <line x1="12" y1="22" x2="12" y2="7" />
-              </svg>
-              <p>Nenhuma recompensa resgatada</p>
+        <div className="mr-card-bottom">
+          {recompensa.status === "ativa" && recompensa.codigo && (
+            <div className="mr-codigo-wrap">
+              <Hash size={12} className="mr-codigo-icon" />
+              <span className="mr-codigo">{recompensa.codigo}</span>
             </div>
-          ) : (
-            recompensas.map((r) => <CardRecompensa key={r.id} recompensa={r} />)
+          )}
+          {recompensa.status === "utilizada" && (
+            <div className="mr-utilizada-wrap">
+              <CheckCircle size={13} className="mr-utilizada-icon" />
+              <span>Recompensa utilizada</span>
+            </div>
           )}
         </div>
       </div>
+    </article>
+  );
 
-      {/* DESKTOP */}
-      <div className="mr-desktop">
+  return (
+    <div className="mr-page">
+      <Navigation />
 
-        <div className="mr-desktop-right">
-          <h1>Minhas recompensas</h1>
-          <div className="mr-lista">
-            {recompensas.length === 0 ? (
-              <div className="mr-vazio">
-                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                  <polyline points="20 12 20 22 4 22 4 12" />
-                  <rect x="2" y="7" width="20" height="5" />
-                  <line x1="12" y1="22" x2="12" y2="7" />
-                </svg>
-                <p>Nenhuma recompensa resgatada</p>
-              </div>
-            ) : (
-              recompensas.map((r) => <CardRecompensa key={r.id} recompensa={r} />)
-            )}
+      <main className="mr-main">
+
+        {/* ── Header ── */}
+        <section className="mr-header">
+          <div className="mr-header-text">
+            <p className="mr-kicker">Perfil</p>
+            <h1>Minhas recompensas</h1>
+            <p>Acompanhe os resgates realizados com seus pontos.</p>
+          </div>
+        </section>
+
+        {/* ── Stats ── */}
+        <div className="mr-stats">
+          <div className="mr-stat">
+            <div className="mr-stat-icon mr-stat-icon--total">
+              <Gift size={16} />
+            </div>
+            <div>
+              <span className="mr-stat-num">{recompensas.length}</span>
+              <span className="mr-stat-label">Total</span>
+            </div>
+          </div>
+          <div className="mr-stat">
+            <div className="mr-stat-icon mr-stat-icon--ativa">
+              <Clock size={16} />
+            </div>
+            <div>
+              <span className="mr-stat-num">{ativas}</span>
+              <span className="mr-stat-label">Ativas</span>
+            </div>
+          </div>
+          <div className="mr-stat">
+            <div className="mr-stat-icon mr-stat-icon--utilizada">
+              <CheckCircle size={16} />
+            </div>
+            <div>
+              <span className="mr-stat-num">{utilizadas}</span>
+              <span className="mr-stat-label">Utilizadas</span>
+            </div>
           </div>
         </div>
-      </div>
-            
-     </div>
+
+        {/* ── Lista ── */}
+        <div className="mr-lista">
+          {recompensas.length === 0 ? (
+            <div className="mr-vazio">
+              <div className="mr-vazio-icone">
+                <Gift size={28} />
+              </div>
+              <strong>Nenhuma recompensa resgatada</strong>
+              <span>Acumule pontos nas coletas e troque por recompensas</span>
+            </div>
+          ) : (
+            recompensas.map((r, i) => (
+              <CardRecompensa key={r.id} recompensa={r} i={i} />
+            ))
+          )}
+        </div>
+
+      </main>
+    </div>
   );
 }
