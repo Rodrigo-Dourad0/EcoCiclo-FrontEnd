@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export default function useAgendarColeta() {
+export default function useAgendarDoacao() {
   const [form, setForm] = useState({
     tipoMaterial: "",
     pesoEstimado: "",

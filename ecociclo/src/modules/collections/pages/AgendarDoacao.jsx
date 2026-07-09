@@ -1,8 +1,8 @@
-import "../styles/AgendarColeta.css";
-import useAgendarColeta from "../hooks/useAgendarColeta";
+import "../styles/AgendarDoacao.css";
+import useAgendarDoacao from "../hooks/useAgendarDoacao.js";
 import { Navigation } from "../../../shared/components/Navigation/Navigation.jsx";
 
-export default function AgendarColeta() {
+export default function AgendarDoacao() {
   const {
     form,
     erros,
@@ -11,7 +11,7 @@ export default function AgendarColeta() {
     handleChange,
     handleBlur,
     handleSubmit,
-  } = useAgendarColeta();
+  } = useAgendarDoacao();
 
   return (
     <div className="ac-page">

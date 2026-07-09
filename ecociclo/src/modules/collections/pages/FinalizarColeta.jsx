@@ -156,7 +156,7 @@ export default function FinalizarColeta() {
                 <line x1="12" y1="8" x2="12" y2="12"/>
                 <line x1="12" y1="16" x2="12.01" y2="16"/>
               </svg>
-              <span>Ao finalizar, o doador receberá os pontos pela coleta</span>
+              <span>Ao finalizar, o doador receberá os pontos pela doação realizada.</span>
             </div>
           </div>
 
