@@ -23,27 +23,6 @@ body {
   overflow-y: auto;
 }
 
-/* Corrige o item ativo: tira do Início e coloca em Perfil */
-.mc-page .nav-item.active {
-  background: transparent;
-}
-
-.mc-page .nav-item.active .nav-link,
-.mc-page .nav-item.active .nav-icon,
-.mc-page .nav-item.active .nav-label {
-  color: inherit;
-}
-
-.mc-page .nav-list .nav-item:nth-child(5) {
-  background: rgba(16, 185, 129, 0.12);
-  border-radius: 14px;
-}
-
-.mc-page .nav-list .nav-item:nth-child(5) .nav-link,
-.mc-page .nav-list .nav-item:nth-child(5) .nav-icon,
-.mc-page .nav-list .nav-item:nth-child(5) .nav-label {
-  color: #00d69f;
-}
 
 /* ─── MOBILE FIRST ────────────────────────────────────── */
 .mc-page .navigation {
@@ -599,7 +578,6 @@ body {
   }
 }
 
-/* ─── DESKTOP ─────────────────────────────────────────── */
 @media (min-width: 1025px) {
   .mc-page {
     display: flex;
@@ -608,20 +586,26 @@ body {
   }
 
   .mc-page .navigation {
-    width: 300px;
+    width: 250px !important;
+    min-width: 250px !important;
+    max-width: 250px !important;
+
     min-height: 100vh;
     height: auto;
+
     position: fixed;
     left: 0;
     top: 0;
     bottom: 0;
+
     flex-shrink: 0;
+    overflow: hidden;
   }
 
   .mc-main {
     flex: 1;
     min-height: 100vh;
-    margin-left: 300px;
+    margin-left: 250px;
     padding: 48px 64px;
     overflow-y: visible;
   }

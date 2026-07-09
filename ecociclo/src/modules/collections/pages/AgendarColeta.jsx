@@ -19,9 +19,9 @@ export default function AgendarColeta() {
 
       <main className="ac-main">
         <section className="ac-header">
-          <p className="ac-kicker">Coletas</p>
-          <h1>Agendar coleta</h1>
-          <p>Preencha os dados para agendar sua coleta de recicláveis.</p>
+          <p className="ac-kicker">Doações</p>
+          <h1>Agendar Doação</h1>
+          <p>Preencha os dados para agendar sua doação de recicláveis.</p>
         </section>
 
         <section className="ac-content">
@@ -170,7 +170,7 @@ export default function AgendarColeta() {
 
             <div className="ac-field">
               <label htmlFor="endereco">
-                Endereço de coleta <span className="ac-required">*</span>
+                Endereço de doação <span className="ac-required">*</span>
               </label>
               <div className="ac-select-wrap">
                 <svg viewBox="0 0 24 24">
@@ -216,7 +216,7 @@ export default function AgendarColeta() {
               <div className="ac-textarea-wrap">
                 <textarea
                   id="observacoes"
-                  placeholder="Informações adicionais sobre a coleta..."
+                  placeholder="Informações adicionais sobre a doação..."
                   value={form.observacoes}
                   onChange={handleChange}
                   rows={4}
@@ -231,7 +231,7 @@ export default function AgendarColeta() {
                 <line x1="12" y1="8" x2="12" y2="12"/>
                 <line x1="12" y1="16" x2="12.01" y2="16"/>
               </svg>
-              <span>Você ganhará pontos ao completar esta coleta!</span>
+              <span>Você ganhará pontos ao completar esta doação!</span>
             </div>
           </div>
 
@@ -243,7 +243,7 @@ export default function AgendarColeta() {
               <line x1="8" y1="2" x2="8" y2="6"/>
               <line x1="3" y1="10" x2="21" y2="10"/>
             </svg>
-            Agendar coleta
+            Agendar doação
           </button>
 
         </section>

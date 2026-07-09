@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { useProfilePage } from '../hooks/useProfilePage.js'
 import ProfileCard from '../components/ProfileCard.jsx'
 import { RenderIcon } from '../components/RenderIcon.jsx'
-import { Navigation } from '../../../shared/components/navigation/Navigation.jsx'
+import { Navigation } from '../../../shared/components/Navigation/Navigation.jsx'
 import '../styles/profile-page.css'
 
 function ProfilePage() {

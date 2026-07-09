@@ -1,169 +1,202 @@
-.navigation {
-  background-color: var(--bg);
-  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.05);
-  display: flex;
-  flex-direction: column;
-  transition: all 0.3s ease;
-  z-index: 100;
+/* ── VARIÁVEIS ── */
+:root {
+  --nav-bg:         #0b0e14;
+  --nav-border:     rgba(255, 255, 255, 0.06);
+  --nav-text:       #4a5568;
+  --nav-text-hover: #10b981;
+  --nav-active:     #10b981;
+  --nav-active-dim: rgba(16, 185, 129, 0.10);
+  --nav-glow:       rgba(16, 185, 129, 0.4);
+  --nav-radius:     14px;
 }
 
-/* Sidebar for Desktop */
+/* ── KEYFRAMES ── */
+@keyframes logo-glow {
+  0%, 100% { box-shadow: 0 0 10px 2px rgba(16,185,129,.4); }
+  50%       { box-shadow: 0 0 22px 6px rgba(16,185,129,.65); }
+}
+
+@keyframes nav-icon-in {
+  from { transform: scale(0.7) rotate(-8deg); opacity: 0; }
+  to   { transform: scale(1)   rotate(0deg);  opacity: 1; }
+}
+
+@keyframes nav-label-in {
+  from { opacity: 0; transform: translateY(4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes mobile-icon-in {
+  from { transform: translateY(0px) scale(0.8); opacity: 0; }
+  to   { transform: translateY(-2px) scale(1.08); opacity: 1; }
+}
+
+/* ── BASE ── */
+.navigation {
+  background-color: var(--nav-bg);
+  display: flex;
+  flex-direction: column;
+  z-index: 100;
+  transition: all 0.3s ease;
+}
+
+/* ════════════════════════════════
+   DESKTOP  ≥ 769px
+════════════════════════════════ */
 @media (min-width: 769px) {
   .navigation {
-    width: 250px;
+    width: 260px;
     height: 100vh;
     position: sticky;
     top: 0;
     left: 0;
     align-self: flex-start;
-    padding: 24px 0;
-    border-right: 1px solid var(--border);
+    padding: 28px 0 24px;
+    border-right: 1px solid var(--nav-border);
     overflow-y: auto;
+    box-shadow: 1px 0 0 rgba(16,185,129,.06), 4px 0 28px rgba(0,0,0,.45);
   }
 
+  /* Logo */
   .nav-logo {
     display: flex;
-    justify-content: center;
     align-items: center;
-    padding-bottom: 32px;
+    gap: 11px;
+    padding: 0 22px 36px;
+  }
+
+  .nav-logo-mark {
+    width: 36px;
+    height: 36px;
+    background: linear-gradient(135deg, #10b981, #059669);
+    border-radius: 11px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    animation: logo-glow 3s ease-in-out infinite;
   }
 
   .nav-logo h2 {
-    color: var(--primary-color);
-    font-size: 28px;
+    color: #f0fdf9;
+    font-size: 19px;
     font-weight: 700;
     margin: 0;
-    letter-spacing: -0.5px;
+    letter-spacing: -0.3px;
+    text-shadow: 0 0 20px rgba(16,185,129,.25);
   }
 
+  /* Lista */
   .nav-list {
     list-style: none;
     padding: 0;
     margin: 0;
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 2px;
+    flex: 1;
   }
 
   .nav-item {
-    padding: 0 16px;
+    padding: 0 12px;
+    position: relative;
   }
 
   .nav-link {
     display: flex;
     align-items: center;
-    padding: 12px 20px;
+    gap: 13px;
+    padding: 11px 14px;
     text-decoration: none;
-    color: var(--text);
-    border-radius: 12px;
-    transition: all 0.2s ease;
-    gap: 16px;
-    font-weight: 500;
+    color: var(--nav-text);
+    border-radius: var(--nav-radius);
+    transition: background 0.2s, color 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Shimmer no hover */
+  .nav-link::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, transparent, rgba(16,185,129,.06), transparent);
+    transform: translateX(-100%);
+    transition: transform 0.45s ease;
+    pointer-events: none;
+  }
+
+  .nav-link:hover::after {
+    transform: translateX(100%);
   }
 
   .nav-link:hover {
-    background-color: var(--bg-main);
-    color: #1F2937;
+    background: rgba(16,185,129,.06);
+    color: #10b981;
   }
 
+  /* Ativo */
   .nav-item.active .nav-link {
-    background-color: rgba(16, 185, 129, 0.1);
-    color: var(--primary-color);
+    background: var(--nav-active-dim);
+    color: var(--nav-active);
   }
 
-  .nav-icon {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .nav-label {
-    font-size: 16px;
-  }
-}
-
-/* Bottom Navigation for Mobile */
-@media (max-width: 768px) {
-  .navigation {
-    position: fixed;
-    bottom: 0;
+  /* Barrinha lateral neon */
+  .nav-item.active::before {
+    content: '';
+    position: absolute;
     left: 0;
-    width: 100%;
-    height: 70px;
-    flex-direction: row;
-    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
-    border-top: 1px solid var(--border);
-    justify-content: center;
-    padding-bottom: env(safe-area-inset-bottom, 0px);
-    /* Para iPhones */
-  }
-
-  .nav-logo {
-    display: none;
-    /* Hide logo on mobile nav */
-  }
-
-  .nav-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    align-items: center;
-    flex: 1;
-    height: 100%;
-  }
-
-  .nav-item {
-    flex: 1;
-    display: flex;
-    justify-content: center;
-  }
-
-  .nav-link {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-decoration: none;
-    color: #9CA3AF;
-    /* Cinza claro nos inativos */
-    padding: 8px 4px;
-    gap: 4px;
-    width: 100%;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 3px;
+    height: 22px;
+    background: var(--nav-active);
+    border-radius: 0 4px 4px 0;
+    box-shadow: 0 0 12px 3px var(--nav-glow);
   }
 
   .nav-icon {
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #6B7280;
-    /* Mais escuro que o texto, mas ainda cinza */
+    flex-shrink: 0;
+    transition: color 0.2s, transform 0.2s, filter 0.2s;
+    color: var(--nav-text);
+  }
+
+  .nav-link:hover .nav-icon {
+    color: #10b981;
+    transform: scale(1.1);
+    filter: drop-shadow(0 0 4px rgba(16,185,129,.4));
+  }
+
+  .nav-item.active .nav-icon {
+    color: var(--nav-active);
+    filter: drop-shadow(0 0 6px var(--nav-glow));
+    animation: nav-icon-in 0.25s cubic-bezier(.34,1.56,.64,1) both;
   }
 
   .nav-label {
-    font-size: 10px;
+    font-size: 14px;
     font-weight: 500;
+    letter-spacing: 0.1px;
+    transition: color 0.2s;
   }
 
-  .nav-item.active .nav-icon,
   .nav-item.active .nav-label {
-    color: #22C55E;
-    /* Verde forte exato do print */
+    font-weight: 600;
+    text-shadow: 0 0 12px rgba(16,185,129,.4);
+    animation: nav-label-in 0.2s ease both;
   }
-}
 
-/* ── Botões de autenticação ── */
-
-/* Desktop: ficam no rodapé da sidebar */
-@media (min-width: 769px) {
+  /* ── Auth desktop ── */
   .nav-auth {
     margin-top: auto;
-    padding: 24px 16px 8px;
+    padding: 18px 14px 8px;
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 8px;
+    border-top: 1px solid var(--nav-border);
   }
 
   .nav-auth-btn {
@@ -174,43 +207,171 @@
     padding: 11px 16px;
     border-radius: 12px;
     text-decoration: none;
-    font-size: 14px;
+    font-size: 13px;
     font-weight: 600;
-    transition: all 0.2s ease;
+    transition: background 0.2s, box-shadow 0.2s, color 0.2s, transform 0.15s;
+    white-space: nowrap;
+  }
+
+  .nav-auth-btn:hover {
+    transform: translateY(-1px);
   }
 
   .btn-login {
-    background-color: transparent;
-    border: 1.5px solid #22C55E;
-    color: #22C55E;
+    background: rgba(16,185,129,.08);
+    border: 1.5px solid rgba(16,185,129,.25);
+    color: #10b981;
   }
 
   .btn-login:hover {
-    background-color: rgba(34, 197, 94, 0.08);
+    background: rgba(16,185,129,.14);
+    border-color: #10b981;
+    box-shadow: 0 0 16px rgba(16,185,129,.25), inset 0 0 12px rgba(16,185,129,.06);
   }
 
   .btn-register {
-    background-color: #22C55E;
-    color: #ffffff;
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    color: #fff;
     border: 1.5px solid transparent;
+    box-shadow: 0 4px 16px rgba(16,185,129,.32);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .btn-register::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,.12), transparent);
+    transform: translateX(-100%);
+    transition: transform 0.5s ease;
+  }
+
+  .btn-register:hover::before {
+    transform: translateX(100%);
   }
 
   .btn-register:hover {
-    background-color: #16A34A;
+    box-shadow: 0 0 24px rgba(16,185,129,.55), 0 4px 16px rgba(16,185,129,.3);
   }
 }
 
-/* Mobile: botões de auth como ícones compactos na barra inferior */
+/* ════════════════════════════════
+   MOBILE + TABLET  ≤ 768px
+════════════════════════════════ */
 @media (max-width: 768px) {
+  .navigation {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 64px;
+    flex-direction: row;
+    align-items: stretch;
+    border-top: 1px solid rgba(16,185,129,.12);
+    box-shadow: 0 -1px 0 rgba(16,185,129,.08), 0 -12px 40px rgba(0,0,0,.55);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    background: rgba(11, 14, 20, 0.96);
+  }
+
+  .nav-logo,
+  .nav-logo-mark {
+    display: none;
+  }
+
+  /* Lista ocupa todo o espaço disponível */
+  .nav-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    flex: 1;
+    min-width: 0;
+  }
+
+  .nav-item {
+    flex: 1;
+    display: flex;
+    align-items: stretch;
+    padding: 0;
+    position: relative;
+    min-width: 0;
+  }
+
+  .nav-link {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    color: var(--nav-text);
+    gap: 3px;
+    width: 100%;
+    padding: 6px 2px;
+    transition: color 0.2s;
+    min-width: 0;
+  }
+
+  /* Linha neon no topo do item ativo */
+  .nav-item.active::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 24px;
+    height: 2px;
+    background: var(--nav-active);
+    border-radius: 0 0 4px 4px;
+    box-shadow: 0 0 10px 3px var(--nav-glow), 0 0 4px var(--nav-glow);
+  }
+
+  .nav-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.2s, transform 0.22s, filter 0.2s;
+    color: var(--nav-text);
+    flex-shrink: 0;
+  }
+
+  .nav-item.active .nav-icon {
+    color: var(--nav-active);
+    filter: drop-shadow(0 0 5px var(--nav-glow));
+    animation: mobile-icon-in 0.25s cubic-bezier(.34,1.56,.64,1) both;
+  }
+
+  .nav-label {
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 0.2px;
+    transition: color 0.2s;
+    color: var(--nav-text);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+    text-align: center;
+  }
+
+  .nav-item.active .nav-label {
+    color: var(--nav-active);
+    text-shadow: 0 0 8px rgba(16,185,129,.5);
+  }
+
+  /* ── Auth mobile: dois ícones compactos SEM texto quebrado ── */
   .nav-auth {
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: space-around;
-    height: 100%;
-    gap: 0;
-    padding: 0;
-    margin: 0;
+    justify-content: center;
+    padding: 0 4px;
+    gap: 2px;
+    flex-shrink: 0;
   }
 
   .nav-auth-btn {
@@ -220,33 +381,47 @@
     justify-content: center;
     gap: 3px;
     text-decoration: none;
-    padding: 8px 4px;
-    flex: 1;
-    font-size: 10px;
-    font-weight: 500;
-    border-radius: 0;
+    padding: 6px 10px;
+    font-size: 9px;
+    font-weight: 600;
     border: none;
     background: transparent;
-    transition: color 0.2s ease;
+    border-radius: 10px;
+    transition: color 0.2s, background 0.2s, filter 0.2s;
+    white-space: nowrap;
+    min-width: 48px;
+  }
+
+  .nav-auth-btn span {
+    line-height: 1;
   }
 
   .btn-login {
-    color: #22C55E;
+    color: #10b981;
   }
 
   .btn-login:hover {
-    color: #16A34A;
-    background: transparent;
+    background: rgba(16,185,129,.1);
+    filter: drop-shadow(0 0 5px var(--nav-glow));
   }
 
   .btn-register {
-    color: #3B82F6;
-    background: transparent;
-    border: none;
+    color: #60a5fa;
   }
 
   .btn-register:hover {
-    color: #2563EB;
-    background: transparent;
+    background: rgba(96,165,250,.1);
+    filter: drop-shadow(0 0 5px rgba(96,165,250,.5));
+  }
+
+  /* Divisor entre nav-list e nav-auth */
+  .nav-auth::before {
+    content: '';
+    display: block;
+    width: 1px;
+    height: 28px;
+    background: var(--nav-border);
+    margin-right: 4px;
+    flex-shrink: 0;
   }
 }

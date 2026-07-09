@@ -4,6 +4,8 @@
   padding: 0;
 }
 
+
+
 .ac-page {
   min-height: 100vh;
   background: #f5f6f8;
@@ -413,26 +415,36 @@
   }
 
   .ac-page .navigation {
-    position: fixed !important;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    top: auto !important;
-    width: 100% !important;
-    height: auto !important;
-    min-height: 86px !important;
-    display: flex !important;
-    flex-direction: row !important;
-    align-items: center !important;
-    justify-content: space-around !important;
-    padding: 10px !important;
-    background: #12141b;
-    overflow-x: auto;
-    overflow-y: hidden;
-    gap: 8px;
-    z-index: 999;
-    box-shadow: 0 -6px 24px rgba(0, 0, 0, 0.18);
-  }
+  position: fixed !important;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: auto !important;
+
+  width: 100% !important;
+  height: auto !important;
+  min-height: 86px !important;
+
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  justify-content: space-around !important;
+
+  padding: 10px !important;
+  background: #12141b;
+  overflow-x: auto;
+  overflow-y: hidden;
+  gap: 8px;
+  z-index: 999;
+  box-shadow: 0 -6px 24px rgba(0, 0, 0, 0.18);
+}
+.ac-page .nav-link {
+  width: 100%;
+}
+
+.ac-page .nav-label {
+  white-space: nowrap;
+}
 
   .ac-page .nav-logo { display: none !important; }
 
@@ -517,7 +529,7 @@
 }
 
 /* ── TABLET ── */
-@media (min-width: 700px) and (max-width: 1024px) {
+@media (min-width: 700px) and (max-width: 768px) {
   .ac-page {
     padding-bottom: 136px;
   }
@@ -610,7 +622,7 @@
 }
 
 /* ── DESKTOP ── */
-@media (min-width: 1025px) {
+@media (min-width: 769px) {
   .ac-page {
     display: flex;
     min-height: 100vh;
@@ -619,23 +631,31 @@
   }
 
   .ac-page .navigation {
-    width: 300px;
+    width: 250px !important;
+    min-width: 250px !important;
+    max-width: 250px !important;
+
     min-height: 100vh;
     height: auto;
+
     position: fixed;
     left: 0;
     top: 0;
     bottom: 0;
+
     flex-shrink: 0;
+    overflow: hidden;
   }
 
   .ac-main {
     flex: 1;
     min-height: 100vh;
-    margin-left: 300px;
+    margin-left: 260px;
     padding: 48px 64px;
     overflow-y: visible;
   }
 
-  .ac-header h1 { font-size: 42px; }
+  .ac-header h1 {
+    font-size: 42px;
+  }
 }

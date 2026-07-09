@@ -10,16 +10,7 @@
   font-family: "Poppins", sans-serif;
 }
 
-/* Ativa Perfil na navbar */
-.me-page .nav-list .nav-item:nth-child(5) {
-  background: rgba(16, 185, 129, 0.12);
-  border-radius: 14px;
-}
-.me-page .nav-list .nav-item:nth-child(5) .nav-link,
-.me-page .nav-list .nav-item:nth-child(5) .nav-icon,
-.me-page .nav-list .nav-item:nth-child(5) .nav-label {
-  color: #00d69f;
-}
+
 
 /* ── MAIN ────────────────────────────────── */
 
@@ -516,20 +507,26 @@
   }
 
   .me-page .navigation {
-    width: 300px;
+    width: 250px !important;
+    min-width: 250px !important;
+    max-width: 250px !important;
+
     min-height: 100vh;
     height: auto;
+
     position: fixed;
     left: 0;
     top: 0;
     bottom: 0;
+
     flex-shrink: 0;
+    overflow: hidden;
   }
 
   .me-main {
     flex: 1;
     min-height: 100vh;
-    margin-left: 300px;
+    margin-left: 250px;
     padding: 48px 64px;
   }
 

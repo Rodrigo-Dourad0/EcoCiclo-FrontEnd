@@ -19,212 +19,244 @@ function Login() {
   } = useLogin();
 
   const handleLogin = () => {
-  const emailValido = validarEmail(email);
-  const senhaValida = validarSenha(senha);
-
-  if (emailValido && senhaValida) {
-    navigate("/dashboard");
-  }
-};
+    const emailValido = validarEmail(email);
+    const senhaValida = validarSenha(senha);
+    if (emailValido && senhaValida) {
+      navigate("/dashboard");
+    }
+  };
 
   return (
-    <div className="login-page">
-
-      {/* ── PAINEL ESQUERDO ── */}
-      <div className="panel-left">
-        <div className="deco-ring r1" />
-        <div className="deco-ring r2" />
-        <div className="deco-ring r3" />
-        <div className="deco-ring r4" />
-        <div className="deco-ring r5" />
-        <div className="deco-dot d1" />
-        <div className="deco-dot d2" />
-        <div className="deco-dot d3" />
-
-        <div className="brand">
-          <div className="brand-mark">
+    <>
+      {/* ══════════════════════════════
+          MOBILE / TABLET
+      ══════════════════════════════ */}
+      <div className="ln-screen">
+        {/* Header */}
+        <div className="ln-header">
+          <button className="ln-btn-voltar" onClick={() => window.history.back()}>
             <svg viewBox="0 0 24 24">
-              <path d="M21 3C10 4 4 10 3 21c11-1 17-7 18-18z" />
+              <polyline points="15 18 9 12 15 6" />
             </svg>
-          </div>
-          <span className="brand-name">EcoCiclo</span>
+          </button>
+          <h1>Entrar</h1>
         </div>
 
-        <div className="hero-copy">
-          <p className="hero-label">Plataforma Premium</p>
-          <h1 className="hero-title">
-            Bem-vindo<br />de <em>volta</em>
-          </h1>
-          <p className="hero-sub">
-            Acesse sua conta para continuar de onde parou. Tudo sincronizado, seguro e pronto para você.
-          </p>
-        </div>
+        <div className="ln-body">
+          <p className="ln-subtitle">Acesse sua conta para continuar</p>
 
-        <div className="left-stats">
-          <div className="stat-item">
-            <span className="stat-number">12k+</span>
-            <span className="stat-label">Usuários ativos</span>
-          </div>
-          <div className="stat-divider" />
-          <div className="stat-item">
-            <span className="stat-number">98%</span>
-            <span className="stat-label">Satisfação</span>
-          </div>
-          <div className="stat-divider" />
-          <div className="stat-item">
-            <span className="stat-number">50t</span>
-            <span className="stat-label">Recicladas</span>
-          </div>
-        </div>
-
-        <div className="left-features">
-          <div className="feature-item">
-            <div className="feature-icon">
-              <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-            </div>
-            <div>
-              <span className="feature-title">Segurança de ponta</span>
-              <span className="feature-desc">Seus dados protegidos com criptografia de alto nível.</span>
-            </div>
-          </div>
-          <div className="feature-item">
-            <div className="feature-icon">
-              <svg viewBox="0 0 24 24"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
-            </div>
-            <div>
-              <span className="feature-title">Impacto em tempo real</span>
-              <span className="feature-desc">Acompanhe cada coleta e seu impacto ambiental ao vivo.</span>
-            </div>
-          </div>
-          <div className="feature-item">
-            <div className="feature-icon">
-              <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
-            </div>
-            <div>
-              <span className="feature-title">Comunidade ativa</span>
-              <span className="feature-desc">Mais de 12 mil usuários transformando o meio ambiente.</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* ── PAINEL DIREITO ── */}
-      <div className="panel-right">
-        <div className="panel-right-bg" />
-
-        {/* Mobile header */}
-        <div className="mobile-header">
-          <div className="mobile-brand-mark">
-            <svg viewBox="0 0 24 24">
-              <path d="M21 3C10 4 4 10 3 21c11-1 17-7 18-18z" />
-            </svg>
-          </div>
-          <h2 className="mobile-title">Bem-vindo de volta</h2>
-          <p className="mobile-sub">Acesse sua conta para continuar</p>
-        </div>
-
-        <div className="form-card">
-          <div className="form-header">
-            <p className="form-greeting">Acesse sua conta</p>
-            <h2 className="form-title">Entrar</h2>
-            <p className="form-sub">Preencha seus dados para continuar</p>
-          </div>
-
-          {/* Email */}
-          <div className={`field ${emailErro ? "field--erro" : ""}`}>
-            <label>E-mail<span className="required">*</span></label>
-            <div className="input-wrap">
-              <svg viewBox="0 0 24 24" className="input-icon">
-                <rect x="2" y="4" width="20" height="16" rx="2"/>
-                <polyline points="2,4 12,13 22,4"/>
-              </svg>
+          <div className="ln-fields-card">
+            {/* Email */}
+            <div className={`ln-field ${emailErro ? "ln-field--erro" : ""}`}>
+              <label htmlFor="email">
+                E-mail <span className="ln-obrigatorio">*</span>
+              </label>
               <input
                 type="email"
+                id="email"
                 placeholder="seu@email.com"
                 value={email}
                 onChange={(e) => { setEmail(e.target.value); validarEmail(e.target.value); }}
                 onBlur={() => validarEmail(email)}
                 className={emailErro ? "input-erro" : ""}
+                autoComplete="off"
               />
-              {email && !emailErro && (
-                <span className="input-check">
-                  <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
-                </span>
-              )}
+              {emailErro && <span className="ln-erro">{emailErro}</span>}
             </div>
-            {emailErro && (
-              <span className="erro-msg">
-                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-                {emailErro}
-              </span>
-            )}
+
+            <div className="ln-field-divider" />
+
+            {/* Senha */}
+            <div className={`ln-field ${senhaErro ? "ln-field--erro" : ""}`}>
+              <div className="ln-label-row">
+                <label htmlFor="senha">
+                  Senha <span className="ln-obrigatorio">*</span>
+                </label>
+                <Link to="/recuperar-senha" className="ln-link-esqueci">
+                  Esqueci minha senha
+                </Link>
+              </div>
+              <div className="ln-input-pwd">
+                <input
+                  type={showPwd ? "text" : "password"}
+                  id="senha"
+                  placeholder="Mínimo 6 caracteres"
+                  value={senha}
+                  onChange={(e) => { setSenha(e.target.value); validarSenha(e.target.value); }}
+                  onBlur={() => validarSenha(senha)}
+                  className={senhaErro ? "input-erro" : ""}
+                  autoComplete="new-password"
+                />
+                <button
+                  className="ln-eye-btn"
+                  type="button"
+                  onClick={() => setShowPwd(!showPwd)}
+                  aria-label="Mostrar senha"
+                >
+                  {showPwd ? (
+                    <svg viewBox="0 0 24 24">
+                      <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94"/>
+                      <path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"/>
+                      <line x1="1" y1="1" x2="23" y2="23"/>
+                    </svg>
+                  ) : (
+                    <svg viewBox="0 0 24 24">
+                      <path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z"/>
+                      <circle cx="12" cy="12" r="3"/>
+                    </svg>
+                  )}
+                </button>
+              </div>
+              {senhaErro && <span className="ln-erro">{senhaErro}</span>}
+            </div>
           </div>
 
-          {/* Senha */}
-          <div className={`field ${senhaErro ? "field--erro" : ""}`}>
-            <div className="field-row">
-              <label>Senha<span className="required">*</span></label>
-              <Link to="/recuperar-senha" className="field-link">Esqueci minha senha</Link>
-            </div>
-            <div className="input-wrap">
-              <svg viewBox="0 0 24 24" className="input-icon icon-lock">
-                <rect x="5" y="11" width="14" height="10" rx="2"/>
-                <path d="M8 11V7a4 4 0 0 1 8 0v4"/>
-              </svg>
-              <input
-                type={showPwd ? "text" : "password"}
-                placeholder="••••••••"
-                value={senha}
-                onChange={(e) => { setSenha(e.target.value); validarSenha(e.target.value); }}
-                onBlur={() => validarSenha(senha)}
-                className={senhaErro ? "input-erro" : ""}
-              />
-              <button className="eye-btn" type="button" onClick={() => setShowPwd(!showPwd)} aria-label="Mostrar senha">
-                {showPwd ? (
-                  <svg viewBox="0 0 24 24">
-                    <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94"/>
-                    <path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"/>
-                    <line x1="1" y1="1" x2="23" y2="23"/>
-                  </svg>
-                ) : (
-                  <svg viewBox="0 0 24 24">
-                    <path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z"/>
-                    <circle cx="12" cy="12" r="3"/>
-                  </svg>
-                )}
-              </button>
-            </div>
-            {senhaErro && (
-              <span className="erro-msg">
-                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-                {senhaErro}
-              </span>
-            )}
-          </div>
-
-          <label className="remember">
+          <label className="ln-remember">
             <input type="checkbox" />
-            <span className="check-box" />
-            <span className="remember-label">Manter-me conectado</span>
+            <span className="ln-check-box" />
+            <span className="ln-remember-label">Lembrar meu acesso</span>
           </label>
 
-          <button
-  className="login-btn-submit"
-  onClick={handleLogin}
->
-            <span>Entrar</span>
-            <svg viewBox="0 0 24 24" className="btn-arrow">
-              <line x1="5" y1="12" x2="19" y2="12"/>
-              <polyline points="12 5 19 12 12 19"/>
-            </svg>
+          <button className="ln-btn-entrar" onClick={handleLogin}>
+            Entrar
           </button>
 
-          <p className="signup-row">
+          <p className="ln-cadastro-link">
             Não tem conta? <Link to="/criar-conta">Criar agora</Link>
           </p>
         </div>
       </div>
-    </div>
+
+      {/* ══════════════════════════════
+          DESKTOP
+      ══════════════════════════════ */}
+      <div className="ln-desktop">
+        {/* Painel esquerdo */}
+        <div className="ln-left">
+          <div className="ln-logo">
+            <svg viewBox="0 0 24 24">
+              <path d="M21 3C10 4 4 10 3 21c11-1 17-7 18-18z" />
+            </svg>
+          </div>
+
+          <h2>Bem-vindo<br />de volta.</h2>
+          <p>Acesse sua conta e continue contribuindo com um planeta mais sustentável.</p>
+
+          <div className="ln-features">
+            <div className="ln-feature">
+              <div className="ln-feature-icon">
+                <svg viewBox="0 0 24 24">
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                </svg>
+              </div>
+              <span>Seus dados protegidos com segurança de ponta</span>
+            </div>
+            <div className="ln-feature">
+              <div className="ln-feature-icon">
+                <svg viewBox="0 0 24 24">
+                  <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/>
+                  <polyline points="17 6 23 6 23 12"/>
+                </svg>
+              </div>
+              <span>Acompanhe seu impacto ambiental em tempo real</span>
+            </div>
+            <div className="ln-feature">
+              <div className="ln-feature-icon">
+                <svg viewBox="0 0 24 24">
+                  <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                </svg>
+              </div>
+              <span>Ganhe pontos e troque por recompensas exclusivas</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Painel direito */}
+        <div className="ln-right">
+          <h1>Entrar</h1>
+          <p className="ln-subtitle">Acesse sua conta para continuar</p>
+
+          <div className="ln-form-card">
+            {/* Email */}
+            <div className={`ln-field ${emailErro ? "ln-field--erro" : ""}`}>
+              <label htmlFor="email2">
+                E-mail <span className="ln-obrigatorio">*</span>
+              </label>
+              <input
+                type="email"
+                id="email2"
+                placeholder="seu@email.com"
+                value={email}
+                onChange={(e) => { setEmail(e.target.value); validarEmail(e.target.value); }}
+                onBlur={() => validarEmail(email)}
+                className={emailErro ? "input-erro" : ""}
+                autoComplete="off"
+              />
+              {emailErro && <span className="ln-erro">{emailErro}</span>}
+            </div>
+
+            {/* Senha */}
+            <div className={`ln-field ${senhaErro ? "ln-field--erro" : ""}`}>
+              <div className="ln-label-row">
+                <label htmlFor="senha2">
+                  Senha <span className="ln-obrigatorio">*</span>
+                </label>
+                <Link to="/recuperar-senha" className="ln-link-esqueci">
+                  Esqueci minha senha
+                </Link>
+              </div>
+              <div className="ln-input-pwd">
+                <input
+                  type={showPwd ? "text" : "password"}
+                  id="senha2"
+                  placeholder="Mínimo 6 caracteres"
+                  value={senha}
+                  onChange={(e) => { setSenha(e.target.value); validarSenha(e.target.value); }}
+                  onBlur={() => validarSenha(senha)}
+                  className={senhaErro ? "input-erro" : ""}
+                  autoComplete="new-password"
+                />
+                <button
+                  className="ln-eye-btn"
+                  type="button"
+                  onClick={() => setShowPwd(!showPwd)}
+                  aria-label="Mostrar senha"
+                >
+                  {showPwd ? (
+                    <svg viewBox="0 0 24 24">
+                      <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94"/>
+                      <path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"/>
+                      <line x1="1" y1="1" x2="23" y2="23"/>
+                    </svg>
+                  ) : (
+                    <svg viewBox="0 0 24 24">
+                      <path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z"/>
+                      <circle cx="12" cy="12" r="3"/>
+                    </svg>
+                  )}
+                </button>
+              </div>
+              {senhaErro && <span className="ln-erro">{senhaErro}</span>}
+            </div>
+          </div>
+
+          <label className="ln-remember">
+            <input type="checkbox" />
+            <span className="ln-check-box" />
+            <span className="ln-remember-label">Lembrar meu acesso</span>
+          </label>
+
+          <div className="ln-actions">
+            <button className="ln-btn-entrar" onClick={handleLogin}>
+              Entrar
+            </button>
+            <p className="ln-cadastro-link">
+              Não tem conta? <Link to="/criar-conta">Criar agora</Link>
+            </p>
+          </div>
+        </div>
+      </div>
+    </>
   );
 }
 

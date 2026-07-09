@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom"
 import CardAvaliacao from "../components/CardAvaliacao.jsx"
 import ResumoEstrelas from "../components/ResumoEstrelas.jsx"
 import FiltrosBotoes from "../components/FiltrosBotoes.jsx"
-import { Navigation } from '../../../shared/components/navigation/Navigation.jsx'
+import { Navigation } from '../../../shared/components/Navigation/Navigation.jsx'
 import "../styles/MinhasAvaliacoes.css"
 
 const avaliacoesData = [
