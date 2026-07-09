@@ -8,7 +8,7 @@ export function Navigation() {
 
   const navItems = [
     { icon: <Home size={22} />,       label: 'Início',       to: '/dashboard' },
-    { icon: <HandHeart size={22} />,  label: 'Doação',       to: '/agendar-coleta' },
+    { icon: <HandHeart size={22} />,  label: 'Doação',       to: '/agendar-doacao' },
     { icon: <Gift size={22} />,       label: 'Recompensas',  to: '/recompensas' },
     { icon: <Clock size={22} />,      label: 'Histórico',    to: '/historico' },
     { icon: <User size={22} />,       label: 'Perfil',       to: '/perfil' },
@@ -16,7 +16,7 @@ export function Navigation() {
 
   const rotasRelacionadas = {
   "/dashboard": ["/dashboard"],
-  "/agendar-coleta": ["/agendar-coleta", "/detalhes-coleta", "/visualizar-rota", "/finalizar-coleta"],
+  "/agendar-doacao": ["/agendar-doacao", "/detalhes-doacao"],
   "/recompensas": ["/recompensas", "/minhas-recompensas", "/detalhes-recompensas", "/gerenciar-recompensa"],
   "/historico": ["/historico"],
   "/perfil": ["/perfil", "/meus-enderecos", "/novo-endereco", "/editar-perfil", "/minhas-coletas", "/minhas-avaliacoes", "/validar-coletores"],

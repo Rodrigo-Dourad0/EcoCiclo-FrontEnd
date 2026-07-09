@@ -31,7 +31,7 @@ export function Dashboard() {
     },
     {
       id: 2,
-      label: 'Coletas',
+      label: 'Doações',
       value: '24',
       icon: <Package className="stat-icon package" size={24} />,
       colorClass: 'blue'
@@ -45,8 +45,8 @@ export function Dashboard() {
     }
   ];
 
-  // Dados de coletas mockados
-  const coletas = [
+  // Dados de doações mockados
+  const doacoes = [
     {
       id: 1,
       tipo: 'Papel e Papelão',
@@ -128,59 +128,65 @@ export function Dashboard() {
             ))}
           </section>
 
-          {/* Botão de agendar nova coleta */}
+          {/* Botão de agendar nova doação */}
           <button
             className="btn-agendar-coleta"
-            onClick={() => navigate('/agendar-coleta')}
+            onClick={() => navigate('/agendar-doacao')}
           >
             <Plus size={20} />
-            <span>Agendar nova coleta</span>
+            <span>Agendar nova doação</span>
           </button>
 
-          {/* Seção de minhas coletas */}
+          {/* Seção de minhas doações */}
           <section className="minhas-coletas-section">
             <div className="minhas-coletas-header">
-              <h3 className="minhas-coletas-title">Minhas coletas</h3>
+              <h3 className="minhas-coletas-title">Minhas doações</h3>
               <button
                 className="ver-todas-btn"
-                onClick={() => navigate('/minhas-coletas')}
+                onClick={() => navigate('/minhas-doacoes')}
               >
                 Ver todas <ChevronRight size={16} />
               </button>
             </div>
 
             <div className="coletas-list">
-              {coletas.map((coleta) => (
-                <div key={coleta.id} className="coleta-card">
+              {doacoes.map((doacao) => (
+                <div key={doacao.id} className="coleta-card">
                   <div className="coleta-card-top">
                     <div className="coleta-tipo">
                       <Recycle size={18} className="coleta-tipo-icon" />
-                      <span className="coleta-tipo-text">{coleta.tipo}</span>
+                      <span className="coleta-tipo-text">{doacao.tipo}</span>
                     </div>
-                    <span className={`coleta-status ${coleta.statusClass}`}>
-                      {coleta.status}
+
+                    <span className={`coleta-status ${doacao.statusClass}`}>
+                      {doacao.status}
                     </span>
                   </div>
 
                   <div className="coleta-detalhes">
                     <div className="coleta-detalhe-item">
                       <Calendar size={14} />
-                      <span>{coleta.data}</span>
+                      <span>{doacao.data}</span>
                     </div>
+
                     <div className="coleta-detalhe-item">
                       <MapPin size={14} />
-                      <span>{coleta.endereco}</span>
+                      <span>{doacao.endereco}</span>
                     </div>
+
                     <div className="coleta-detalhe-item">
                       <Weight size={14} />
-                      <span>Peso estimado: {coleta.peso}</span>
+                      <span>Peso estimado: {doacao.peso}</span>
                     </div>
                   </div>
 
                   <div className="coleta-card-bottom">
-                    <span className="coleta-pontos">{coleta.pontos}</span>
-                    {coleta.coletor && (
-                      <span className="coleta-coletor">Coletor: {coleta.coletor}</span>
+                    <span className="coleta-pontos">{doacao.pontos}</span>
+
+                    {doacao.coletor && (
+                      <span className="coleta-coletor">
+                        Coletor: {doacao.coletor}
+                      </span>
                     )}
                   </div>
                 </div>

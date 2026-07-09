@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const coletas = {
+const doacoes = {
   agendadas: [
     {
       id: 1,
@@ -9,15 +9,6 @@ const coletas = {
       endereco: "Rua das Flores, 123 - Centro",
       peso: "15 kg",
       coletor: "Maria Santos",
-      status: "Agendada",
-    },
-    {
-      id: 2,
-      tipo: "Vidro",
-      data: "02/02/2026 às 09:00",
-      endereco: "Av. Brasil, 500 - Centro",
-      peso: "10 kg",
-      coletor: "João Pereira",
       status: "Agendada",
     },
   ],
@@ -30,16 +21,6 @@ const coletas = {
       peso: "8 kg",
       pontos: 80,
       coletor: "Carlos Oliveira",
-      status: "Coletada",
-    },
-    {
-      id: 4,
-      tipo: "Metal",
-      data: "20/01/2026 às 15:00",
-      endereco: "Rua das Palmeiras, 77 - Vila Nova",
-      peso: "12 kg",
-      pontos: 120,
-      coletor: "Ana Lima",
       status: "Coletada",
     },
   ],
@@ -56,19 +37,19 @@ const coletas = {
   ],
 };
 
-export function useMinhasColetas() {
+export function useMinhasDoacoes() {
   const [abaAtiva, setAbaAtiva] = useState("agendadas");
 
   const contagens = {
-    agendadas: coletas.agendadas.length,
-    coletadas: coletas.coletadas.length,
-    canceladas: coletas.canceladas.length,
+    agendadas: doacoes.agendadas.length,
+    coletadas: doacoes.coletadas.length,
+    canceladas: doacoes.canceladas.length,
   };
 
   return {
     abaAtiva,
     setAbaAtiva,
-    coletasFiltradas: coletas[abaAtiva],
+    doacoesFiltradas: doacoes[abaAtiva],
     contagens,
   };
 }

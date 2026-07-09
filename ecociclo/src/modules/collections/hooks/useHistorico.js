@@ -14,7 +14,7 @@ export const PERIODOS = {
 };
 
 
-export const coletas = [
+export const doacoes = [
   {
     id: "001",
     tipo: "Papel e Papelão",

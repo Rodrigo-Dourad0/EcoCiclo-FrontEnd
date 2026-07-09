@@ -28,14 +28,14 @@ function ProfilePage() {
   
   // Mapeamento de ações
   const acoes = {
-    onMeusEnderecos: () => navigate('/meus-enderecos'),
-    onNovoEndereco: () => navigate('/novo-endereco'),
-    onMinhasAvaliacoes: () => navigate('/minhas-avaliacoes'),
-    onMinhasColetas: () => navigate('/minhas-coletas'),
-    onGerenciarRecompensas: () => navigate('/gerenciar-recompensa'),
-    onGerenciarUsuarios: () => alert('Gerenciar Usuários - em desenvolvimento'),
-    onValidarColetores: () => navigate('/validar-coletores'),
-  }
+  onMeusEnderecos: () => navigate('/meus-enderecos'),
+  onNovoEndereco: () => navigate('/novo-endereco'),
+  onMinhasAvaliacoes: () => navigate('/minhas-avaliacoes'),
+  onMinhasColetas: () => navigate('/minhas-coletas'),
+  onGerenciarRecompensas: () => navigate('/gerenciar-recompensa'),
+  onGerenciarUsuarios: () => alert('Gerenciar Usuários - em desenvolvimento'),
+  onValidarColetores: () => navigate('/validar-coletores'),
+}
 
   function handleLogout() { navigate('/login') }
   function handleVoltar() { navigate('/') }

@@ -1,10 +1,9 @@
 // Historico.jsx
 import { useState, useMemo } from "react";
 import "../styles/Historico.css";
-import { coletas, STATUS, PERIODOS } from "../hooks/useHistorico";
+import { doacoes, STATUS, PERIODOS } from "../hooks/useHistorico";
 import { Navigation } from "../../../shared/components/Navigation/Navigation";
 
-/* ── icones dos cards ────────────────────────────────── */
 const IconBox = () => (
   <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
     <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
@@ -37,37 +36,40 @@ const IconWeight = () => (
   </svg>
 );
 
-/* ── Helpers ─────────────────────────────────────────── */
 function getBadgeClass(status) {
   if (status === STATUS.AGENDADA) return "badge badge-agendada";
   if (status === STATUS.COLETADA) return "badge badge-coletada";
   return "badge badge-cancelada";
 }
 
-function filtrarPorPeriodo(coleta, periodo) {
+function filtrarPorPeriodo(doacao, periodo) {
   if (periodo === PERIODOS.TODOS) return true;
-  const [dia, mes, ano] = coleta.data.split("/").map(Number);
-  const dataColeta = new Date(ano, mes - 1, dia);
+
+  const [dia, mes, ano] = doacao.data.split("/").map(Number);
+  const dataDoacao = new Date(ano, mes - 1, dia);
   const hoje = new Date();
+
   if (periodo === PERIODOS.ULTIMO_MES) {
     const ref = new Date(hoje);
     ref.setMonth(hoje.getMonth() - 1);
-    return dataColeta >= ref;
+    return dataDoacao >= ref;
   }
+
   if (periodo === PERIODOS.ULTIMOS_3_MESES) {
     const ref = new Date(hoje);
     ref.setMonth(hoje.getMonth() - 3);
-    return dataColeta >= ref;
+    return dataDoacao >= ref;
   }
+
   if (periodo === PERIODOS.ESTE_ANO) {
-    return dataColeta.getFullYear() === hoje.getFullYear();
+    return dataDoacao.getFullYear() === hoje.getFullYear();
   }
+
   return true;
 }
 
-/* ── Card de coleta ──────────────────────────────────── */
-function CardColeta({ coleta, delay }) {
-  const temRodape = coleta.pontos !== null || coleta.coletor;
+function CardDoacao({ doacao, delay }) {
+  const temRodape = doacao.pontos !== null || doacao.coletor;
 
   return (
     <div className="coleta-card" style={{ animationDelay: `${delay}ms` }}>
@@ -76,35 +78,41 @@ function CardColeta({ coleta, delay }) {
           <div className="icone-material">
             <IconBox />
           </div>
-          <span className="coleta-tipo">{coleta.tipo}</span>
+          <span className="coleta-tipo">{doacao.tipo}</span>
         </div>
-        <span className={getBadgeClass(coleta.status)}>{coleta.status}</span>
+
+        <span className={getBadgeClass(doacao.status)}>{doacao.status}</span>
       </div>
 
       <div className="coleta-detalhes">
         <div className="detalhe-row">
           <IconCalendar />
-          {coleta.data} às {coleta.horario}
+          {doacao.data} às {doacao.horario}
         </div>
+
         <div className="detalhe-row">
           <IconPin />
-          {coleta.endereco}
+          {doacao.endereco}
         </div>
+
         <div className="detalhe-row">
           <IconWeight />
-          Peso estimado: {coleta.pesoEstimado} kg
+          Peso estimado: {doacao.pesoEstimado} kg
         </div>
       </div>
 
       {temRodape && (
         <>
           <div className="coleta-divider" />
+
           <div className="coleta-card-footer">
-            {coleta.pontos !== null
-              ? <span className="pontos-badge">+{coleta.pontos} pontos</span>
-              : <span />
-            }
-            <span className="coletor-info">Coletor: {coleta.coletor}</span>
+            {doacao.pontos !== null ? (
+              <span className="pontos-badge">+{doacao.pontos} pontos</span>
+            ) : (
+              <span />
+            )}
+
+            <span className="coletor-info">Coletor: {doacao.coletor}</span>
           </div>
         </>
       )}
@@ -112,16 +120,17 @@ function CardColeta({ coleta, delay }) {
   );
 }
 
-/* ── Tela principal ──────────────────────────────────── */
 export default function Historico() {
   const [statusFiltro, setStatusFiltro] = useState("Todos os status");
   const [periodoFiltro, setPeriodoFiltro] = useState(PERIODOS.TODOS);
 
-  const coletasFiltradas = useMemo(() => {
-    return coletas.filter((c) => {
+  const doacoesFiltradas = useMemo(() => {
+    return doacoes.filter((d) => {
       const passaStatus =
-        statusFiltro === "Todos os status" || c.status === statusFiltro;
-      const passaPeriodo = filtrarPorPeriodo(c, periodoFiltro);
+        statusFiltro === "Todos os status" || d.status === statusFiltro;
+
+      const passaPeriodo = filtrarPorPeriodo(d, periodoFiltro);
+
       return passaStatus && passaPeriodo;
     });
   }, [statusFiltro, periodoFiltro]);
@@ -132,13 +141,10 @@ export default function Historico() {
 
       <main className="historico-main">
         <div className="historico-container">
-
-          {/* Header */}
           <header className="historico-header">
             <h1>Histórico</h1>
           </header>
 
-          {/* Filtros */}
           <div className="filtros-wrapper">
             <select
               className="filtro-select"
@@ -162,25 +168,23 @@ export default function Historico() {
             </select>
           </div>
 
-          {/* Lista ou empty state */}
-          {coletasFiltradas.length === 0 ? (
+          {doacoesFiltradas.length === 0 ? (
             <div className="empty-state">
               <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
                 <polyline points="3.27 6.96 12 12.01 20.73 6.96"/>
                 <line x1="12" y1="22.08" x2="12" y2="12"/>
               </svg>
-              <p>Nenhuma coleta encontrada</p>
+              <p>Nenhuma doação encontrada</p>
               <span>Tente ajustar os filtros</span>
             </div>
           ) : (
             <div className="historico-lista">
-              {coletasFiltradas.map((c, i) => (
-                <CardColeta key={c.id} coleta={c} delay={i * 55} />
+              {doacoesFiltradas.map((d, i) => (
+                <CardDoacao key={d.id} doacao={d} delay={i * 55} />
               ))}
             </div>
           )}
-
         </div>
       </main>
     </div>
