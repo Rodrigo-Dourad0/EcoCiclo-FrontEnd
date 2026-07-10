@@ -9,7 +9,6 @@ import RecuperarSenha from './modules/auth/pages/RecuperarSenha.jsx';
 import NovoEndereco from './modules/profile/pages/NovoEndereco.jsx';
 import EditarPerfil from './modules/profile/pages/EditarPerfil.jsx';
 import AgendarDoacao from './modules/collections/pages/AgendarDoacao.jsx';
-import FinalizarColeta from './modules/collections/pages/FinalizarColeta.jsx';
 import MinhasAvaliacoes from './modules/feedback/pages/MinhasAvaliacoes.jsx';
 import Recompensas from './modules/rewards/pages/Recompensas.jsx';
 import MinhasDoacoes from './modules/collections/pages/MinhasDoacoes.jsx';
@@ -38,7 +37,6 @@ function App() {
         <Route path="/novo-endereco" element={<NovoEndereco />} />
         <Route path="/editar-perfil" element={<EditarPerfil />} />
         <Route path="/agendar-doacao" element={<AgendarDoacao />} />
-        <Route path="/finalizar-coleta" element={<FinalizarColeta />} />
         <Route path="/minhas-avaliacoes" element={<MinhasAvaliacoes />} />
         <Route path="/recompensas" element={<Recompensas />} />
         <Route path="/minhas-doacoes" element={<MinhasDoacoes />} />

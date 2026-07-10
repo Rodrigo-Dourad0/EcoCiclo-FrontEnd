@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 // ─── DADOS DAS COLETAS ────────────────────────────────────────────────────────
-const coletas = [
+const coletasIniciais = [
   {
     id: '001',
     status: 'agendada',
@@ -83,9 +83,14 @@ export const tabLabels = [
   '#101 – Disponível',
 ];
 
+// pontuação estimada por kg, usada ao finalizar uma coleta
+const PONTOS_POR_KG = 6;
+
 // ─── HOOK ─────────────────────────────────────────────────────────────────────
 export function useDetalhesColeta() {
+  const [coletas, setColetas] = useState(coletasIniciais);
   const [activeIndex, setActiveIndex] = useState(0);
+  const [sheetAberto, setSheetAberto] = useState(false);
 
   const coletaAtiva = coletas[activeIndex];
 
@@ -93,10 +98,40 @@ export function useDetalhesColeta() {
     setActiveIndex(index);
   }
 
+  function abrirFinalizarColeta() {
+    setSheetAberto(true);
+  }
+
+  function fecharFinalizarColeta() {
+    setSheetAberto(false);
+  }
+
+  function finalizarColeta({ idColeta, pesoReal, observacoes, fotos }) {
+    setColetas((prev) =>
+      prev.map((c) =>
+        c.id === idColeta
+          ? {
+              ...c,
+              status: 'coletada',
+              peso: `${pesoReal} kg`,
+              observacoes: observacoes?.trim() ? observacoes : c.observacoes,
+              pontos: Math.round(Number(pesoReal) * PONTOS_POR_KG),
+              fotos,
+            }
+          : c
+      )
+    );
+    setSheetAberto(false);
+  }
+
   return {
     coletas,
     coletaAtiva,
     activeIndex,
     irParaColeta,
+    sheetAberto,
+    abrirFinalizarColeta,
+    fecharFinalizarColeta,
+    finalizarColeta,
   };
 }

@@ -52,6 +52,200 @@ function spawnParticles(buttonEl) {
   }
 }
 
+/* ─── Sheet Finalizar Coleta (tema escuro / neon, no mesmo
+       padrão visual do modal "Detalhes da coleta") ───────── */
+const FORM_INICIAL = { pesoReal: "", observacoes: "", fotos: [] };
+
+function FinalizarColetaSheet({ aberto, aoFechar, coleta, onConfirmar }) {
+  const [form, setForm] = useState(FORM_INICIAL);
+  const [erroPeso, setErroPeso] = useState(null);
+
+  if (!aberto || !coleta) return null;
+
+  function validarPeso(valor) {
+    if (!valor || valor.trim() === "") return "Informe o peso real coletado.";
+    const numero = Number(valor);
+    if (Number.isNaN(numero) || numero <= 0) return "Informe um peso válido.";
+    return null;
+  }
+
+  function handleChange(e) {
+    const { id, value } = e.target;
+    setForm((prev) => ({ ...prev, [id]: value }));
+  }
+
+  function handleBlurPeso(e) {
+    setErroPeso(validarPeso(e.target.value));
+  }
+
+  function handleFotos(e) {
+    const arquivos = Array.from(e.target.files || []);
+    setForm((prev) => ({ ...prev, fotos: [...prev.fotos, ...arquivos] }));
+  }
+
+  function removerFoto(index) {
+    setForm((prev) => ({ ...prev, fotos: prev.fotos.filter((_, i) => i !== index) }));
+  }
+
+  function fecharEResetar() {
+    setForm(FORM_INICIAL);
+    setErroPeso(null);
+    aoFechar();
+  }
+
+  function handleSubmit() {
+    const mensagem = validarPeso(form.pesoReal);
+    if (mensagem) { setErroPeso(mensagem); return; }
+    onConfirmar({ idColeta: coleta.id, ...form });
+    setForm(FORM_INICIAL);
+    setErroPeso(null);
+  }
+
+  return (
+    <div
+      className="cd-final-backdrop"
+      onClick={(e) => { if (e.target === e.currentTarget) fecharEResetar(); }}
+    >
+      <div className="cd-final-modal" role="dialog" aria-modal="true">
+        <div className="cd-final-header">
+          <div className="cd-final-header-left">
+            <div className="cd-final-icon">
+              <Flag size={20} />
+            </div>
+            <div>
+              <div className="cd-final-title">Finalizar coleta</div>
+              <span className="cd-final-sub">
+                <Package size={11} />
+                {coleta.material} · #{coleta.codigoId}
+              </span>
+            </div>
+          </div>
+          <button className="cd-final-close" onClick={fecharEResetar} aria-label="Fechar">
+            <X size={16} />
+          </button>
+        </div>
+
+        <div className="cd-final-divider" />
+
+        <div className="cd-final-body">
+          {/* Resumo da coleta */}
+          <div className="cd-final-resumo-row">
+            <div className="cd-final-item">
+              <MapPin size={16} className="cd-final-item-icon" />
+              <div>
+                <span className="cd-final-item-label">Endereço</span>
+                <span className="cd-final-item-value">{coleta.endereco}</span>
+              </div>
+            </div>
+            <div className="cd-final-item">
+              <Weight size={16} className="cd-final-item-icon" />
+              <div>
+                <span className="cd-final-item-label">Peso estimado</span>
+                <span className="cd-final-item-value">{coleta.peso}</span>
+              </div>
+            </div>
+          </div>
+
+          <div className="cd-final-item cd-final-item--full">
+            <User size={16} className="cd-final-item-icon" />
+            <div>
+              <span className="cd-final-item-label">Doador</span>
+              <span className="cd-final-item-value">{coleta.doador}</span>
+            </div>
+          </div>
+
+          {/* Peso real */}
+          <div className="cd-final-field">
+            <label htmlFor="pesoReal">
+              Peso real coletado (kg) <span className="cd-final-required">*</span>
+            </label>
+            <div className={`cd-final-input-wrap ${erroPeso ? "cd-final-input-wrap--erro" : ""}`}>
+              <Weight size={16} className="cd-final-input-icon" />
+              <input
+                type="number"
+                id="pesoReal"
+                placeholder="Ex: 10.5"
+                value={form.pesoReal}
+                onChange={handleChange}
+                onBlur={handleBlurPeso}
+                min="0"
+                step="0.1"
+              />
+            </div>
+            {erroPeso && <span className="cd-final-erro">{erroPeso}</span>}
+          </div>
+
+          {/* Observações */}
+          <div className="cd-final-field">
+            <label htmlFor="observacoes">
+              Observações <span className="cd-final-optional">(opcional)</span>
+            </label>
+            <textarea
+              id="observacoes"
+              className="cd-final-textarea"
+              placeholder="Adicione observações sobre a coleta..."
+              value={form.observacoes}
+              onChange={handleChange}
+              rows={3}
+            />
+          </div>
+
+          {/* Fotos */}
+          <div className="cd-final-field">
+            <label>
+              Fotos <span className="cd-final-optional">(opcional)</span>
+            </label>
+            <label className="cd-final-fotos-btn" htmlFor="cd-final-fotos-input">
+              <Image size={15} />
+              Adicionar fotos
+              <input
+                type="file"
+                id="cd-final-fotos-input"
+                accept="image/*"
+                multiple
+                onChange={handleFotos}
+                style={{ display: "none" }}
+              />
+            </label>
+            {form.fotos.length > 0 && (
+              <div className="cd-final-fotos-preview">
+                {form.fotos.map((foto, index) => (
+                  <div key={index} className="cd-final-foto-item">
+                    <img src={URL.createObjectURL(foto)} alt={`Foto ${index + 1}`} />
+                    <button
+                      type="button"
+                      className="cd-final-foto-remover"
+                      onClick={() => removerFoto(index)}
+                    >
+                      <X size={10} />
+                    </button>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+
+          {/* Banner informativo */}
+          <div className="cd-final-banner">
+            <CheckCircle size={15} />
+            <span>Ao finalizar, o doador receberá os pontos pela doação realizada.</span>
+          </div>
+        </div>
+
+        <div className="cd-final-actions">
+          <button className="cd-final-btn-confirmar" onClick={handleSubmit}>
+            <Flag size={15} />
+            Confirmar finalização
+          </button>
+          <button className="cd-final-btn-cancelar" onClick={fecharEResetar}>
+            Cancelar
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 /* ─── Componente principal ──────────────────────── */
 export default function ColetasDisponiveis() {
   const navigate = useNavigate();
@@ -69,6 +263,7 @@ export default function ColetasDisponiveis() {
   const btnRefs = useRef({});
   const aceitarBtnRef = useRef(null);
   const [coletaDetalhes, setColetaDetalhes] = useState(null);
+  const [sheetFinalizar, setSheetFinalizar] = useState(false);
 
   useEffect(() => {
     coletasAceitas.forEach((item) => {
@@ -80,24 +275,35 @@ export default function ColetasDisponiveis() {
   }, [coletasAceitas]);
 
   useEffect(() => {
-    const handleKey = (e) => { if (e.key === "Escape") setColetaDetalhes(null); };
+    const handleKey = (e) => {
+      if (e.key === "Escape") {
+        if (sheetFinalizar) { setSheetFinalizar(false); return; }
+        setColetaDetalhes(null);
+      }
+    };
     window.addEventListener("keydown", handleKey);
     return () => window.removeEventListener("keydown", handleKey);
-  }, []);
+  }, [sheetFinalizar]);
 
-  // Atualiza coletaDetalhes quando coletasAceitas muda (para refletir estado aceito dentro do modal)
   useEffect(() => {
     if (!coletaDetalhes) return;
     const atualizada = coletasAceitas.find((c) => c.id === coletaDetalhes.id);
     if (atualizada) setColetaDetalhes((prev) => ({ ...prev, status: "Aceita" }));
   }, [coletasAceitas]);
 
-  const isAceita = (id) => coletasAceitas.some((c) => c.id === id);
+  const isAceita     = (id) => coletasAceitas.some((c) => c.id === id);
   const isProcessando = (id) => idsEmProcessamento.includes(id);
 
   const handleAceitarNoModal = () => {
     if (!coletaDetalhes) return;
     aceitarColeta(coletaDetalhes.id);
+  };
+
+  const handleFinalizarColeta = ({ idColeta, pesoReal, observacoes, fotos }) => {
+    // Aqui você chamará a API de finalização
+    console.log("Finalizando coleta", { idColeta, pesoReal, observacoes, fotos });
+    setSheetFinalizar(false);
+    setColetaDetalhes(null);
   };
 
   return (
@@ -233,7 +439,6 @@ export default function ColetasDisponiveis() {
                         </div>
                       </div>
 
-                      {/* Footer — só botão Detalhes */}
                       <div className="cd-footer">
                         <button
                           className="cd-btn-detalhes"
@@ -255,7 +460,7 @@ export default function ColetasDisponiveis() {
       <Toast visivel={toastVisivel} mensagem={toastMensagem} />
 
       {/* ════════════════════════════════
-          MODAL DE DETALHES COMPLETO
+          MODAL DE DETALHES
       ════════════════════════════════ */}
       {coletaDetalhes && (() => {
         const jaAceita    = isAceita(coletaDetalhes.id);
@@ -265,7 +470,6 @@ export default function ColetasDisponiveis() {
           <div className="cd-modal-overlay" onClick={() => setColetaDetalhes(null)}>
             <div className="cd-modal" onClick={(e) => e.stopPropagation()}>
 
-              {/* ── Header ── */}
               <div className="cd-modal-header">
                 <div className="cd-modal-header-left">
                   <div className="cd-modal-icon"><Package size={22} /></div>
@@ -284,7 +488,6 @@ export default function ColetasDisponiveis() {
 
               <div className="cd-modal-scroll">
 
-                {/* Status + categoria */}
                 <div className="cd-modal-status-row cd-modal-status-row--top">
                   <span className={`cd-modal-status ${jaAceita ? "cd-modal-status--aceita" : ""}`}>
                     <CheckCircle size={12} />
@@ -299,10 +502,8 @@ export default function ColetasDisponiveis() {
 
                 <div className="cd-modal-divider" />
 
-                {/* Grid de info */}
                 <div className="cd-modal-body">
 
-                  {/* Doador + Telefone */}
                   <div className="cd-modal-row">
                     <div className="cd-modal-item">
                       <User size={15} className="cd-modal-item-icon" />
@@ -320,7 +521,6 @@ export default function ColetasDisponiveis() {
                     </div>
                   </div>
 
-                  {/* Data + Peso */}
                   <div className="cd-modal-row">
                     <div className="cd-modal-item">
                       <Calendar size={15} className="cd-modal-item-icon" />
@@ -338,7 +538,6 @@ export default function ColetasDisponiveis() {
                     </div>
                   </div>
 
-                  {/* Pontos */}
                   <div className="cd-modal-row">
                     <div className="cd-modal-item">
                       <Star size={15} className="cd-modal-item-icon cd-modal-item-icon--star" />
@@ -349,7 +548,6 @@ export default function ColetasDisponiveis() {
                     </div>
                   </div>
 
-                  {/* Endereço completo */}
                   <div className="cd-modal-item cd-modal-item--full">
                     <MapPin size={15} className="cd-modal-item-icon" />
                     <div>
@@ -358,7 +556,6 @@ export default function ColetasDisponiveis() {
                     </div>
                   </div>
 
-                  {/* Mapa */}
                   <div className="cd-modal-mapa">
                     <iframe
                       title="mapa"
@@ -368,7 +565,6 @@ export default function ColetasDisponiveis() {
                     />
                   </div>
 
-                  {/* Descrição completa */}
                   <div className="cd-modal-item cd-modal-item--full">
                     <FileText size={15} className="cd-modal-item-icon" />
                     <div>
@@ -377,7 +573,6 @@ export default function ColetasDisponiveis() {
                     </div>
                   </div>
 
-                  {/* Observações */}
                   <div className="cd-modal-obs">
                     <span className="cd-modal-obs-label">
                       <Flag size={12} />
@@ -386,7 +581,6 @@ export default function ColetasDisponiveis() {
                     <p>{coletaDetalhes.observacoes}</p>
                   </div>
 
-                  {/* Fotos */}
                   <div className="cd-modal-fotos">
                     <span className="cd-modal-fotos-label">
                       <Image size={12} />
@@ -410,7 +604,6 @@ export default function ColetasDisponiveis() {
 
                 {/* ── Botões de ação ── */}
                 <div className="cd-modal-actions">
-                  {/* Aceitar coleta */}
                   <button
                     ref={(el) => {
                       if (el && processando) aceitarBtnRef.current = el;
@@ -434,7 +627,6 @@ export default function ColetasDisponiveis() {
                     )}
                   </button>
 
-                  {/* Visualizar rota */}
                   <button
                     className="cd-modal-btn cd-modal-btn--rota"
                     onClick={() => navigate("/visualizar-rota")}
@@ -443,11 +635,11 @@ export default function ColetasDisponiveis() {
                     Visualizar rota
                   </button>
 
-                  {/* Finalizar coleta — só aparece se já aceita */}
+                  {/* Finalizar coleta — abre sheet em vez de navegar */}
                   {jaAceita && (
                     <button
                       className="cd-modal-btn cd-modal-btn--finalizar"
-                      onClick={() => navigate("/finalizar-coleta")}
+                      onClick={() => setSheetFinalizar(true)}
                     >
                       <Flag size={16} />
                       Finalizar coleta
@@ -460,6 +652,16 @@ export default function ColetasDisponiveis() {
           </div>
         );
       })()}
+
+      {/* ════════════════════════════════
+          SHEET FINALIZAR COLETA
+      ════════════════════════════════ */}
+      <FinalizarColetaSheet
+        aberto={sheetFinalizar}
+        aoFechar={() => setSheetFinalizar(false)}
+        coleta={coletaDetalhes}
+        onConfirmar={handleFinalizarColeta}
+      />
     </div>
   );
 }
