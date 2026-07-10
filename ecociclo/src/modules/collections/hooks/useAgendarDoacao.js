@@ -10,6 +10,7 @@ export default function useAgendarDoacao() {
     observacoes: "",
   });
   const [erros, setErros] = useState({});
+  const [fotos, setFotos] = useState([]);
 
   const tiposMaterial = [
     "Papel e Papelão",
@@ -67,7 +68,6 @@ export default function useAgendarDoacao() {
         v = v.replace(/(\d{2})(\d{2})(\d{0,4})/, "$1/$2/$3");
       }
       setForm((prev) => ({ ...prev, data: v }));
-      // só limpa o erro se já está completo; não dispara erro enquanto digita
       if (erros.data && v.length === 10) {
         setErros((prev) => ({ ...prev, data: "" }));
       }
@@ -86,13 +86,12 @@ export default function useAgendarDoacao() {
 
     setForm((prev) => ({ ...prev, [campo]: value }));
 
-    // limpa erro ao corrigir o campo
     if (erros[campo]) {
       setErros((prev) => ({ ...prev, [campo]: validarCampo(campo, value) }));
     }
   }
 
-  // ── onBlur: dispara erro ao sair do campo ─────────────────────────────────
+  // ── onBlur ───────────────────────────────────────────────────────────────
   function handleBlur(e) {
     const { id, value } = e.target;
     const campo = id.replace(/2$/, "");
@@ -101,7 +100,17 @@ export default function useAgendarDoacao() {
     setErros((prev) => ({ ...prev, [campo]: erro }));
   }
 
-  // ── Submit: valida tudo ───────────────────────────────────────────────────
+  // ── Fotos ────────────────────────────────────────────────────────────────
+  function handleFotosChange({ target }) {
+    const novos = Array.from(target.files || target);
+    setFotos((prev) => [...prev, ...novos].slice(0, 5));
+  }
+
+  function handleRemoverFoto(index) {
+    setFotos((prev) => prev.filter((_, i) => i !== index));
+  }
+
+  // ── Submit ───────────────────────────────────────────────────────────────
   function validar() {
     const campos = ["tipoMaterial", "pesoEstimado", "data", "horario", "endereco"];
     const novosErros = {};
@@ -124,10 +133,13 @@ export default function useAgendarDoacao() {
   return {
     form,
     erros,
+    fotos,
     tiposMaterial,
     enderecos,
     handleChange,
     handleBlur,
     handleSubmit,
+    handleFotosChange,
+    handleRemoverFoto,
   };
 }
