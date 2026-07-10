@@ -228,6 +228,51 @@
   box-shadow: 0 1px 4px rgba(34, 197, 94, 0.3);
 }
 
+/* === Acesso provisório à tela do coletor === */
+.btn-acesso-coletor {
+  width: fit-content;
+  margin: -14px 0 24px auto;
+  padding: 9px 13px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+
+  border: 1px solid #D1FAE5;
+  border-radius: 10px;
+
+  background: #F0FDF4;
+  color: #15803D;
+
+  font-size: 12px;
+  font-weight: 600;
+  font-family: var(--sans);
+
+  cursor: pointer;
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.btn-acesso-coletor:hover {
+  background: #DCFCE7;
+  border-color: #86EFAC;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(34, 197, 94, 0.12);
+}
+
+.btn-acesso-coletor:active {
+  transform: translateY(0);
+  box-shadow: none;
+}
+
+.btn-acesso-coletor svg {
+  flex-shrink: 0;
+}
+
 /* === Seção Minhas Coletas === */
 .minhas-coletas-section {
   margin-top: 0;
@@ -477,6 +522,12 @@
   .coleta-coletor {
     font-size: 11px;
   }
+
+  .btn-acesso-coletor {
+  width: 100%;
+  margin: -12px 0 22px;
+  padding: 10px 14px;
+}
 }
 
 /* Telas muito pequenas */

@@ -137,6 +137,17 @@ export function Dashboard() {
             <span>Agendar nova doação</span>
           </button>
 
+          {/* Acesso provisório à tela do coletor */}
+          <button
+            type="button"
+            className="btn-acesso-coletor"
+            onClick={() => navigate('/coletas-disponiveis')}
+          >
+            <Recycle size={17} />
+            <span>Coletas disponíveis</span>
+            <ChevronRight size={16} />
+          </button>
+
           {/* Seção de minhas doações */}
           <section className="minhas-coletas-section">
             <div className="minhas-coletas-header">
