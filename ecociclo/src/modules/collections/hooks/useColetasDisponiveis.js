@@ -83,8 +83,6 @@ export default function useColetasDisponiveis() {
   const coletasAtivas = coletasAceitas.length;
   const limiteAtingido = coletasAtivas >= limiteColetas;
 
-  // Pontuação atual do coletor — dado mockado enquanto não há integração.
-    const pontosColetor = 2350;
 
   function aceitarColeta(id) {
     if (limiteAtingido || idsBloqueadosRef.current.has(id)) return;
@@ -136,7 +134,6 @@ export default function useColetasDisponiveis() {
     limiteColetas,
     limiteAtingido,
     totalDisponiveis: coletasDisponiveis.length,
-    pontosColetor,
     aceitarColeta,
     idsEmProcessamento,
     coletasAceitas,

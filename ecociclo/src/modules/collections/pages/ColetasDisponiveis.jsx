@@ -5,7 +5,6 @@ import {
   MapPin,
   Clock,
   Weight,
-  Award,
   User,
   CheckCircle,
   Zap,
@@ -73,7 +72,6 @@ export default function ColetasDisponiveis() {
     limiteColetas,
     limiteAtingido,
     totalDisponiveis,
-    pontosColetor,
     aceitarColeta,
     idsEmProcessamento,
     coletasAceitas,
@@ -102,32 +100,17 @@ export default function ColetasDisponiveis() {
 
           {/* Cabeçalho */}
           <header className="cd-header">
-            <div className="cd-header-conteudo">
-                <div className="cd-header-texto">
-                <p className="cd-kicker">
-                    <Zap size={13} />
-                    Coletor
-                </p>
+            <p className="cd-kicker">
+              <Zap size={13} />
+              Coletor
+            </p>
 
-                <h1>Coletas Disponíveis</h1>
+            <h1>Coletas Disponíveis</h1>
 
-                <p className="cd-header-sub">
-                    Escolha uma coleta para realizar e ganhe pontos.
-                </p>
-                </div>
-
-                <div className="cd-pontos-resumo">
-                <div className="cd-pontos-resumo-icon">
-                    <Award size={19} />
-                </div>
-
-                <div>
-                    <strong>{pontosColetor.toLocaleString("pt-BR")}</strong>
-                    <span>Pontos acumulados</span>
-                </div>
-                </div>
-            </div>
-            </header>
+            <p className="cd-header-sub">
+              Escolha uma coleta para realizar.
+            </p>
+          </header>
 
           {/* Resumo */}
           <section className="cd-resumo">
@@ -255,10 +238,6 @@ export default function ColetasDisponiveis() {
                       </div>
 
                       <div className="cd-footer">
-                        <div className="cd-pontos">
-                          <Award size={16} />
-                          <span>{coleta.pontos} pontos</span>
-                        </div>
 
                         <button
                           ref={(el) => {
