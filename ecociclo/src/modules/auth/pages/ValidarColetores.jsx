@@ -145,35 +145,6 @@ export default function ValidarColetores() {
           </p>
         </div>
 
-        {/* Stats */}
-        <div className="vc-stats">
-          <div className="vc-stat-card">
-            <span className="vc-stat-icon vc-stat-icon--total">⏳</span>
-            <div>
-              <span className="vc-stat-num">{pendentes.length}</span>
-              <span className="vc-stat-label">AGUARDANDO</span>
-            </div>
-          </div>
-          <div className="vc-stat-card">
-            <span className="vc-stat-icon vc-stat-icon--ativo">✅</span>
-            <div>
-              <span className="vc-stat-num">
-                {coletores.filter((c) => c.status === "aprovado").length}
-              </span>
-              <span className="vc-stat-label">APROVADOS</span>
-            </div>
-          </div>
-          <div className="vc-stat-card">
-            <span className="vc-stat-icon vc-stat-icon--pausado">❌</span>
-            <div>
-              <span className="vc-stat-num">
-                {coletores.filter((c) => c.status === "recusado").length}
-              </span>
-              <span className="vc-stat-label">RECUSADOS</span>
-            </div>
-          </div>
-        </div>
-
         <div className="vc-content">
           {/* Lista */}
           <div className="vc-lista">
