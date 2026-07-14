@@ -22,7 +22,7 @@ import MeusEnderecos from './modules/profile/pages/MeusEnderecos.jsx';
 import GerenciarRecompensa from './modules/rewards/pages/GerenciarRecompensa.jsx';
 import ValidarColetores from "./modules/auth/pages/ValidarColetores.jsx";
 import ColetasDisponiveis from "./modules/collections/pages/ColetasDisponiveis.jsx";
-
+import { AdminDashboard } from './modules/dashboard/pages/AdminDashboard.jsx';
 
 function App() {
   return (
@@ -32,6 +32,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/dashboard-coletor" element={<ColetorDashboard />} />
+        <Route path="/admin-dashboard" element={<AdminDashboard />} />
         <Route path="/criar-conta" element={<CriarConta />} />
         <Route path="/perfil" element={<ProfilePage />} />
         <Route path="/avaliar-coletor" element={<AvaliarColetor />} />
