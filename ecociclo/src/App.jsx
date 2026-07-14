@@ -1,6 +1,7 @@
 import './App.css';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Dashboard } from './modules/dashboard/pages/Dashboard.jsx';
+import { ColetorDashboard }  from './modules/dashboard/pages/ColetorDashboard.jsx';
 import Login from './modules/auth/pages/login.jsx';
 import CriarConta from './modules/auth/pages/CriarConta.jsx';
 import ProfilePage from './modules/profile/pages/ProfilePage.jsx';
@@ -30,6 +31,7 @@ function App() {
         <Route path="/" element={<Login />} />
         <Route path="/login" element={<Login />} />
         <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/dashboard-coletor" element={<ColetorDashboard />} />
         <Route path="/criar-conta" element={<CriarConta />} />
         <Route path="/perfil" element={<ProfilePage />} />
         <Route path="/avaliar-coletor" element={<AvaliarColetor />} />

@@ -1,14 +1,14 @@
-/* src/modules/dashboard/styles/Dashboard.css */
+/* src/modules/collector/styles/CollectorDashboard.css */
 
-.dashboard-main {
+.collector-dashboard-main {
   flex: 1;
-  background-color: #F8F9FA; /* Fundo cinza bem claro conforme a imagem */
+  background-color: #F8F9FA;
   height: 100vh;
   overflow-y: auto;
   font-family: var(--sans);
 }
 
-.dashboard-container {
+.collector-dashboard-container {
   padding: 16px 20px 40px;
   max-width: 1200px;
   margin: 0 auto;
@@ -22,45 +22,11 @@
   margin-bottom: 24px;
 }
 
-.top-title-wrapper {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
 .top-title {
   font-size: 18px;
   font-weight: 600;
-  color: #111827; /* Preto/Cinza escuro */
+  color: #111827;
   margin: 0;
-}
-
-/* Botão pequeno de troca para o dashboard de coletor */
-.btn-switch-dashboard {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  padding: 5px 10px;
-  border: 1px solid #E5E7EB;
-  border-radius: 20px;
-  background: #FFFFFF;
-  color: #374151;
-  font-size: 11px;
-  font-weight: 600;
-  font-family: var(--sans);
-  cursor: pointer;
-  transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
-}
-
-.btn-switch-dashboard:hover {
-  background-color: #F0FDF4;
-  border-color: #86EFAC;
-  color: #15803D;
-  transform: translateY(-1px);
-}
-
-.btn-switch-dashboard:active {
-  transform: translateY(0);
 }
 
 .icon-button {
@@ -165,7 +131,7 @@
 }
 
 /* Statistics section */
-.dashboard-stats {
+.collector-dashboard-stats {
   display: flex;
   gap: 12px;
   width: 100%;
@@ -179,10 +145,10 @@
   display: flex;
   align-items: center;
   gap: 10px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05); /* Sombra bem leve igual o print */
-  border: 1px solid #E5E7EB; /* Borda bem fina e clara */
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  border: 1px solid #E5E7EB;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
-  min-width: 110px; /* Suficiente para não apertar no desktop */
+  min-width: 110px;
 }
 
 .stat-card:hover {
@@ -197,15 +163,15 @@
 }
 
 .stat-icon-naked.green {
-  color: #22C55E; /* Verde forte */
+  color: #22C55E;
 }
 
 .stat-icon-naked.blue {
-  color: #3B82F6; /* Azul forte */
+  color: #3B82F6;
 }
 
 .stat-icon-naked.yellow {
-  color: #F59E0B; /* Amarelo/Laranja forte */
+  color: #F59E0B;
 }
 
 .stat-info {
@@ -218,7 +184,7 @@
 .stat-label {
   font-size: 11px;
   font-weight: 500;
-  color: #6B7280; /* Cinza médio */
+  color: #6B7280;
   margin-bottom: 2px;
 }
 
@@ -229,8 +195,8 @@
   line-height: 1.1;
 }
 
-/* === Botão Agendar Nova Coleta === */
-.btn-agendar-coleta {
+/* === Botão Ver Coletas Disponíveis === */
+.btn-buscar-coletas {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -251,19 +217,19 @@
   box-shadow: 0 2px 8px rgba(34, 197, 94, 0.3);
 }
 
-.btn-agendar-coleta:hover {
+.btn-buscar-coletas:hover {
   transform: translateY(-1px);
   box-shadow: 0 4px 16px rgba(34, 197, 94, 0.4);
   background: linear-gradient(135deg, #16A34A, #15803D);
 }
 
-.btn-agendar-coleta:active {
+.btn-buscar-coletas:active {
   transform: translateY(0);
   box-shadow: 0 1px 4px rgba(34, 197, 94, 0.3);
 }
 
-/* === Acesso provisório à tela do coletor === */
-.btn-acesso-coletor {
+/* === Acesso provisório ao painel do doador === */
+.btn-acesso-doador {
   width: fit-content;
   margin: -14px 0 24px auto;
   padding: 9px 13px;
@@ -291,19 +257,19 @@
     box-shadow 0.2s ease;
 }
 
-.btn-acesso-coletor:hover {
+.btn-acesso-doador:hover {
   background: #DCFCE7;
   border-color: #86EFAC;
   transform: translateY(-1px);
   box-shadow: 0 4px 12px rgba(34, 197, 94, 0.12);
 }
 
-.btn-acesso-coletor:active {
+.btn-acesso-doador:active {
   transform: translateY(0);
   box-shadow: none;
 }
 
-.btn-acesso-coletor svg {
+.btn-acesso-doador svg {
   flex-shrink: 0;
 }
 
@@ -438,15 +404,13 @@
   gap: 4px;
 }
 
-.coleta-pontos {
-  font-size: 14px;
-  font-weight: 600;
-  color: #22C55E;
-}
-
-.coleta-coletor {
+.coleta-doador {
+  display: flex;
+  align-items: center;
+  gap: 4px;
   font-size: 12px;
-  color: #9CA3AF;
+  font-weight: 500;
+  color: #374151;
 }
 
 /* ================================================
@@ -454,7 +418,7 @@
    ================================================ */
 
 @media (max-width: 1024px) {
-  .dashboard-stats {
+  .collector-dashboard-stats {
     flex-wrap: wrap;
   }
   .stat-card {
@@ -463,21 +427,16 @@
 }
 
 @media (max-width: 768px) {
-  .dashboard-main {
-    padding-bottom: 80px; /* Espaço pro menu inferior */
+  .collector-dashboard-main {
+    padding-bottom: 80px;
   }
-  
-  .dashboard-container {
+
+  .collector-dashboard-container {
     padding: 16px 16px 24px;
   }
 
   .top-title {
     font-size: 16px;
-  }
-
-  .btn-switch-dashboard {
-    font-size: 10px;
-    padding: 4px 8px;
   }
 
   .greeting-title {
@@ -488,7 +447,7 @@
     font-size: 12px;
   }
 
-  .dashboard-stats {
+  .collector-dashboard-stats {
     flex-direction: row;
     flex-wrap: nowrap;
     overflow-x: auto;
@@ -496,19 +455,18 @@
     scroll-snap-type: x mandatory;
     gap: 12px;
     -webkit-overflow-scrolling: touch;
-    
-    /* Disfarçar scrollbar visualmente mantendo scroll */
-    scrollbar-width: none; 
+
+    scrollbar-width: none;
     -ms-overflow-style: none;
   }
-  
-  .dashboard-stats::-webkit-scrollbar {
+
+  .collector-dashboard-stats::-webkit-scrollbar {
     display: none;
   }
 
   .stat-card {
     flex: 0 0 auto;
-    width: 30%; /* Mostra quase todos numa tela normal mobile mas dá pra arrastar */
+    width: 30%;
     min-width: 105px;
     scroll-snap-align: center;
     padding: 14px 12px;
@@ -517,7 +475,7 @@
   .stat-label {
     font-size: 10px;
   }
-  
+
   .stat-value {
     font-size: 16px;
   }
@@ -527,21 +485,18 @@
     height: 20px;
   }
 
-  /* Botão agendar — mobile */
-  .btn-agendar-coleta {
+  .btn-buscar-coletas {
     font-size: 14px;
     padding: 13px 20px;
     margin-top: 16px;
     margin-bottom: 24px;
   }
 
-  /* Popover de notificações — mobile */
   .notification-popover {
     width: 260px;
     right: -8px;
   }
 
-  /* Cards de coleta — mobile */
   .coleta-card {
     padding: 14px;
   }
@@ -554,19 +509,15 @@
     font-size: 12px;
   }
 
-  .coleta-pontos {
-    font-size: 13px;
-  }
-
-  .coleta-coletor {
+  .coleta-doador {
     font-size: 11px;
   }
 
-  .btn-acesso-coletor {
-  width: 100%;
-  margin: -12px 0 22px;
-  padding: 10px 14px;
-}
+  .btn-acesso-doador {
+    width: 100%;
+    margin: -12px 0 22px;
+    padding: 10px 14px;
+  }
 }
 
 /* Telas muito pequenas */
@@ -581,7 +532,7 @@
     width: 28%;
   }
 
-  .btn-agendar-coleta {
+  .btn-buscar-coletas {
     font-size: 13px;
     padding: 12px 16px;
   }

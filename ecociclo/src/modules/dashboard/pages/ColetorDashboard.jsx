@@ -1,10 +1,10 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Leaf, Package, Star, Bell, Plus, Calendar, MapPin, Weight, ChevronRight, Recycle, Truck } from 'lucide-react';
-import '../styles/Dashboard.css';
+import { Recycle, Package, Star, Bell, Weight, Calendar, MapPin, User, ChevronRight, Search } from 'lucide-react';
+import '../styles/ColetorDashboard.css';
 import { Navigation } from '../../../shared/components/Navigation/Navigation.jsx';
 
-export function Dashboard() {
+export function ColetorDashboard() {
   const navigate = useNavigate();
   const [showNotifications, setShowNotifications] = useState(false);
   const notifRef = useRef(null);
@@ -20,33 +20,33 @@ export function Dashboard() {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  // Dados de estatísticas mockados
+  // Dados de estatísticas mockados (perspectiva do coletor)
   const stats = [
     {
       id: 1,
-      label: 'Pontos',
-      value: '1250',
-      icon: <Leaf className="stat-icon leaf" size={24} />,
-      colorClass: 'green'
-    },
-    {
-      id: 2,
-      label: 'Doações',
-      value: '24',
+      label: 'Coletas feitas',
+      value: '38',
       icon: <Package className="stat-icon package" size={24} />,
       colorClass: 'blue'
     },
     {
+      id: 2,
+      label: 'Peso total',
+      value: '312 kg',
+      icon: <Weight className="stat-icon weight" size={24} />,
+      colorClass: 'green'
+    },
+    {
       id: 3,
-      label: 'Impacto',
-      value: 'Alto',
+      label: 'Avaliação',
+      value: '4.9',
       icon: <Star className="stat-icon star" size={24} />,
       colorClass: 'yellow'
     }
   ];
 
-  // Dados de doações mockados
-  const doacoes = [
+  // Dados de coletas mockados (perspectiva do coletor)
+  const coletas = [
     {
       id: 1,
       tipo: 'Papel e Papelão',
@@ -55,8 +55,7 @@ export function Dashboard() {
       data: '30/01/2026 às 14:00',
       endereco: 'Rua das Flores, 123 - Centro',
       peso: '15 kg',
-      pontos: '+150 pontos',
-      coletor: 'Maria Santos'
+      doador: 'Maria Santos'
     },
     {
       id: 2,
@@ -66,32 +65,20 @@ export function Dashboard() {
       data: '25/01/2026 às 10:00',
       endereco: 'Av. Principal, 456 - Jardins',
       peso: '8 kg',
-      pontos: '+80 pontos',
-      coletor: null
+      doador: 'Carlos Oliveira'
     }
   ];
 
   return (
     <div className="app-container">
         <Navigation />
-      
-      <main className="dashboard-main">
-        <div className="dashboard-container">
+
+      <main className="collector-dashboard-main">
+        <div className="collector-dashboard-container">
 
           {/* Cabeçalho superior */}
           <header className="top-header">
-            <div className="top-title-wrapper">
-              <h2 className="top-title">Dashboard</h2>
-              <button
-                type="button"
-                className="btn-switch-dashboard"
-                onClick={() => navigate('/dashboard-coletor')}
-                title="Ir para o dashboard do coletor"
-              >
-                <Truck size={14} />
-                <span>Sou coletor</span>
-              </button>
-            </div>
+            <h2 className="top-title">Dashboard</h2>
             <div className="notification-wrapper" ref={notifRef}>
               <button
                 className="icon-button"
@@ -120,12 +107,12 @@ export function Dashboard() {
 
           {/* Seção de saudação */}
           <section className="greeting-section">
-            <h1 className="greeting-title">Olá, João! 👏</h1>
-            <p className="greeting-subtitle">Pronto para ajudar o meio ambiente?</p>
+            <h1 className="greeting-title">Olá, Coletor! 👏</h1>
+            <p className="greeting-subtitle">Pronto para coletar hoje?</p>
           </section>
 
           {/* Cards de estatísticas */}
-          <section className="dashboard-stats">
+          <section className="collector-dashboard-stats">
             {stats.map((stat) => (
               <div key={stat.id} className="stat-card">
                 <div className={`stat-icon-naked ${stat.colorClass}`}>
@@ -139,77 +126,73 @@ export function Dashboard() {
             ))}
           </section>
 
-          {/* Botão de agendar nova doação */}
+          {/* Botão de buscar novas coletas */}
           <button
-            className="btn-agendar-coleta"
-            onClick={() => navigate('/agendar-doacao')}
-          >
-            <Plus size={20} />
-            <span>Agendar nova doação</span>
-          </button>
-
-          {/* Acesso provisório à tela do coletor */}
-          <button
-            type="button"
-            className="btn-acesso-coletor"
+            className="btn-buscar-coletas"
             onClick={() => navigate('/coletas-disponiveis')}
           >
+            <Search size={20} />
+            <span>Ver coletas disponíveis</span>
+          </button>
+
+          {/* Acesso provisório à tela do doador */}
+          <button
+            type="button"
+            className="btn-acesso-doador"
+            onClick={() => navigate('/dashboard')}
+          >
             <Recycle size={17} />
-            <span>Coletas disponíveis</span>
+            <span>Painel do doador</span>
             <ChevronRight size={16} />
           </button>
 
-          {/* Seção de minhas doações */}
+          {/* Seção de minhas coletas */}
           <section className="minhas-coletas-section">
             <div className="minhas-coletas-header">
-              <h3 className="minhas-coletas-title">Minhas doações</h3>
+              <h3 className="minhas-coletas-title">Minhas coletas</h3>
               <button
                 className="ver-todas-btn"
-                onClick={() => navigate('/minhas-doacoes')}
+                onClick={() => navigate('/minhas-coletas')}
               >
                 Ver todas <ChevronRight size={16} />
               </button>
             </div>
 
             <div className="coletas-list">
-              {doacoes.map((doacao) => (
-                <div key={doacao.id} className="coleta-card">
+              {coletas.map((coleta) => (
+                <div key={coleta.id} className="coleta-card">
                   <div className="coleta-card-top">
                     <div className="coleta-tipo">
                       <Recycle size={18} className="coleta-tipo-icon" />
-                      <span className="coleta-tipo-text">{doacao.tipo}</span>
+                      <span className="coleta-tipo-text">{coleta.tipo}</span>
                     </div>
 
-                    <span className={`coleta-status ${doacao.statusClass}`}>
-                      {doacao.status}
+                    <span className={`coleta-status ${coleta.statusClass}`}>
+                      {coleta.status}
                     </span>
                   </div>
 
                   <div className="coleta-detalhes">
                     <div className="coleta-detalhe-item">
                       <Calendar size={14} />
-                      <span>{doacao.data}</span>
+                      <span>{coleta.data}</span>
                     </div>
 
                     <div className="coleta-detalhe-item">
                       <MapPin size={14} />
-                      <span>{doacao.endereco}</span>
+                      <span>{coleta.endereco}</span>
                     </div>
 
                     <div className="coleta-detalhe-item">
                       <Weight size={14} />
-                      <span>Peso estimado: {doacao.peso}</span>
+                      <span>Peso estimado: {coleta.peso}</span>
                     </div>
                   </div>
 
                   <div className="coleta-card-bottom">
-                    <span className="coleta-pontos">{doacao.pontos}</span>
-
-                    {doacao.coletor && (
-                      <span className="coleta-coletor">
-                        Coletor: {doacao.coletor}
-                      </span>
-                    )}
+                    <span className="coleta-doador">
+                      <User size={12} /> Doador: {coleta.doador}
+                    </span>
                   </div>
                 </div>
               ))}
