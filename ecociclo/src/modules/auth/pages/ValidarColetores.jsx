@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Navigation } from '../../../shared/components/navigation/Navigation.jsx';
+import { Navigation } from '../../../shared/components/Navigation/Navigation.jsx';
 import "../styles/ValidarColetores.css";
 
 const coletoresMock = [

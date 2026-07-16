@@ -1,26 +1,54 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Home, HandHeart, Gift, Clock, User, LogIn, UserPlus } from 'lucide-react';
+import { Home, HandHeart, Gift, Clock, User, LogIn, UserPlus, CheckCircle, Users } from 'lucide-react';
+import { useAuth } from '../../../context/AuthContext';
 import './Navigation.css';
 
 export function Navigation() {
   const location = useLocation();
 
-  const navItems = [
-    { icon: <Home size={22} />,       label: 'Início',       to: '/dashboard' },
-    { icon: <HandHeart size={22} />,  label: 'Doação',       to: '/agendar-doacao' },
-    { icon: <Gift size={22} />,       label: 'Recompensas',  to: '/recompensas' },
-    { icon: <Clock size={22} />,      label: 'Histórico',    to: '/historico' },
-    { icon: <User size={22} />,       label: 'Perfil',       to: '/perfil' },
-  ];
+  const { user } = useAuth();
+  const tipo = user?.tipo;
+
+  let navItems = [];
+
+  if (tipo === 'ADMIN') {
+    navItems = [
+      { icon: <Home size={22} />, label: 'Dashboard', to: '/admin-dashboard' },
+      { icon: <Gift size={22} />, label: 'Recompensas', to: '/gerenciar-recompensa' },
+      { icon: <CheckCircle size={22} />, label: 'Validar', to: '/validar-coletores' },
+      { icon: <Users size={22} />, label: 'Usuários', to: '#' },
+      { icon: <User size={22} />, label: 'Perfil', to: '/perfil' },
+    ];
+  } else if (tipo === 'ASSOCIACAO') {
+    navItems = [
+      { icon: <Home size={22} />, label: 'Dashboard', to: '/dashboard-coletor' },
+      { icon: <Clock size={22} />, label: 'Histórico', to: '/minhas-coletas' },
+      { icon: <User size={22} />, label: 'Perfil', to: '/perfil' },
+    ];
+  } else {
+    // DOADOR ou Default
+    navItems = [
+      { icon: <Home size={22} />, label: 'Início', to: '/dashboard' },
+      { icon: <HandHeart size={22} />, label: 'Doação', to: '/agendar-doacao' },
+      { icon: <Gift size={22} />, label: 'Recompensas', to: '/recompensas' },
+      { icon: <Clock size={22} />, label: 'Histórico', to: '/historico' },
+      { icon: <User size={22} />, label: 'Perfil', to: '/perfil' },
+    ];
+  }
 
   const rotasRelacionadas = {
-  "/dashboard": ["/dashboard"],
-  "/agendar-doacao": ["/agendar-doacao", "/detalhes-doacao"],
-  "/recompensas": ["/recompensas", "/minhas-recompensas", "/detalhes-recompensas", "/gerenciar-recompensa"],
-  "/historico": ["/historico"],
-  "/perfil": ["/perfil", "/meus-enderecos", "/novo-endereco", "/editar-perfil", "/minhas-coletas", "/minhas-avaliacoes", "/validar-coletores"],
-};
+    "/dashboard": ["/dashboard"],
+    "/dashboard-coletor": ["/dashboard-coletor"],
+    "/admin-dashboard": ["/admin-dashboard"],
+    "/agendar-doacao": ["/agendar-doacao", "/detalhes-doacao"],
+    "/recompensas": ["/recompensas", "/minhas-recompensas", "/detalhes-recompensas"],
+    "/gerenciar-recompensa": ["/gerenciar-recompensa"],
+    "/validar-coletores": ["/validar-coletores"],
+    "/historico": ["/historico"],
+    "/minhas-coletas": ["/minhas-coletas"],
+    "/perfil": ["/perfil", "/meus-enderecos", "/novo-endereco", "/editar-perfil", "/minhas-avaliacoes"],
+  };
 
   return (
     <nav className="navigation">
@@ -50,17 +78,6 @@ export function Navigation() {
         })}
       </ul>
 
-      {/* Botões de autenticação */}
-      <div className="nav-auth">
-        <Link to="/login" className="nav-auth-btn btn-login">
-          <LogIn size={16} />
-          <span>Login</span>
-        </Link>
-        <Link to="/criar-conta" className="nav-auth-btn btn-register">
-          <UserPlus size={16} />
-          <span>Criar Conta</span>
-        </Link>
-      </div>
     </nav>
   );
 }

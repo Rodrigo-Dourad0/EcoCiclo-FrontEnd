@@ -3,7 +3,6 @@ import { RenderIcon } from './RenderIcon.jsx'
 function ProfileCard({ 
   usuario, 
   tipoUsuario,
-  alternarTipoUsuario,
   configuracoes,
   onLogout, 
   onEditarPerfil,
@@ -58,19 +57,7 @@ function ProfileCard({
           </svg>
         </button>
 
-        <button 
-          className="profile-card__btn-alternar"
-          onClick={alternarTipoUsuario}
-          title={`Alternar para ${tipoUsuario === 'Coletor' ? 'Administrador' : 'Coletor'}`}
-        >
-          <span className="profile-card__btn-acao-esquerda">
-            <RenderIcon iconName="users" width={18} height={18} />
-            {tipoUsuario === 'Coletor' ? 'Modo Admin' : 'Modo Coletor'}
-          </span>
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="18" height="18">
-            <polyline points="9 18 15 12 9 6" />
-          </svg>
-        </button>
+
 
         {configuracoes.map((config) => (
           <button 

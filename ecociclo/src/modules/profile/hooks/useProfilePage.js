@@ -1,17 +1,44 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { useAuth } from '../../../context/AuthContext'
 
 export function useProfilePage() {
-  const [tipoUsuario, setTipoUsuario] = useState('Coletor')
+  const { user } = useAuth()
+  
+  const defaultUser = user || {
+    nome: 'Carregando...',
+    email: '',
+    telefone: '',
+    avatar: null,
+    avaliacao: 0,
+    coletas: 0,
+    tipo: 'DOADOR'
+  }
+
+  const mapearTipo = (tipo) => {
+    if (tipo === 'ADMIN') return 'Administrador';
+    if (tipo === 'ASSOCIACAO') return 'Coletor';
+    return 'Doador';
+  };
+
+  const [tipoUsuario, setTipoUsuario] = useState(mapearTipo(defaultUser.tipo))
   
   const [usuario, setUsuario] = useState({
-    nome: 'João Silva',
-    email: 'joao.silva@gmail.com',
-    telefone: '(11) 98765-4321',
-    avatar: null,
-    avaliacao: 4.8,
-    coletas: 24,
-    tipoUsuario: 'Coletor',
+    ...defaultUser,
+    tipoUsuario: mapearTipo(defaultUser.tipo)
   })
+
+  useEffect(() => {
+    if (user) {
+       const tipo = mapearTipo(user.tipo);
+       setTipoUsuario(tipo);
+       setUsuario({
+         ...user,
+         tipoUsuario: tipo,
+         avaliacao: user.avaliacao || 0,
+         coletas: user.coletas || 0
+       });
+    }
+  }, [user])
 
   const [isDesktop, setIsDesktop] = useState(window.innerWidth >= 768)
 
@@ -65,30 +92,38 @@ export function useProfilePage() {
     }
   ]
 
-  // Função para alternar tipo de usuário
-  const alternarTipoUsuario = () => {
-    const novoTipo = tipoUsuario === 'Coletor' ? 'Administrador' : 'Coletor'
-    setTipoUsuario(novoTipo)
-    setUsuario(prev => ({
-      ...prev,
-      tipoUsuario: novoTipo
-    }))
-  }
+  // Configurações para Doador
+  const configuracoesDoador = [
+    {
+      id: 'meus-enderecos',
+      label: 'Gerenciar endereços',
+      icon: 'map',
+      action: 'onMeusEnderecos'
+    },
+    {
+      id: 'novo-endereco',
+      label: 'Adicionar novo endereço',
+      icon: 'plus',
+      action: 'onNovoEndereco'
+    }
+  ]
 
   // Retorna as configurações baseado no tipo de usuário
   const getConfiguracoes = () => {
-    return tipoUsuario === 'Coletor' ? configracoesColetor : configuracoesAdministrador
+    if (tipoUsuario === 'Administrador') return configuracoesAdministrador;
+    if (tipoUsuario === 'Coletor') return configracoesColetor;
+    return configuracoesDoador;
   }
 
   return {
     usuario,
     setUsuario,
     tipoUsuario,
-    alternarTipoUsuario,
     isDesktop,
     setIsDesktop,
     configuracoes: getConfiguracoes(),
     configracoesColetor,
-    configuracoesAdministrador
+    configuracoesAdministrador,
+    configuracoesDoador
   }
 }

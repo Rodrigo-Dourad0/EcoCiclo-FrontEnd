@@ -10,7 +10,6 @@ function ProfilePage() {
   const {
     usuario,
     tipoUsuario,
-    alternarTipoUsuario,
     isDesktop,
     setIsDesktop,
     configuracoes
@@ -71,7 +70,6 @@ function ProfilePage() {
             <ProfileCard
               usuario={usuario}
               tipoUsuario={tipoUsuario}
-              alternarTipoUsuario={alternarTipoUsuario}
               configuracoes={configuracoes}
               onLogout={handleLogout}
               onEditarPerfil={handleEditarPerfil}
@@ -134,13 +132,6 @@ function ProfilePage() {
             <div className="profile-painel__secao">
               <div className="profile-painel__config-header">
                 <h2 className="profile-painel__secao-titulo">Configurações</h2>
-                <button 
-                  className="profile-painel__btn-alternar"
-                  onClick={alternarTipoUsuario}
-                  title={`Alternar para ${tipoUsuario === 'Coletor' ? 'Administrador' : 'Coletor'}`}
-                >
-                  {tipoUsuario === 'Coletor' ? 'Modo Admin' : 'Modo Coletor'}
-                </button>
               </div>
 
               {configuracoes.map((config) => (
