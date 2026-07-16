@@ -16,13 +16,20 @@ function Login() {
     senhaErro,
     validarEmail,
     validarSenha,
+    handleLoginSubmit,
+    loading
   } = useLogin();
 
-  const handleLogin = () => {
-    const emailValido = validarEmail(email);
-    const senhaValida = validarSenha(senha);
-    if (emailValido && senhaValida) {
-      navigate("/dashboard");
+  const handleLogin = async () => {
+    const userData = await handleLoginSubmit();
+    if (userData) {
+      if (userData.tipo === 'ADMIN') {
+        navigate("/admin-dashboard");
+      } else if (userData.tipo === 'ASSOCIACAO') {
+        navigate("/dashboard-coletor");
+      } else {
+        navigate("/dashboard");
+      }
     }
   };
 
@@ -117,8 +124,8 @@ function Login() {
             <span className="ln-remember-label">Lembrar meu acesso</span>
           </label>
 
-          <button className="ln-btn-entrar" onClick={handleLogin}>
-            Entrar
+          <button className="ln-btn-entrar" onClick={handleLogin} disabled={loading}>
+            {loading ? "Entrando..." : "Entrar"}
           </button>
 
           <p className="ln-cadastro-link">
@@ -247,8 +254,8 @@ function Login() {
           </label>
 
           <div className="ln-actions">
-            <button className="ln-btn-entrar" onClick={handleLogin}>
-              Entrar
+            <button className="ln-btn-entrar" onClick={handleLogin} disabled={loading}>
+              {loading ? "Entrando..." : "Entrar"}
             </button>
             <p className="ln-cadastro-link">
               Não tem conta? <Link to="/criar-conta">Criar agora</Link>

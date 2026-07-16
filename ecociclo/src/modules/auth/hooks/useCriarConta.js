@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../../../shared/services/firebase";
 
 export default function useCriarConta() {
   const [tipo, setTipo] = useState("doador");
@@ -6,6 +8,7 @@ export default function useCriarConta() {
     nome: "",
     email: "",
     telefone: "",
+    endereco: "",
     senha: "",
     confirmarSenha: "",
   });
@@ -68,9 +71,44 @@ export default function useCriarConta() {
     return Object.keys(novosErros).length === 0;
   }
 
-  function handleSubmit() {
+  async function handleSubmit() {
     if (validar()) {
-      alert(`Conta criada com sucesso!\nNome: ${form.nome}\nTipo: ${tipo}`);
+      try {
+        // Mapeamento: doador -> DOADOR, coletor -> ASSOCIACAO, admin -> ADMIN
+        const tipoUsuario = tipo === 'doador' ? 'DOADOR' : tipo === 'admin' ? 'ADMIN' : 'ASSOCIACAO';
+        
+        // 1. Firebase Auth
+        const userCredential = await createUserWithEmailAndPassword(auth, form.email, form.senha);
+        const user = userCredential.user;
+        const token = await user.getIdToken();
+
+        // 2. Back-end API - Criar perfil
+        const response = await fetch('http://localhost:8080/api/usuarios', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            nome: form.nome,
+            email: form.email,
+            telefone: form.telefone,
+            tipo: tipoUsuario,
+            associacaoId: null,
+            firebaseUid: user.uid,
+            pontuacao: 0
+          })
+        });
+
+        if (!response.ok) {
+           const errorData = await response.json().catch(() => ({}));
+           throw new Error(errorData.erro || 'Erro ao criar usuário no back-end');
+        }
+
+        alert(`Conta criada com sucesso!\nNome: ${form.nome}\nTipo: ${tipoUsuario}`);
+      } catch (error) {
+        console.error("Erro ao criar conta:", error);
+        alert(`Erro ao criar conta: ${error.message}`);
+      }
     }
   }
 

@@ -83,6 +83,13 @@ export default function CriarConta() {
                 <span className="cc-tipo-desc">Coletar materiais recicláveis</span>
               </div>
             </div>
+            <div className={`cc-tipo-option ${tipo === "admin" ? "ativo" : ""}`} onClick={() => setTipo("admin")}>
+              <div className="cc-radio-outer">{tipo === "admin" && <div className="cc-radio-inner" />}</div>
+              <div className="cc-tipo-info">
+                <span className="cc-tipo-nome">Administrador</span>
+                <span className="cc-tipo-desc">Gerenciar a plataforma</span>
+              </div>
+            </div>
           </div>
 
           <button className="cc-btn-criar" onClick={handleSubmit}>Criar conta</button>
@@ -193,6 +200,13 @@ export default function CriarConta() {
                 <div className="cc-tipo-info">
                   <span className="cc-tipo-nome">Coletor</span>
                   <span className="cc-tipo-desc">Coletar materiais recicláveis</span>
+                </div>
+              </div>
+              <div className={`cc-tipo-option ${tipo === "admin" ? "ativo" : ""}`} onClick={() => setTipo("admin")}>
+                <div className="cc-radio-outer">{tipo === "admin" && <div className="cc-radio-inner" />}</div>
+                <div className="cc-tipo-info">
+                  <span className="cc-tipo-nome">Administrador</span>
+                  <span className="cc-tipo-desc">Gerenciar a plataforma</span>
                 </div>
               </div>
             </div>
