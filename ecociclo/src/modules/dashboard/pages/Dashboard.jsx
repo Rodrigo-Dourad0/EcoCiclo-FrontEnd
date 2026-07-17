@@ -82,15 +82,6 @@ export function Dashboard() {
           <header className="top-header">
             <div className="top-title-wrapper">
               <h2 className="top-title">Dashboard</h2>
-              <button
-                type="button"
-                className="btn-switch-dashboard"
-                onClick={() => navigate('/dashboard-coletor')}
-                title="Ir para o dashboard do coletor"
-              >
-                <Truck size={14} />
-                <span>Sou coletor</span>
-              </button>
             </div>
             <div className="notification-wrapper" ref={notifRef}>
               <button
@@ -146,17 +137,6 @@ export function Dashboard() {
           >
             <Plus size={20} />
             <span>Agendar nova doação</span>
-          </button>
-
-          {/* Acesso provisório à tela do coletor */}
-          <button
-            type="button"
-            className="btn-acesso-coletor"
-            onClick={() => navigate('/coletas-disponiveis')}
-          >
-            <Recycle size={17} />
-            <span>Coletas disponíveis</span>
-            <ChevronRight size={16} />
           </button>
 
           {/* Seção de minhas doações */}
