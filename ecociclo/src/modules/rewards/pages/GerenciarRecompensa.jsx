@@ -1,9 +1,11 @@
-import { Plus, Star, Package, Pencil, Pause, Play, Upload, X, Gift } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import { Plus, Star, Package, Pencil, Upload, X, Gift, Trash2, ChevronRight, Clock3 } from "lucide-react";
 import { Navigation } from "../../../shared/components/Navigation/Navigation.jsx";
 import { useGerenciarRecompensa } from "../hooks/useGerenciarRecompensa";
 import "../styles/GerenciarRecompensa.css";
 
 function GerenciarRecompensa() {
+  const navigate = useNavigate();
   const {
     recompensas,
     modalAberto,
@@ -14,12 +16,16 @@ function GerenciarRecompensa() {
     abrirModal,
     fecharModal,
     handleSalvar,
-    toggleAtiva,
+    handleDeletar,
     handleFoto,
+    carregando,
+    salvando,
+    removendoId,
+    erro,
   } = useGerenciarRecompensa();
 
-  const ativas   = recompensas.filter((r) => r.ativa).length;
-  const pausadas = recompensas.filter((r) => !r.ativa).length;
+  const disponiveis = recompensas.filter((r) => r.ativa).length;
+  const indisponiveis = recompensas.filter((r) => !r.ativa).length;
 
   return (
     <div className="gr-page">
@@ -38,6 +44,11 @@ function GerenciarRecompensa() {
             <Plus size={18} />
             Nova recompensa
           </button>
+          <button className="gr-btn-retirada" onClick={() => navigate("/recompensas-retirada")}>
+            <Clock3 size={18} />
+            Recompensas para retirada
+            <ChevronRight size={16} />
+          </button>
         </section>
 
         {/* ── Stats ── */}
@@ -53,23 +64,37 @@ function GerenciarRecompensa() {
           </div>
           <div className="gr-stat">
             <div className="gr-stat-icon gr-stat-icon--ativa">
-              <Play size={16} />
+              <Gift size={16} />
             </div>
             <div>
-              <span className="gr-stat-num">{ativas}</span>
-              <span className="gr-stat-label">Ativas</span>
+              <span className="gr-stat-num">{disponiveis}</span>
+              <span className="gr-stat-label">Disponíveis</span>
             </div>
           </div>
           <div className="gr-stat">
             <div className="gr-stat-icon gr-stat-icon--pausada">
-              <Pause size={16} />
+              <Gift size={16} />
             </div>
             <div>
-              <span className="gr-stat-num">{pausadas}</span>
-              <span className="gr-stat-label">Pausadas</span>
+              <span className="gr-stat-num">{indisponiveis}</span>
+              <span className="gr-stat-label">Indisponíveis</span>
             </div>
           </div>
         </div>
+
+        {erro && <p className="gr-feedback gr-feedback--erro">{erro}</p>}
+
+        {carregando ? (
+          <div className="gr-empty-state">
+            <span>Carregando recompensas...</span>
+          </div>
+        ) : recompensas.length === 0 ? (
+          <div className="gr-empty-state">
+            <Gift size={28} />
+            <strong>Nenhuma recompensa cadastrada</strong>
+            <span>Use o botão "Nova recompensa" para criar o primeiro brinde.</span>
+          </div>
+        ) : null}
 
         {/* ── Lista de recompensas ── */}
         <div className="gr-lista">
@@ -83,12 +108,12 @@ function GerenciarRecompensa() {
               <div className="gr-card-foto">
                 {r.foto ? (
                   <img src={r.foto} alt={r.nome} />
-                ) : (
-                  <div className="gr-card-foto-placeholder">
-                    <Gift size={28} />
-                  </div>
-                )}
-                {!r.ativa && <span className="gr-card-pausada-tag">Pausada</span>}
+                  ) : (
+                    <div className="gr-card-foto-placeholder">
+                      <Gift size={28} />
+                    </div>
+                  )}
+                {!r.ativa && <span className="gr-card-pausada-tag">Indisponível</span>}
               </div>
 
               {/* Conteúdo */}
@@ -124,12 +149,13 @@ function GerenciarRecompensa() {
                     Editar
                   </button>
                   <button
-                    className={`gr-action-btn ${r.ativa ? "gr-action-btn--pause" : "gr-action-btn--play"}`}
-                    onClick={() => toggleAtiva(r.id)}
-                    aria-label={r.ativa ? "Pausar" : "Reativar"}
+                    className="gr-action-btn gr-action-btn--delete"
+                    onClick={() => handleDeletar(r.id)}
+                    aria-label="Excluir"
+                    disabled={removendoId === r.id}
                   >
-                    {r.ativa ? <Pause size={14} /> : <Play size={14} />}
-                    {r.ativa ? "Pausar" : "Reativar"}
+                    <Trash2 size={14} />
+                    {removendoId === r.id ? "Excluindo..." : "Excluir"}
                   </button>
                 </div>
               </div>
@@ -160,8 +186,8 @@ function GerenciarRecompensa() {
               {/* Upload de foto */}
               <label className="gr-upload-area">
                 <input type="file" accept="image/*" onChange={handleFoto} />
-                {form.fotoPreview ? (
-                  <img src={form.fotoPreview} alt="Preview" className="gr-upload-preview" />
+                {form.imagemPreview ? (
+                  <img src={form.imagemPreview} alt="Preview" className="gr-upload-preview" />
                 ) : (
                   <div className="gr-upload-placeholder">
                     <Upload size={24} />
@@ -207,12 +233,12 @@ function GerenciarRecompensa() {
                       type="number"
                       placeholder="500"
                       min={1}
-                      value={form.pontos}
-                      onChange={(e) => setForm((f) => ({ ...f, pontos: e.target.value }))}
-                      className={erros.pontos ? "gr-input-erro" : ""}
+                      value={form.custoPontos}
+                      onChange={(e) => setForm((f) => ({ ...f, custoPontos: e.target.value }))}
+                      className={erros.custoPontos ? "gr-input-erro" : ""}
                     />
                   </div>
-                  {erros.pontos && <span className="gr-erro">{erros.pontos}</span>}
+                  {erros.custoPontos && <span className="gr-erro">{erros.custoPontos}</span>}
                 </div>
 
                 <div className="gr-field">
@@ -223,20 +249,20 @@ function GerenciarRecompensa() {
                       type="number"
                       placeholder="10"
                       min={0}
-                      value={form.estoque}
-                      onChange={(e) => setForm((f) => ({ ...f, estoque: e.target.value }))}
-                      className={erros.estoque ? "gr-input-erro" : ""}
+                      value={form.quantidade}
+                      onChange={(e) => setForm((f) => ({ ...f, quantidade: e.target.value }))}
+                      className={erros.quantidade ? "gr-input-erro" : ""}
                     />
                   </div>
-                  {erros.estoque && <span className="gr-erro">{erros.estoque}</span>}
+                  {erros.quantidade && <span className="gr-erro">{erros.quantidade}</span>}
                 </div>
               </div>
             </div>
 
             <div className="gr-modal-footer">
-              <button className="gr-btn-cancelar" onClick={fecharModal}>Cancelar</button>
-              <button className="gr-btn-salvar" onClick={handleSalvar}>
-                {editandoId ? "Salvar alterações" : "Cadastrar brinde"}
+              <button className="gr-btn-cancelar" onClick={fecharModal} disabled={salvando}>Cancelar</button>
+              <button className="gr-btn-salvar" onClick={handleSalvar} disabled={salvando}>
+                {salvando ? "Salvando..." : editandoId ? "Salvar alterações" : "Cadastrar brinde"}
               </button>
             </div>
           </div>

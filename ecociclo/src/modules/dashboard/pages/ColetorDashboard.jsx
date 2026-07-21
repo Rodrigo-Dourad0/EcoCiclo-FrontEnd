@@ -3,11 +3,14 @@ import { useNavigate } from 'react-router-dom';
 import { Recycle, Package, Star, Bell, Weight, Calendar, MapPin, User, ChevronRight, Search } from 'lucide-react';
 import '../styles/ColetorDashboard.css';
 import { Navigation } from '../../../shared/components/Navigation/Navigation.jsx';
+import { useColetorDashboard } from '../hooks/useColetorDashboard';
 
 export function ColetorDashboard() {
   const navigate = useNavigate();
   const [showNotifications, setShowNotifications] = useState(false);
   const notifRef = useRef(null);
+  
+  const { totalColetas, pesoTotal, avaliacao, coletas, loading, error, saudacao } = useColetorDashboard();
 
   // Fecha o popover ao clicar fora dele
   useEffect(() => {
@@ -20,52 +23,27 @@ export function ColetorDashboard() {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  // Dados de estatísticas mockados (perspectiva do coletor)
   const stats = [
     {
       id: 1,
       label: 'Coletas feitas',
-      value: '38',
+      value: String(totalColetas || 0),
       icon: <Package className="stat-icon package" size={24} />,
       colorClass: 'blue'
     },
     {
       id: 2,
       label: 'Peso total',
-      value: '312 kg',
+      value: `${pesoTotal || 0} kg`,
       icon: <Weight className="stat-icon weight" size={24} />,
       colorClass: 'green'
     },
     {
       id: 3,
       label: 'Avaliação',
-      value: '4.9',
+      value: String(avaliacao || 'N/A'),
       icon: <Star className="stat-icon star" size={24} />,
       colorClass: 'yellow'
-    }
-  ];
-
-  // Dados de coletas mockados (perspectiva do coletor)
-  const coletas = [
-    {
-      id: 1,
-      tipo: 'Papel e Papelão',
-      status: 'Agendada',
-      statusClass: 'status-agendada',
-      data: '30/01/2026 às 14:00',
-      endereco: 'Rua das Flores, 123 - Centro',
-      peso: '15 kg',
-      doador: 'Maria Santos'
-    },
-    {
-      id: 2,
-      tipo: 'Plástico',
-      status: 'Coletada',
-      statusClass: 'status-coletada',
-      data: '25/01/2026 às 10:00',
-      endereco: 'Av. Principal, 456 - Jardins',
-      peso: '8 kg',
-      doador: 'Carlos Oliveira'
     }
   ];
 
@@ -107,7 +85,7 @@ export function ColetorDashboard() {
 
           {/* Seção de saudação */}
           <section className="greeting-section">
-            <h1 className="greeting-title">Olá, Coletor! 👏</h1>
+            <h1 className="greeting-title">Olá, {saudacao}! 👏</h1>
             <p className="greeting-subtitle">Pronto para coletar hoje?</p>
           </section>
 
@@ -135,17 +113,6 @@ export function ColetorDashboard() {
             <span>Ver coletas disponíveis</span>
           </button>
 
-          {/* Acesso provisório à tela do doador */}
-          <button
-            type="button"
-            className="btn-acesso-doador"
-            onClick={() => navigate('/dashboard')}
-          >
-            <Recycle size={17} />
-            <span>Painel do doador</span>
-            <ChevronRight size={16} />
-          </button>
-
           {/* Seção de minhas coletas */}
           <section className="minhas-coletas-section">
             <div className="minhas-coletas-header">
@@ -159,7 +126,14 @@ export function ColetorDashboard() {
             </div>
 
             <div className="coletas-list">
-              {coletas.map((coleta) => (
+              {loading ? (
+                <p>Carregando coletas...</p>
+              ) : error ? (
+                <p className="error-message">{error}</p>
+              ) : coletas.length === 0 ? (
+                <p>Nenhuma coleta encontrada.</p>
+              ) : (
+                coletas.map((coleta) => (
                 <div key={coleta.id} className="coleta-card">
                   <div className="coleta-card-top">
                     <div className="coleta-tipo">
@@ -168,7 +142,7 @@ export function ColetorDashboard() {
                     </div>
 
                     <span className={`coleta-status ${coleta.statusClass}`}>
-                      {coleta.status}
+                      {coleta.statusLabel}
                     </span>
                   </div>
 
@@ -195,7 +169,7 @@ export function ColetorDashboard() {
                     </span>
                   </div>
                 </div>
-              ))}
+              )))}
             </div>
           </section>
 

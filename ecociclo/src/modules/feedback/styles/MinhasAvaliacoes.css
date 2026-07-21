@@ -218,6 +218,15 @@
   margin-top: 4px;
 }
 
+.avaliacoes-resumo-texto {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 0.8rem;
+  color: var(--eco-cinza-texto);
+  padding: 0 2px 8px;
+}
+
 /* =========================================
    CARD DE AVALIAÇÃO
    ========================================= */
@@ -280,6 +289,12 @@
   font-size: 0.95rem;
   font-weight: 700;
   color: var(--eco-preto);
+}
+
+.card-avaliacao__subtitulo {
+  font-size: 0.76rem;
+  color: var(--eco-cinza-texto);
+  margin-top: 2px;
 }
 
 .card-avaliacao__data {
@@ -359,6 +374,13 @@
   flex-direction: column;
   align-items: center;
   gap: 12px;
+}
+
+.lista-vazia--erro {
+  background: #fff;
+  border: 1px solid #f5c2c7;
+  border-radius: var(--radius-card);
+  box-shadow: var(--sombra-card);
 }
 
 .lista-vazia span { font-size: 2.5rem; }

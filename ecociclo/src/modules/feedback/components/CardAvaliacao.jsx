@@ -3,17 +3,19 @@ import Estrelas from "./Estrelas.jsx"
 
 function CardAvaliacao({ avaliacao }) {
   const [expandido, setExpandido] = useState(false)
-  const temComentario = avaliacao.comentario.length > 0
+  const comentario = avaliacao.comentario || ""
+  const temComentario = comentario.length > 0
 
   return (
     <article className="card-avaliacao" onClick={() => temComentario && setExpandido(!expandido)}>
       <div className="card-avaliacao__topo">
         <div className="card-avaliacao__avatar">
-          {avaliacao.coletor.charAt(0)}
+          {(avaliacao.titulo || avaliacao.coletor || "A").charAt(0)}
         </div>
         <div className="card-avaliacao__info">
           <span className="card-avaliacao__tipo">{avaliacao.tipo}</span>
-          <h3 className="card-avaliacao__nome">{avaliacao.coletor}</h3>
+          <h3 className="card-avaliacao__nome">{avaliacao.titulo || avaliacao.coletor}</h3>
+          {avaliacao.subtitulo && <p className="card-avaliacao__subtitulo">{avaliacao.subtitulo}</p>}
           <time className="card-avaliacao__data">{avaliacao.data}</time>
         </div>
         <div className="card-avaliacao__nota-wrap">
@@ -24,7 +26,7 @@ function CardAvaliacao({ avaliacao }) {
 
       {temComentario && (
         <div className={`card-avaliacao__comentario ${expandido ? "card-avaliacao__comentario--aberto" : ""}`}>
-          <p>"{avaliacao.comentario}"</p>
+          <p>"{comentario}"</p>
         </div>
       )}
 

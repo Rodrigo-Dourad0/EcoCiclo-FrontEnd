@@ -91,7 +91,15 @@ function ScreenColetada({ coleta }) {
       <div className="dc-btn-area">
         <button
           className="dc-btn dc-btn--green"
-          onClick={() => navigate('/avaliar-coletor')}
+          onClick={() =>
+            navigate(
+              `/avaliar-coletor?${new URLSearchParams({
+                agendamentoId: coleta.id,
+                coletorId: coleta.pessoa?.id || "",
+                coletorNome: coleta.pessoa?.nome || "Coletor",
+              }).toString()}`
+            )
+          }
         >
           ☆ &nbsp; Avaliar coletor
         </button>

@@ -1,7 +1,9 @@
 import Estrelas from "./Estrelas.jsx"
 
 function ResumoEstrelas({ avaliacoes }) {
-  const media = avaliacoes.reduce((acc, a) => acc + a.nota, 0) / avaliacoes.length
+  const media = avaliacoes.length
+    ? avaliacoes.reduce((acc, a) => acc + a.nota, 0) / avaliacoes.length
+    : 0
 
   const contagem = [5, 4, 3, 2, 1].map((n) => ({
     nota: n,

@@ -1,31 +1,61 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { Gift, Lock, Check, Leaf, HelpCircle, ChevronRight, X, Recycle, Star, ArrowRightLeft } from 'lucide-react';
-import '../styles/Recompensas.css';
-import { Navigation } from '../../../shared/components/Navigation/Navigation.jsx';
-import { useRecompensas } from '../hooks/useRecompensas';
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import {
+  Gift,
+  Lock,
+  Check,
+  Leaf,
+  HelpCircle,
+  ChevronRight,
+  X,
+  Recycle,
+  Star,
+  ArrowRightLeft,
+  RefreshCw,
+  AlertCircle,
+  Package,
+} from "lucide-react";
+import "../styles/Recompensas.css";
+import { Navigation } from "../../../shared/components/Navigation/Navigation.jsx";
+import { useRecompensas } from "../hooks/useRecompensas";
 
 function Recompensas() {
   const navigate = useNavigate();
-  const { pontosAtuais, proximoNivel, progresso, recompensas, historico } = useRecompensas();
-  const [categoria, setCategoria] = useState('Todas as categorias');
+  const {
+    pontosAtuais,
+    proximoNivel,
+    progresso,
+    recompensasFiltradas,
+    categoriasDisponiveis,
+    disponiveis,
+    busca,
+    setBusca,
+    categoria,
+    setCategoria,
+    loading,
+    error,
+    mensagem,
+    resgatandoId,
+    resgatar,
+    recarregar,
+  } = useRecompensas();
   const [mostrarAjuda, setMostrarAjuda] = useState(false);
 
+  function calcularNivel(pontos) {
+    if (pontos >= 1500) return "Ouro";
+    if (pontos >= 500) return "Prata";
+    return "Bronze";
+  }
+
   function renderBadge(status, custo) {
-    if (status === 'resgatado') {
-      return (
-        <span className="rw-card-badge resgatado">
-          <Check size={13} /> Resgatado
-        </span>
-      );
-    }
-    if (status === 'disponivel') {
+    if (status === "disponivel") {
       return (
         <span className="rw-card-badge disponivel">
           <Gift size={13} /> {custo} pts
         </span>
       );
     }
+
     return (
       <span className="rw-card-badge bloqueado">
         <Lock size={13} /> {custo} pts
@@ -39,7 +69,6 @@ function Recompensas() {
 
       <main className="recompensas-main">
         <div className="recompensas-container">
-          {/* Cabeçalho com título, ajuda e botão de navegação integrados */}
           <header className="rw-top-header">
             <div className="rw-header-esquerda">
               <h2 className="rw-top-title">Recompensas</h2>
@@ -54,7 +83,7 @@ function Recompensas() {
             </div>
             <button
               className="rw-minhas-recompensas-btn"
-              onClick={() => navigate('/minhas-recompensas')}
+              onClick={() => navigate("/minhas-recompensas")}
             >
               <Gift size={16} />
               Minhas recompensas
@@ -62,7 +91,6 @@ function Recompensas() {
             </button>
           </header>
 
-          {/* Modal de ajuda — como funciona o sistema de recompensas */}
           {mostrarAjuda && (
             <div className="rw-modal-overlay" onClick={() => setMostrarAjuda(false)}>
               <div className="rw-modal" onClick={(e) => e.stopPropagation()}>
@@ -130,10 +158,7 @@ function Recompensas() {
                 </div>
 
                 <div className="rw-modal-footer">
-                  <button
-                    className="rw-modal-btn-entendi"
-                    onClick={() => setMostrarAjuda(false)}
-                  >
+                  <button className="rw-modal-btn-entendi" onClick={() => setMostrarAjuda(false)}>
                     Entendi!
                   </button>
                 </div>
@@ -146,12 +171,25 @@ function Recompensas() {
               <Leaf size={28} />
             </div>
             <div className="rw-pontos-info">
-              <span className="rw-pontos-valor">{pontosAtuais.toLocaleString('pt-BR')}</span>
+              <span className="rw-pontos-valor">{pontosAtuais.toLocaleString("pt-BR")}</span>
               <span className="rw-pontos-label">Pontos acumulados</span>
             </div>
             <div className="rw-pontos-extra">
-              <span className="rw-pontos-nivel">Nível Prata</span>
-              <span className="rw-pontos-proximo">{proximoNivel - pontosAtuais} pts p/ Ouro</span>
+              <span className="rw-pontos-nivel">Nível {calcularNivel(pontosAtuais)}</span>
+              <span className="rw-pontos-proximo">
+                {Math.max(0, proximoNivel - pontosAtuais)} pts p/ Ouro
+              </span>
+            </div>
+          </section>
+
+          <section className="rw-status-sistema">
+            <div className="rw-status-chip">
+              <Check size={14} />
+              <span>{disponiveis} recompensas disponíveis</span>
+            </div>
+            <div className="rw-status-chip rw-status-chip--secundario">
+              <Star size={14} />
+              <span>{recompensasFiltradas.length} itens na lista</span>
             </div>
           </section>
 
@@ -161,10 +199,7 @@ function Recompensas() {
               <span className="rw-progresso-valor">{progresso}%</span>
             </div>
             <div className="rw-progresso-barra">
-              <div
-                className="rw-progresso-preenchimento"
-                style={{ width: `${progresso}%` }}
-              ></div>
+              <div className="rw-progresso-preenchimento" style={{ width: `${progresso}%` }} />
             </div>
           </section>
 
@@ -174,29 +209,76 @@ function Recompensas() {
                 type="text"
                 className="rw-search"
                 placeholder="Buscar recompensas..."
+                value={busca}
+                onChange={(e) => setBusca(e.target.value)}
               />
               <select
                 className="rw-categorias"
                 value={categoria}
                 onChange={(e) => setCategoria(e.target.value)}
               >
-                <option>Todas as categorias</option>
-                <option>Voucher</option>
-                <option>Produto</option>
+                {categoriasDisponiveis.map((item) => (
+                  <option key={item}>{item}</option>
+                ))}
               </select>
             </div>
 
+          {error && (
+            <div className="rw-alerta">
+              <AlertCircle size={16} />
+              <span>{error}</span>
+              <button type="button" className="rw-alerta-btn" onClick={recarregar}>
+                <RefreshCw size={14} />
+                Tentar novamente
+              </button>
+            </div>
+          )}
+
+          {mensagem && !error && (
+            <div className="rw-alerta rw-alerta--sucesso">
+              <Check size={16} />
+              <span>{mensagem}</span>
+            </div>
+          )}
+
             <div className="rw-lista">
-              {recompensas.map((item) => (
-                <div key={item.id} className="rw-card">
-                  <div className={`rw-card-icone ${item.cor}`}>{item.emoji}</div>
-                  <div className="rw-card-info">
-                    <span className="rw-card-nome">{item.nome}</span>
-                    <span className="rw-card-desc">{item.desc}</span>
-                  </div>
-                  {renderBadge(item.status, item.custo)}
+              {loading ? (
+                <div className="rw-empty">
+                  <Package size={40} strokeWidth={1.2} />
+                  <strong>Carregando recompensas</strong>
+                  <span>Buscando os itens cadastrados no sistema.</span>
                 </div>
-              ))}
+              ) : recompensasFiltradas.length === 0 ? (
+                <div className="rw-empty">
+                  <Package size={40} strokeWidth={1.2} />
+                  <strong>Nenhuma recompensa encontrada</strong>
+                  <span>Refine a busca ou aguarde novas recompensas serem cadastradas.</span>
+                </div>
+              ) : (
+                recompensasFiltradas.map((item) => (
+                  <div key={item.id} className="rw-card">
+                    <div className={`rw-card-icone ${item.cor}`}>{item.emoji}</div>
+                    <div className="rw-card-info">
+                      <span className="rw-card-nome">{item.nome}</span>
+                      <span className="rw-card-desc">{item.desc}</span>
+                      <span className="rw-card-meta">
+                        {item.categoria} · {item.quantidade} em estoque
+                      </span>
+                    </div>
+                    <div className="rw-card-acoes">
+                      {renderBadge(item.status, item.custo)}
+                      <button
+                        type="button"
+                        className="rw-card-resgatar"
+                        onClick={() => resgatar(item)}
+                        disabled={item.status !== "disponivel" || resgatandoId === item.id}
+                      >
+                        {resgatandoId === item.id ? "Resgatando..." : "Resgatar"}
+                      </button>
+                    </div>
+                  </div>
+                ))
+              )}
             </div>
           </section>
         </div>

@@ -47,6 +47,21 @@
   max-width: 760px;
 }
 
+.me-alert {
+  margin-bottom: 16px;
+  padding: 14px 16px;
+  border-radius: 14px;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.me-alert--erro {
+  background: #fef2f2;
+  color: #b91c1c;
+  border: 1px solid #fecaca;
+}
+
 /* ── BOTÃO ADICIONAR ─────────────────────── */
 
 .me-btn-adicionar {

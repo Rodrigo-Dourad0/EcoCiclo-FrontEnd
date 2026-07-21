@@ -1,88 +1,59 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { Leaf, Package, Star, Bell, Plus, Calendar, MapPin, Weight, ChevronRight, Recycle, Truck } from 'lucide-react';
-import '../styles/Dashboard.css';
-import { Navigation } from '../../../shared/components/Navigation/Navigation.jsx';
+import React, { useState, useRef, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import {
+  Leaf,
+  Package,
+  Star,
+  Bell,
+  Plus,
+  Calendar,
+  MapPin,
+  Weight,
+  ChevronRight,
+  Recycle,
+  AlertCircle,
+  RefreshCw,
+} from "lucide-react";
+import { Navigation } from "../../../shared/components/Navigation/Navigation.jsx";
+import { useDashboard } from "../hooks/useDashboard.js";
+import "../styles/Dashboard.css";
 
 export function Dashboard() {
   const navigate = useNavigate();
-  const [showNotifications, setShowNotifications] = useState(false);
   const notifRef = useRef(null);
+  const {
+    showNotifications,
+    setShowNotifications,
+    stats,
+    doacoesRecentes,
+    loading,
+    error,
+    saudacao,
+    recarregar,
+  } = useDashboard();
 
-  // Fecha o popover ao clicar fora dele
   useEffect(() => {
     function handleClickOutside(event) {
       if (notifRef.current && !notifRef.current.contains(event.target)) {
         setShowNotifications(false);
       }
     }
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, []);
 
-  // Dados de estatísticas mockados
-  const stats = [
-    {
-      id: 1,
-      label: 'Pontos',
-      value: '1250',
-      icon: <Leaf className="stat-icon leaf" size={24} />,
-      colorClass: 'green'
-    },
-    {
-      id: 2,
-      label: 'Doações',
-      value: '24',
-      icon: <Package className="stat-icon package" size={24} />,
-      colorClass: 'blue'
-    },
-    {
-      id: 3,
-      label: 'Impacto',
-      value: 'Alto',
-      icon: <Star className="stat-icon star" size={24} />,
-      colorClass: 'yellow'
-    }
-  ];
-
-  // Dados de doações mockados
-  const doacoes = [
-    {
-      id: 1,
-      tipo: 'Papel e Papelão',
-      status: 'Agendada',
-      statusClass: 'status-agendada',
-      data: '30/01/2026 às 14:00',
-      endereco: 'Rua das Flores, 123 - Centro',
-      peso: '15 kg',
-      pontos: '+150 pontos',
-      coletor: 'Maria Santos'
-    },
-    {
-      id: 2,
-      tipo: 'Plástico',
-      status: 'Coletada',
-      statusClass: 'status-coletada',
-      data: '25/01/2026 às 10:00',
-      endereco: 'Av. Principal, 456 - Jardins',
-      peso: '8 kg',
-      pontos: '+80 pontos',
-      coletor: null
-    }
-  ];
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [setShowNotifications]);
 
   return (
     <div className="app-container">
-        <Navigation />
-      
+      <Navigation />
+
       <main className="dashboard-main">
         <div className="dashboard-container">
-
-          {/* Cabeçalho superior */}
           <header className="top-header">
             <div className="top-title-wrapper">
               <h2 className="top-title">Dashboard</h2>
             </div>
+
             <div className="notification-wrapper" ref={notifRef}>
               <button
                 className="icon-button"
@@ -92,7 +63,6 @@ export function Dashboard() {
                 <Bell size={20} />
               </button>
 
-              {/* Popover de notificações */}
               {showNotifications && (
                 <div className="notification-popover">
                   <div className="notification-popover-header">
@@ -109,93 +79,121 @@ export function Dashboard() {
             </div>
           </header>
 
-          {/* Seção de saudação */}
           <section className="greeting-section">
-            <h1 className="greeting-title">Olá, João! 👏</h1>
-            <p className="greeting-subtitle">Pronto para ajudar o meio ambiente?</p>
+            <h1 className="greeting-title">Olá, {saudacao}!</h1>
+            <p className="greeting-subtitle">Acompanhe seus pontos e suas doações em um só lugar.</p>
           </section>
 
-          {/* Cards de estatísticas */}
+          {error && (
+            <div className="dashboard-error">
+              <AlertCircle size={16} />
+              <span>{error}</span>
+              <button type="button" className="dashboard-error-btn" onClick={recarregar}>
+                <RefreshCw size={14} />
+                Tentar novamente
+              </button>
+            </div>
+          )}
+
           <section className="dashboard-stats">
-            {stats.map((stat) => (
-              <div key={stat.id} className="stat-card">
-                <div className={`stat-icon-naked ${stat.colorClass}`}>
-                  {stat.icon}
+            {stats.map((stat) => {
+              const icon =
+                stat.label === "Pontos" ? (
+                  <Leaf className="stat-icon leaf" size={24} />
+                ) : stat.label === "Doações" ? (
+                  <Package className="stat-icon package" size={24} />
+                ) : stat.label === "Concluídas" ? (
+                  <Star className="stat-icon star" size={24} />
+                ) : (
+                  <Recycle className="stat-icon recycle" size={24} />
+                );
+
+              return (
+                <div key={stat.id} className="stat-card">
+                  <div className={`stat-icon-naked ${stat.colorClass}`}>{icon}</div>
+                  <div className="stat-info">
+                    <span className="stat-label">{stat.label}</span>
+                    <span className="stat-value">
+                      {loading ? "..." : stat.value}
+                    </span>
+                  </div>
                 </div>
-                <div className="stat-info">
-                  <span className="stat-label">{stat.label}</span>
-                  <span className="stat-value">{stat.value}</span>
-                </div>
-              </div>
-            ))}
+              );
+            })}
           </section>
 
-          {/* Botão de agendar nova doação */}
-          <button
-            className="btn-agendar-coleta"
-            onClick={() => navigate('/agendar-doacao')}
-          >
+          <button className="btn-agendar-coleta" onClick={() => navigate("/agendar-doacao")}>
             <Plus size={20} />
             <span>Agendar nova doação</span>
           </button>
 
-          {/* Seção de minhas doações */}
           <section className="minhas-coletas-section">
             <div className="minhas-coletas-header">
-              <h3 className="minhas-coletas-title">Minhas doações</h3>
-              <button
-                className="ver-todas-btn"
-                onClick={() => navigate('/minhas-doacoes')}
-              >
+              <h3 className="minhas-coletas-title">Minhas doações recentes</h3>
+              <button className="ver-todas-btn" onClick={() => navigate("/minhas-doacoes")}>
                 Ver todas <ChevronRight size={16} />
               </button>
             </div>
 
             <div className="coletas-list">
-              {doacoes.map((doacao) => (
-                <div key={doacao.id} className="coleta-card">
-                  <div className="coleta-card-top">
-                    <div className="coleta-tipo">
-                      <Recycle size={18} className="coleta-tipo-icon" />
-                      <span className="coleta-tipo-text">{doacao.tipo}</span>
-                    </div>
-
-                    <span className={`coleta-status ${doacao.statusClass}`}>
-                      {doacao.status}
-                    </span>
-                  </div>
-
-                  <div className="coleta-detalhes">
-                    <div className="coleta-detalhe-item">
-                      <Calendar size={14} />
-                      <span>{doacao.data}</span>
-                    </div>
-
-                    <div className="coleta-detalhe-item">
-                      <MapPin size={14} />
-                      <span>{doacao.endereco}</span>
-                    </div>
-
-                    <div className="coleta-detalhe-item">
-                      <Weight size={14} />
-                      <span>Peso estimado: {doacao.peso}</span>
-                    </div>
-                  </div>
-
-                  <div className="coleta-card-bottom">
-                    <span className="coleta-pontos">{doacao.pontos}</span>
-
-                    {doacao.coletor && (
-                      <span className="coleta-coletor">
-                        Coletor: {doacao.coletor}
-                      </span>
-                    )}
-                  </div>
+              {loading ? (
+                <div className="dashboard-loading">
+                  <RefreshCw size={18} className="dashboard-loading-icon" />
+                  <span>Carregando suas doações...</span>
                 </div>
-              ))}
+              ) : doacoesRecentes.length === 0 ? (
+                <div className="dashboard-empty">
+                  <Package size={34} />
+                  <p>Você ainda não tem doações cadastradas.</p>
+                  <span>Use o botão acima para agendar a sua primeira doação.</span>
+                </div>
+              ) : (
+                doacoesRecentes.map((doacao) => (
+                  <div key={doacao.id} className="coleta-card">
+                    <div className="coleta-card-top">
+                      <div className="coleta-tipo">
+                        <Recycle size={18} className="coleta-tipo-icon" />
+                        <span className="coleta-tipo-text">{doacao.nome}</span>
+                      </div>
+
+                      <span className={`coleta-status ${doacao.statusClass}`}>
+                        {doacao.statusLabel}
+                      </span>
+                    </div>
+
+                    <div className="coleta-detalhes">
+                      <div className="coleta-detalhe-item">
+                        <Calendar size={14} />
+                        <span>{doacao.data}</span>
+                      </div>
+
+                      <div className="coleta-detalhe-item">
+                        <MapPin size={14} />
+                        <span>{doacao.endereco}</span>
+                      </div>
+
+                      <div className="coleta-detalhe-item">
+                        <Weight size={14} />
+                        <span>Peso estimado: {doacao.peso}</span>
+                      </div>
+                    </div>
+
+                    <div className="coleta-card-bottom">
+                      {doacao.pontos ? (
+                        <span className="coleta-pontos">{doacao.pontos}</span>
+                      ) : (
+                        <span className="coleta-pontos">Pontos serão liberados após a conclusão</span>
+                      )}
+
+                      {doacao.coletor && (
+                        <span className="coleta-coletor">Coletor: {doacao.coletor}</span>
+                      )}
+                    </div>
+                  </div>
+                ))
+              )}
             </div>
           </section>
-
         </div>
       </main>
     </div>

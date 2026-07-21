@@ -22,16 +22,20 @@ function Login() {
 
   const handleLogin = async () => {
     const userData = await handleLoginSubmit();
+    
     if (userData) {
-      if (userData.tipo === 'ADMIN') {
-        navigate("/admin-dashboard");
-      } else if (userData.tipo === 'ASSOCIACAO') {
-        navigate("/dashboard-coletor");
+      const perfilUsuario = (userData.perfil || userData.tipo || '').toUpperCase();
+
+      if (perfilUsuario === 'ADMINISTRADOR' || perfilUsuario === 'ADMIN') {
+        window.location.href = "/admin-dashboard";
+      } else if (perfilUsuario === 'COLETOR' || perfilUsuario === 'ASSOCIACAO') {
+        window.location.href = "/dashboard-coletor";
       } else {
-        navigate("/dashboard");
+        window.location.href = "/dashboard";
       }
     }
   };
+
 
   return (
     <>

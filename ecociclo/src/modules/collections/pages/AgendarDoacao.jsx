@@ -1,14 +1,53 @@
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import "../styles/AgendarDoacao.css";
 import useAgendarDoacao from "../hooks/useAgendarDoacao.js";
 import { Navigation } from "../../../shared/components/Navigation/Navigation.jsx";
 
+// Componente isolado para evitar vazamento de memória e re-renders desnecessários
+function FotoPreview({ foto, index, onRemover }) {
+  const [previewUrl, setPreviewUrl] = useState("");
+
+  useEffect(() => {
+    // Cria a URL do blob apenas quando o arquivo da foto muda
+    const url = URL.createObjectURL(foto);
+    setPreviewUrl(url);
+
+    // Cleanup: Libera a memória do navegador quando o componente sumir ou a foto mudar
+    return () => {
+      URL.revokeObjectURL(url);
+    };
+  }, [foto]);
+
+  if (!previewUrl) return null;
+
+  return (
+    <div className="ac-foto-item">
+      <img src={previewUrl} alt={`Foto ${index + 1}`} />
+      <button
+        type="button"
+        className="ac-foto-remove"
+        onClick={() => onRemover(index)}
+        aria-label={`Remover foto ${index + 1}`}
+      >
+        <svg viewBox="0 0 24 24">
+          <line x1="18" y1="6" x2="6" y2="18" />
+          <line x1="6" y1="6" x2="18" y2="18" />
+        </svg>
+      </button>
+    </div>
+  );
+}
+
 export default function AgendarDoacao() {
+  const navigate = useNavigate();
   const {
     form,
     erros,
     tiposMaterial,
     enderecos,
     fotos,
+    loading,
     handleChange,
     handleBlur,
     handleSubmit,
@@ -16,14 +55,15 @@ export default function AgendarDoacao() {
     handleRemoverFoto,
   } = useAgendarDoacao();
 
-  /* Drag-over visual */
   function handleDragOver(e) {
     e.preventDefault();
     e.currentTarget.classList.add("drag-over");
   }
+
   function handleDragLeave(e) {
     e.currentTarget.classList.remove("drag-over");
   }
+
   function handleDrop(e) {
     e.preventDefault();
     e.currentTarget.classList.remove("drag-over");
@@ -38,16 +78,23 @@ export default function AgendarDoacao() {
       <Navigation />
 
       <main className="ac-main">
-        {/* ── Header ── */}
         <section className="ac-header">
           <p className="ac-kicker">Doações</p>
           <h1>Agendar Doação</h1>
           <p>Preencha os dados para agendar sua doação de recicláveis.</p>
         </section>
 
-        <section className="ac-content">
+        <div className="ac-actions">
+          <button
+            type="button"
+            className="ac-secondary-btn"
+            onClick={() => navigate("/minhas-doacoes")}
+          >
+            Ver minhas doações
+          </button>
+        </div>
 
-          {/* ══ Bloco 1: Material ══ */}
+        <section className="ac-content">
           <div className="ac-block">
             <div className="ac-block-label">
               <svg viewBox="0 0 24 24" className="ac-block-icon">
@@ -56,7 +103,6 @@ export default function AgendarDoacao() {
               Material
             </div>
 
-            {/* Tipo de material */}
             <div className="ac-field">
               <label htmlFor="tipoMaterial">
                 Tipo de material <span className="ac-required">*</span>
@@ -84,7 +130,6 @@ export default function AgendarDoacao() {
               {erros.tipoMaterial && <span className="ac-erro">{erros.tipoMaterial}</span>}
             </div>
 
-            {/* Peso estimado */}
             <div className="ac-field ac-field--half">
               <label htmlFor="pesoEstimado">
                 Peso estimado (kg) <span className="ac-required">*</span>
@@ -104,7 +149,8 @@ export default function AgendarDoacao() {
                   onBlur={handleBlur}
                   min="0"
                   className={erros.pesoEstimado ? "input-erro" : ""}
-                />
+                >
+                </input>
               </div>
               {erros.pesoEstimado && <span className="ac-erro">{erros.pesoEstimado}</span>}
             </div>
@@ -112,7 +158,6 @@ export default function AgendarDoacao() {
 
           <div className="ac-divider" />
 
-          {/* ══ Bloco 2: Agendamento ══ */}
           <div className="ac-block">
             <div className="ac-block-label">
               <svg viewBox="0 0 24 24" className="ac-block-icon">
@@ -125,7 +170,6 @@ export default function AgendarDoacao() {
             </div>
 
             <div className="ac-row">
-              {/* Data */}
               <div className="ac-field">
                 <label htmlFor="data">
                   Data <span className="ac-required">*</span>
@@ -151,7 +195,6 @@ export default function AgendarDoacao() {
                 {erros.data && <span className="ac-erro">{erros.data}</span>}
               </div>
 
-              {/* Horário */}
               <div className="ac-field ac-field--time">
                 <label htmlFor="horario">
                   Horário <span className="ac-required">*</span>
@@ -179,7 +222,6 @@ export default function AgendarDoacao() {
 
           <div className="ac-divider" />
 
-          {/* ══ Bloco 3: Endereço ══ */}
           <div className="ac-block">
             <div className="ac-block-label">
               <svg viewBox="0 0 24 24" className="ac-block-icon">
@@ -207,7 +249,9 @@ export default function AgendarDoacao() {
                 >
                   <option value="">Selecione o endereço</option>
                   {(enderecos || []).map((end) => (
-                    <option key={end} value={end}>{end}</option>
+                    <option key={end.id} value={end.id}>
+                      {`${end.logradouro}, ${end.bairro} - ${end.cidade}`}
+                    </option>
                   ))}
                 </select>
                 <svg className="ac-chevron" viewBox="0 0 24 24">
@@ -220,7 +264,6 @@ export default function AgendarDoacao() {
 
           <div className="ac-divider" />
 
-          {/* ══ Bloco 4: Fotos dos materiais ══ */}
           <div className="ac-block">
             <div className="ac-block-label">
               <svg viewBox="0 0 24 24" className="ac-block-icon">
@@ -236,7 +279,6 @@ export default function AgendarDoacao() {
                 Fotos <span className="ac-optional">(opcional)</span>
               </label>
 
-              {/* Área de upload */}
               <div
                 className="ac-upload-area"
                 onDragOver={handleDragOver}
@@ -261,32 +303,20 @@ export default function AgendarDoacao() {
                   Clique ou arraste as fotos aqui
                 </div>
                 <div className="ac-upload-sub">
-                  <span>JPG, PNG ou WEBP</span> · Até 5 imagens · Máx. 10 MB cada
+                  <span>JPG, PNG ou WEBP</span> · Até 5 images · Máx. 10 MB cada
                 </div>
               </div>
 
-              {/* Preview das fotos */}
               {fotos && fotos.length > 0 && (
                 <>
                   <div className="ac-fotos-grid">
                     {fotos.map((foto, index) => (
-                      <div className="ac-foto-item" key={index}>
-                        <img
-                          src={URL.createObjectURL(foto)}
-                          alt={`Foto ${index + 1}`}
-                        />
-                        <button
-                          type="button"
-                          className="ac-foto-remove"
-                          onClick={() => handleRemoverFoto(index)}
-                          aria-label={`Remover foto ${index + 1}`}
-                        >
-                          <svg viewBox="0 0 24 24">
-                            <line x1="18" y1="6" x2="6" y2="18" />
-                            <line x1="6" y1="6" x2="18" y2="18" />
-                          </svg>
-                        </button>
-                      </div>
+                      <FotoPreview 
+                        key={index} 
+                        foto={foto} 
+                        index={index} 
+                        onRemover={handleRemoverFoto} 
+                      />
                     ))}
                   </div>
                   <p className="ac-fotos-count">
@@ -299,7 +329,6 @@ export default function AgendarDoacao() {
 
           <div className="ac-divider" />
 
-          {/* ══ Bloco 5: Observações ══ */}
           <div className="ac-block ac-block--last">
             <div className="ac-block-label">
               <svg viewBox="0 0 24 24" className="ac-block-icon">
@@ -324,7 +353,6 @@ export default function AgendarDoacao() {
               </div>
             </div>
 
-            {/* Banner de pontos */}
             <div className="ac-banner">
               <svg viewBox="0 0 24 24">
                 <circle cx="12" cy="12" r="10" />
@@ -335,15 +363,19 @@ export default function AgendarDoacao() {
             </div>
           </div>
 
-          {/* ── Botão principal ── */}
-          <button className="ac-btn" onClick={handleSubmit}>
+          <button 
+            className="ac-btn" 
+            onClick={handleSubmit} 
+            disabled={loading}
+            style={{ opacity: loading ? 0.7 : 1, cursor: loading ? 'not-allowed' : 'pointer' }}
+          >
             <svg viewBox="0 0 24 24">
               <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
               <line x1="16" y1="2" x2="16" y2="6" />
               <line x1="8" y1="2" x2="8" y2="6" />
               <line x1="3" y1="10" x2="21" y2="10" />
             </svg>
-            Agendar doação
+            {loading ? "Processando..." : "Agendar doação"}
           </button>
 
         </section>

@@ -7,23 +7,28 @@ import './Navigation.css';
 export function Navigation() {
   const location = useLocation();
 
-  const { user } = useAuth();
-  const tipo = user?.tipo;
+  // 1. Pegue o objeto do usuário (garanta que o nome bate com o seu AuthContext)
+  const { user } = useAuth(); 
+  
+  
+  // 2. Use 'tipoUsuario' e adicione o .toUpperCase() para evitar problemas com maiúsculas/minúsculas
+  const tipo = (user?.perfil || user?.tipo || '').toUpperCase();
 
   let navItems = [];
 
-  if (tipo === 'ADMIN') {
+  // 3. Agora a comparação em maiúsculo vai funcionar perfeitamente!
+  if (tipo === 'ADMINISTRADOR' || tipo === 'ADMIN') {
     navItems = [
       { icon: <Home size={22} />, label: 'Dashboard', to: '/admin-dashboard' },
       { icon: <Gift size={22} />, label: 'Recompensas', to: '/gerenciar-recompensa' },
-      { icon: <CheckCircle size={22} />, label: 'Validar', to: '/validar-coletores' },
-      { icon: <Users size={22} />, label: 'Usuários', to: '#' },
+  
+      { icon: <Users size={22} />, label: 'Associações', to: '/gerenciar-associacao' },
       { icon: <User size={22} />, label: 'Perfil', to: '/perfil' },
     ];
-  } else if (tipo === 'ASSOCIACAO') {
+  } else if (tipo === 'COLETOR' || tipo === 'ASSOCIACAO') {
     navItems = [
       { icon: <Home size={22} />, label: 'Dashboard', to: '/dashboard-coletor' },
-      { icon: <Clock size={22} />, label: 'Histórico', to: '/minhas-coletas' },
+      { icon: <Clock size={22} />, label: 'Coletas', to: '/minhas-coletas' },
       { icon: <User size={22} />, label: 'Perfil', to: '/perfil' },
     ];
   } else {

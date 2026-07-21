@@ -1,7 +1,6 @@
 import { useState } from "react";
-import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../../../shared/services/firebase";
 import { useAuth } from "../../../context/AuthContext";
+import { api } from "../../../shared/services/api"; // Ajuste o caminho se necessário
 
 export function useLogin() {
   const { login } = useAuth();
@@ -43,26 +42,37 @@ export function useLogin() {
     if (validarEmail(email) && validarSenha(senha)) {
       setLoading(true);
       try {
-        const userCredential = await signInWithEmailAndPassword(auth, email, senha);
-        const token = await userCredential.user.getIdToken();
-        
-        localStorage.setItem('ecoCicloToken', token);
-        
-        const response = await fetch('http://localhost:8080/api/usuarios/me', {
-          headers: { Authorization: `Bearer ${token}` }
+        // 1. Faz a requisição de login no Spring Boot
+        const loginResponse = await api.post('/api/usuarios/login', { 
+          email, 
+          senha 
         });
         
-        if (!response.ok) {
-          throw new Error('Falha ao buscar perfil do usuário no servidor.');
-        }
+        // 2. Extrai o token (ajuste o .token se o seu back-end retornar o JWT com outro nome, ex: .accessToken)
+        const token = loginResponse.data.token;
         
-        const userData = await response.json();
+        if (!token) {
+            throw new Error("Token não retornado pelo servidor.");
+        }
+
+        // 3. Salva no localStorage usando a exata chave que o Axios interceptor procura
+        localStorage.setItem('token', token);
+        
+        // 4. Busca os dados do perfil (o interceptor já injeta o Bearer token aqui!)
+        const meResponse = await api.get('/api/usuarios/me');
+        
+        const userData = meResponse.data;
+        
+        // 5. Salva no contexto global
         login(userData);
         setLoading(false);
         return userData;
+        
       } catch (error) {
-        console.error(error);
-        alert(`Erro ao fazer login: ${error.message}`);
+        console.error("Erro no login:", error);
+        // Captura a mensagem do Spring Boot (ex: "Credenciais inválidas") ou usa fallback
+        const mensagemErro = error.response?.data?.message || 'E-mail ou senha incorretos.';
+        alert(`Erro ao fazer login: ${mensagemErro}`);
         setLoading(false);
         return false;
       }

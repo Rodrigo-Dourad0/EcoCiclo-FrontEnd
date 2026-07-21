@@ -25,6 +25,12 @@ function ProfileCard({
           <div className="profile-card__info">
             <h2 className="profile-card__nome">{usuario.nome}</h2>
             <p className="profile-card__tipo-usuario">{usuario.tipoUsuario}</p>
+            {tipoUsuario === 'Coletor' && usuario.associacao?.nome && (
+              <p className="profile-card__associacao">
+                Associacao: {usuario.associacao.nome}
+                {usuario.associacao.cnpj ? ` • ${usuario.associacao.cnpj}` : ''}
+              </p>
+            )}
             <p className="profile-card__email">{usuario.email}</p>
             <p className="profile-card__telefone">{usuario.telefone}</p>
           </div>
@@ -41,6 +47,28 @@ function ProfileCard({
             <span className="profile-card__stat-label">Coletas</span>
           </div>
         </div>
+
+        {tipoUsuario === "Coletor" && (
+          <div className="profile-card__feedback">
+            <div className="profile-card__feedback-item">
+              <span className="profile-card__feedback-label">Avaliações recebidas</span>
+              <strong>{usuario.totalAvaliacoes || 0}</strong>
+            </div>
+            <div className="profile-card__feedback-item">
+              <span className="profile-card__feedback-label">Última avaliação</span>
+              <strong>
+                {usuario.ultimaAvaliacao
+                  ? `${usuario.ultimaAvaliacao.nota}.0 ⭐`
+                  : "Sem avaliações ainda"}
+              </strong>
+              {usuario.ultimaAvaliacao?.comentario && (
+                <p className="profile-card__feedback-comentario">
+                  {usuario.ultimaAvaliacao.comentario}
+                </p>
+              )}
+            </div>
+          </div>
+        )}
       </div>
 
       <div className="profile-acoes">

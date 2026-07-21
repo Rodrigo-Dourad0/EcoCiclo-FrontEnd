@@ -35,6 +35,12 @@ export default function CriarConta() {
             </div>
 
             <div className="cc-field">
+              <label htmlFor="cpf">CPF <span className="cc-obrigatorio">*</span></label>
+              <input type="text" id="cpf" placeholder="000.000.000-00" maxLength={14} value={form.cpf} onChange={handleChange} className={erros.cpf ? "input-erro" : ""} autoComplete="off" />
+              {erros.cpf && <span className="cc-erro">{erros.cpf}</span>}
+            </div>
+
+            <div className="cc-field">
               <label htmlFor="email">Email <span className="cc-obrigatorio">*</span></label>
               <input type="email" id="email" placeholder="seu@email.com" value={form.email} onChange={handleChange} className={erros.email ? "input-erro" : ""} autoComplete="off" />
               {erros.email && <span className="cc-erro">{erros.email}</span>}
@@ -46,10 +52,35 @@ export default function CriarConta() {
               {erros.telefone && <span className="cc-erro">{erros.telefone}</span>}
             </div>
 
+            {/* Endereço Desmembrado - Mobile */}
             <div className="cc-field">
-              <label htmlFor="endereco">Endereço <span className="cc-obrigatorio">*</span></label>
-              <input type="text" id="endereco" placeholder="Rua, número, bairro, cidade" value={form.endereco} onChange={handleChange} className={erros.endereco ? "input-erro" : ""} />
-              {erros.endereco && <span className="cc-erro">{erros.endereco}</span>}
+              <label htmlFor="cep">CEP <span className="cc-obrigatorio">*</span></label>
+              <input type="text" id="cep" placeholder="00000-000" maxLength={9} value={form.cep} onChange={handleChange} className={erros.cep ? "input-erro" : ""} />
+              {erros.cep && <span className="cc-erro">{erros.cep}</span>}
+            </div>
+
+            <div className="cc-field">
+              <label htmlFor="logradouro">Logradouro / Rua <span className="cc-obrigatorio">*</span></label>
+              <input type="text" id="logradouro" placeholder="Ex: Rua das Flores, 123" value={form.logradouro} onChange={handleChange} className={erros.logradouro ? "input-erro" : ""} />
+              {erros.logradouro && <span className="cc-erro">{erros.logradouro}</span>}
+            </div>
+
+            <div className="cc-field">
+              <label htmlFor="bairro">Bairro <span className="cc-obrigatorio">*</span></label>
+              <input type="text" id="bairro" placeholder="Seu bairro" value={form.bairro} onChange={handleChange} className={erros.bairro ? "input-erro" : ""} />
+              {erros.bairro && <span className="cc-erro">{erros.bairro}</span>}
+            </div>
+
+            <div className="cc-field">
+              <label htmlFor="cidade">Cidade <span className="cc-obrigatorio">*</span></label>
+              <input type="text" id="cidade" placeholder="Sua cidade" value={form.cidade} onChange={handleChange} className={erros.cidade ? "input-erro" : ""} />
+              {erros.cidade && <span className="cc-erro">{erros.cidade}</span>}
+            </div>
+
+            <div className="cc-field">
+              <label htmlFor="estado">Estado (UF) <span className="cc-obrigatorio">*</span></label>
+              <input type="text" id="estado" placeholder="Ex: BA" maxLength={2} value={form.estado} onChange={handleChange} className={erros.estado ? "input-erro" : ""} />
+              {erros.estado && <span className="cc-erro">{erros.estado}</span>}
             </div>
 
             <div className="cc-field-divider" />
@@ -152,9 +183,9 @@ export default function CriarConta() {
 
             <div className="cc-row">
               <div className="cc-field">
-                <label htmlFor="email2">Email <span className="cc-obrigatorio">*</span></label>
-                <input type="email" id="email2" placeholder="seu@email.com" value={form.email} onChange={handleChange} className={erros.email ? "input-erro" : ""} autoComplete="off" />
-                {erros.email && <span className="cc-erro">{erros.email}</span>}
+                <label htmlFor="cpf2">CPF <span className="cc-obrigatorio">*</span></label>
+                <input type="text" id="cpf2" placeholder="000.000.000-00" maxLength={14} value={form.cpf} onChange={handleChange} className={erros.cpf ? "input-erro" : ""} autoComplete="off" />
+                {erros.cpf && <span className="cc-erro">{erros.cpf}</span>}
               </div>
               <div className="cc-field">
                 <label htmlFor="telefone2">Telefone <span className="cc-obrigatorio">*</span></label>
@@ -165,9 +196,46 @@ export default function CriarConta() {
 
             <div className="cc-row">
               <div className="cc-field cc-full">
-                <label htmlFor="endereco2">Endereço <span className="cc-obrigatorio">*</span></label>
-                <input type="text" id="endereco2" placeholder="Rua, número, bairro, cidade" value={form.endereco} onChange={handleChange} className={erros.endereco ? "input-erro" : ""} />
-                {erros.endereco && <span className="cc-erro">{erros.endereco}</span>}
+                <label htmlFor="email2">Email <span className="cc-obrigatorio">*</span></label>
+                <input type="email" id="email2" placeholder="seu@email.com" value={form.email} onChange={handleChange} className={erros.email ? "input-erro" : ""} autoComplete="off" />
+                {erros.email && <span className="cc-erro">{erros.email}</span>}
+              </div>
+            </div>
+
+            {/* Endereço Desmembrado - Desktop (Linha 1: CEP e Estado) */}
+            <div className="cc-row">
+              <div className="cc-field">
+                <label htmlFor="cep2">CEP <span className="cc-obrigatorio">*</span></label>
+                <input type="text" id="cep2" placeholder="00000-000" maxLength={9} value={form.cep} onChange={handleChange} className={erros.cep ? "input-erro" : ""} />
+                {erros.cep && <span className="cc-erro">{erros.cep}</span>}
+              </div>
+              <div className="cc-field">
+                <label htmlFor="estado2">Estado (UF) <span className="cc-obrigatorio">*</span></label>
+                <input type="text" id="estado2" placeholder="Ex: BA" maxLength={2} value={form.estado} onChange={handleChange} className={erros.estado ? "input-erro" : ""} />
+                {erros.estado && <span className="cc-erro">{erros.estado}</span>}
+              </div>
+            </div>
+
+            {/* Endereço Desmembrado - Desktop (Linha 2: Logradouro inteiro) */}
+            <div className="cc-row">
+              <div className="cc-field cc-full">
+                <label htmlFor="logradouro2">Logradouro / Rua e Número <span className="cc-obrigatorio">*</span></label>
+                <input type="text" id="logradouro2" placeholder="Ex: Rua das Flores, 123" value={form.logradouro} onChange={handleChange} className={erros.logradouro ? "input-erro" : ""} />
+                {erros.logradouro && <span className="cc-erro">{erros.logradouro}</span>}
+              </div>
+            </div>
+
+            {/* Endereço Desmembrado - Desktop (Linha 3: Bairro e Cidade) */}
+            <div className="cc-row">
+              <div className="cc-field">
+                <label htmlFor="bairro2">Bairro <span className="cc-obrigatorio">*</span></label>
+                <input type="text" id="bairro2" placeholder="Seu bairro" value={form.bairro} onChange={handleChange} className={erros.bairro ? "input-erro" : ""} />
+                {erros.bairro && <span className="cc-erro">{erros.bairro}</span>}
+              </div>
+              <div className="cc-field">
+                <label htmlFor="cidade2">Cidade <span className="cc-obrigatorio">*</span></label>
+                <input type="text" id="cidade2" placeholder="Sua cidade" value={form.cidade} onChange={handleChange} className={erros.cidade ? "input-erro" : ""} />
+                {erros.cidade && <span className="cc-erro">{erros.cidade}</span>}
               </div>
             </div>
 

@@ -1,65 +1,31 @@
-import { useState } from "react"
-import { useNavigate } from "react-router-dom"
-import CardAvaliacao from "../components/CardAvaliacao.jsx"
-import ResumoEstrelas from "../components/ResumoEstrelas.jsx"
-import FiltrosBotoes from "../components/FiltrosBotoes.jsx"
-import { Navigation } from '../../../shared/components/Navigation/Navigation.jsx'
-import "../styles/MinhasAvaliacoes.css"
-
-const avaliacoesData = [
-  {
-    id: 1,
-    coletor: "Carlos Oliveira",
-    data: "28 abr. 2025",
-    nota: 5,
-    comentario: "Excelente serviço! Pontual e muito atencioso com a separação dos materiais.",
-    tipo: "Coleta Seletiva",
-  },
-  {
-    id: 2,
-    coletor: "Ana Souza",
-    data: "15 abr. 2025",
-    nota: 4,
-    comentario: "Muito boa a coleta, só chegou um pouco atrasada.",
-    tipo: "Coleta de Eletrônicos",
-  },
-  {
-    id: 3,
-    coletor: "Roberto Lima",
-    data: "02 abr. 2025",
-    nota: 3,
-    comentario: "",
-    tipo: "Coleta Seletiva",
-  },
-  {
-    id: 4,
-    coletor: "Fernanda Costa",
-    data: "20 mar. 2025",
-    nota: 5,
-    comentario: "Simplesmente perfeita! Recomendo demais.",
-    tipo: "Coleta de Orgânicos",
-  },
-]
+import { useNavigate } from "react-router-dom";
+import CardAvaliacao from "../components/CardAvaliacao.jsx";
+import ResumoEstrelas from "../components/ResumoEstrelas.jsx";
+import FiltrosBotoes from "../components/FiltrosBotoes.jsx";
+import { Navigation } from "../../../shared/components/Navigation/Navigation.jsx";
+import { useMinhasAvaliacoes } from "../hooks/useMinhasAvaliacoes";
+import "../styles/MinhasAvaliacoes.css";
 
 export default function MinhasAvaliacoes() {
-  const navigate = useNavigate()
-  const [filtroAtivo, setFiltroAtivo] = useState("Todas")
-
-  const avaliacoesFiltradas = avaliacoesData.filter((a) => {
-    if (filtroAtivo === "Todas") return true
-    if (filtroAtivo === "Com comentário") return a.comentario.length > 0
-    const nota = parseInt(filtroAtivo)
-    return a.nota === nota
-  })
+  const navigate = useNavigate();
+  const {
+    filtroAtivo,
+    setFiltroAtivo,
+    avaliacoes,
+    avaliacoesFiltradas,
+    resumo,
+    loading,
+    error,
+    recarregar,
+  } = useMinhasAvaliacoes();
 
   return (
     <div className="minhas-avaliacoes">
-
       <Navigation />
 
       <main className="avaliacoes-conteudo">
         <header className="avaliacoes-conteudo__header">
-          <button className="btn-voltar" onClick={() => navigate('/perfil')} aria-label="Voltar">
+          <button className="btn-voltar" onClick={() => navigate("/perfil")} aria-label="Voltar">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
               stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M19 12H5M12 5l-7 7 7 7" />
@@ -68,11 +34,30 @@ export default function MinhasAvaliacoes() {
           </button>
         </header>
 
-        <ResumoEstrelas avaliacoes={avaliacoesData} />
+        <ResumoEstrelas avaliacoes={avaliacoes} />
         <FiltrosBotoes filtroAtivo={filtroAtivo} onFiltroChange={setFiltroAtivo} />
 
+        <section className="avaliacoes-resumo-texto">
+          <span>{resumo.total} avaliações recebidas</span>
+          <span>Média {resumo.media.toFixed(1)} estrelas</span>
+        </section>
+
+        {error && (
+          <div className="lista-vazia lista-vazia--erro">
+            <p>{error}</p>
+            <button type="button" className="filtro-btn filtro-btn--ativo" onClick={recarregar}>
+              Tentar novamente
+            </button>
+          </div>
+        )}
+
         <section className="lista-avaliacoes" aria-live="polite">
-          {avaliacoesFiltradas.length === 0 ? (
+          {loading ? (
+            <div className="lista-vazia">
+              <span>🌿</span>
+              <p>Carregando avaliações.</p>
+            </div>
+          ) : avaliacoesFiltradas.length === 0 ? (
             <div className="lista-vazia">
               <span>🌿</span>
               <p>Nenhuma avaliação encontrada para este filtro.</p>
@@ -83,5 +68,5 @@ export default function MinhasAvaliacoes() {
         </section>
       </main>
     </div>
-  )
+  );
 }

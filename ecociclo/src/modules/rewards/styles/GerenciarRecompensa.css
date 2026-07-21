@@ -105,6 +105,37 @@
   transform: translateY(0);
 }
 
+.gr-btn-retirada {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 13px 22px;
+  background: linear-gradient(135deg, #2563eb, #1d4ed8);
+  color: #fff;
+  border: none;
+  border-radius: 14px;
+  font-family: "Poppins", sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  align-self: flex-start;
+  transition: background 0.18s, transform 0.18s, box-shadow 0.2s;
+}
+
+.gr-btn-retirada svg {
+  stroke: rgba(255,255,255,.95);
+  fill: none;
+  stroke-width: 2.5;
+  flex-shrink: 0;
+}
+
+.gr-btn-retirada:hover {
+  background: linear-gradient(135deg, #1d4ed8, #1e40af);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(37,99,235,.28);
+}
+
 /* ── STATS ── */
 .gr-stats {
   display: flex;
@@ -248,6 +279,46 @@
   border: 1px solid #fde68a;
 }
 
+.gr-feedback {
+  margin: 0 0 18px;
+  padding: 12px 14px;
+  border-radius: 14px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.gr-feedback--erro {
+  background: #fef2f2;
+  color: #b91c1c;
+  border: 1px solid #fecaca;
+}
+
+.gr-empty-state {
+  background: #fff;
+  border: 1px dashed #d1d5db;
+  border-radius: 18px;
+  padding: 24px;
+  margin-bottom: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: #64748b;
+}
+
+.gr-empty-state strong {
+  color: #0f172a;
+  font-size: 15px;
+}
+
+.gr-empty-state svg {
+  stroke: #10b981;
+  fill: none;
+  stroke-width: 1.8;
+}
+
 /* Body */
 .gr-card-body {
   flex: 1;
@@ -367,6 +438,22 @@
 }
 .gr-action-btn--play svg { stroke: #16a34a; }
 .gr-action-btn--play:hover { background: #bbf7d0; }
+
+.gr-action-btn--delete {
+  background: #fee2e2;
+  color: #b91c1c;
+}
+.gr-action-btn--delete svg { stroke: #ef4444; }
+.gr-action-btn--delete:hover { background: #fecaca; }
+
+.gr-action-btn:disabled,
+.gr-btn-cancelar:disabled,
+.gr-btn-salvar:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
 
 /* ── MODAL OVERLAY ── */
 .gr-modal-overlay {

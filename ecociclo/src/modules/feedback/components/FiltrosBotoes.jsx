@@ -1,4 +1,4 @@
-const filtrosDisponiveis = ["Todas", "5 estrelas", "4 estrelas", "3 estrelas", "Com comentário"]
+const filtrosDisponiveis = ["Todas", "5 estrelas", "4 estrelas", "3 estrelas", "2 estrelas", "1 estrela", "Com comentario"]
 
 function FiltrosBotoes({ filtroAtivo, onFiltroChange }) {
   return (

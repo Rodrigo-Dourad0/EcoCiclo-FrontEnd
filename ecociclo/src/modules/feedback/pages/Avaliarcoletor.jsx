@@ -2,7 +2,7 @@ import { useAvaliarColetor } from "../hooks/useAvaliarColetor";
 import "../styles/Avaliarcoletor.css";
 import { Navigation } from "../../../shared/components/Navigation/Navigation";
 
-export default function AvaliarColetor({ collectorName = "Carlos Oliveira" }) {
+export default function AvaliarColetor() {
   const {
     rating,
     setRating,
@@ -14,6 +14,12 @@ export default function AvaliarColetor({ collectorName = "Carlos Oliveira" }) {
     activeRating,
     handleSubmit,
     handleBack,
+    handleGoToDoacoes,
+    loading,
+    error,
+    podeEnviar,
+    coletorNome,
+    resumoAgendamento,
   } = useAvaliarColetor();
 
   return (
@@ -21,9 +27,7 @@ export default function AvaliarColetor({ collectorName = "Carlos Oliveira" }) {
       <Navigation />
 
       <div className="avaliarcoletor-screen">
-
         <div className="avaliarcoletor-main">
-
           <div className="avaliarcoletor-header">
             <button className="avaliarcoletor-back-btn" onClick={handleBack} aria-label="Voltar">
               <svg width="22" height="22" viewBox="0 0 24 24" fill="none"
@@ -35,11 +39,13 @@ export default function AvaliarColetor({ collectorName = "Carlos Oliveira" }) {
           </div>
 
           <div className="avaliarcoletor-body">
-
             <div className="avaliarcoletor-collector-info">
               <p className="avaliarcoletor-collector-subtitle">Como foi sua experiência com</p>
-              <p className="avaliarcoletor-collector-name">{collectorName}</p>
+              <p className="avaliarcoletor-collector-name">{coletorNome}</p>
+              <p className="avaliarcoletor-collector-meta">{resumoAgendamento}</p>
             </div>
+
+            {error && <div className="avaliarcoletor-error">{error}</div>}
 
             <div className="avaliarcoletor-card">
               <p className="avaliarcoletor-card-title">Avaliação</p>
@@ -52,6 +58,7 @@ export default function AvaliarColetor({ collectorName = "Carlos Oliveira" }) {
                     onMouseLeave={() => setHovered(0)}
                     onClick={() => setRating(star)}
                     aria-label={`${star} estrela${star > 1 ? "s" : ""}`}
+                    disabled={loading}
                   >
                     <svg
                       className={`avaliarcoletor-star-svg${star <= activeRating ? " active" : ""}`}
@@ -75,17 +82,17 @@ export default function AvaliarColetor({ collectorName = "Carlos Oliveira" }) {
                 placeholder="Compartilhe sua experiência..."
                 value={comment}
                 onChange={(e) => setComment(e.target.value)}
+                disabled={loading}
               />
             </div>
 
             <button
-              className={`avaliarcoletor-submit-btn ${rating === 0 ? "disabled" : "enabled"}`}
+              className={`avaliarcoletor-submit-btn ${podeEnviar ? "enabled" : "disabled"}`}
               onClick={handleSubmit}
-              disabled={rating === 0}
+              disabled={!podeEnviar}
             >
-              Enviar avaliação
+              {loading ? "Enviando..." : "Enviar avaliação"}
             </button>
-
           </div>
         </div>
 
@@ -102,13 +109,12 @@ export default function AvaliarColetor({ collectorName = "Carlos Oliveira" }) {
               <p className="avaliarcoletor-modal-text">
                 Obrigado pelo seu feedback. Isso ajuda a melhorar a comunidade.
               </p>
-              <button className="avaliarcoletor-modal-btn" onClick={handleBack}>
-                Voltar
+              <button className="avaliarcoletor-modal-btn" onClick={handleGoToDoacoes}>
+                Voltar para minhas doações
               </button>
             </div>
           </div>
         )}
-
       </div>
     </div>
   );

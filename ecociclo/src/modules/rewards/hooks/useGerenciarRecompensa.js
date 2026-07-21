@@ -1,88 +1,131 @@
-import { useState } from "react";
-
-const recompensasIniciais = [
-  {
-    id: 1,
-    nome: "Garrafa Térmica EcoCiclo",
-    descricao: "Garrafa de 500ml em aço inoxidável com logo EcoCiclo.",
-    pontos: 800,
-    estoque: 32,
-    foto: null,
-    ativa: true,
-  },
-  {
-    id: 2,
-    nome: "Camiseta Reciclada",
-    descricao: "Camiseta confeccionada com algodão orgânico reciclado.",
-    pontos: 1200,
-    estoque: 15,
-    foto: null,
-    ativa: true,
-  },
-  {
-    id: 3,
-    nome: "Vale-compras R$ 50",
-    descricao: "Desconto de R$ 50 em lojas parceiras.",
-    pontos: 500,
-    estoque: 50,
-    foto: null,
-    ativa: false,
-  },
-  {
-    id: 4,
-    nome: "Kit Ecobag + Squeeze",
-    descricao: "Ecobag reutilizável + squeeze de 600ml.",
-    pontos: 950,
-    estoque: 8,
-    foto: null,
-    ativa: true,
-  },
-];
+import { useEffect, useState } from "react";
+import { supabase } from "../../../shared/services/supabase";
+import {
+  atualizarRecompensa,
+  criarRecompensa,
+  deletarRecompensa,
+  listarRecompensas,
+} from "../services/recompensaService";
 
 const FORM_VAZIO = {
   nome: "",
   descricao: "",
-  pontos: "",
-  estoque: "",
-  foto: null,
-  fotoPreview: null,
+  custoPontos: "",
+  quantidade: "",
+  imagem: "",
+  imagemPreview: "",
+};
+
+const normalizarRecompensa = (recompensa) => ({
+  id: recompensa.id,
+  nome: recompensa.nome ?? "",
+  descricao: recompensa.descricao ?? "",
+  pontos: Number(recompensa.custoPontos ?? 0),
+  estoque: Number(recompensa.quantidadeDisponivel ?? recompensa.quantidade ?? 0),
+  quantidade: Number(recompensa.quantidade ?? 0),
+  quantidadeDisponivel: Number(recompensa.quantidadeDisponivel ?? recompensa.quantidade ?? 0),
+  foto: recompensa.imagem ?? "",
+  ativa: recompensa.disponivel ?? true,
+});
+
+const truncarString = (valor, limite = 255) => {
+  if (!valor) return "";
+  return valor.length > limite ? valor.slice(0, limite) : valor;
+};
+
+const gerarNomeArquivo = (arquivo) => {
+  const extensao = arquivo.name.split(".").pop() || "png";
+  return `recompensa-${Date.now()}-${Math.random().toString(36).slice(2)}.${extensao}`;
+};
+
+const normalizarErro = (error) => {
+  const status = error?.response?.status;
+  const mensagemBackend =
+    error?.response?.data?.message ||
+    error?.response?.data?.mensagem ||
+    error?.response?.data?.error;
+
+  if (mensagemBackend) {
+    return mensagemBackend;
+  }
+
+  if (status === 401 || status === 403) {
+    return "Você não tem permissão para gerenciar recompensas.";
+  }
+
+  if (status === 404) {
+    return "Recompensa não encontrada.";
+  }
+
+  return "Não foi possível concluir a operação. Tente novamente.";
 };
 
 export function useGerenciarRecompensa() {
-  const [recompensas, setRecompensas] = useState(recompensasIniciais);
+  const [recompensas, setRecompensas] = useState([]);
   const [modalAberto, setModalAberto] = useState(false);
   const [form, setForm] = useState(FORM_VAZIO);
   const [erros, setErros] = useState({});
   const [editandoId, setEditandoId] = useState(null);
+  const [carregando, setCarregando] = useState(true);
+  const [salvando, setSalvando] = useState(false);
+  const [removendoId, setRemovendoId] = useState(null);
+  const [erro, setErro] = useState("");
+  const [arquivoImagem, setArquivoImagem] = useState(null);
 
-  // ── Validação
+  const carregarRecompensas = async () => {
+    setCarregando(true);
+    setErro("");
+
+    try {
+      const dados = await listarRecompensas();
+      setRecompensas(dados.map(normalizarRecompensa));
+    } catch (error) {
+      setErro(normalizarErro(error));
+      setRecompensas([]);
+    } finally {
+      setCarregando(false);
+    }
+  };
+
+  useEffect(() => {
+    carregarRecompensas();
+  }, []);
+
   const validar = () => {
     const e = {};
     if (!form.nome.trim()) e.nome = "Nome é obrigatório.";
     if (!form.descricao.trim()) e.descricao = "Descrição é obrigatória.";
-    if (!form.pontos || Number(form.pontos) <= 0) e.pontos = "Informe pontos válidos.";
-    if (!form.estoque || Number(form.estoque) < 0) e.estoque = "Informe estoque válido.";
+    if (!form.custoPontos || Number(form.custoPontos) <= 0) {
+      e.custoPontos = "Informe pontos válidos.";
+    }
+    if (form.quantidade === "" || Number(form.quantidade) < 0) {
+      e.quantidade = "Informe estoque válido.";
+    }
+
     setErros(e);
     return Object.keys(e).length === 0;
   };
 
-  // ── Abrir modal (novo ou editar)
   const abrirModal = (recompensa = null) => {
     if (recompensa) {
       setForm({
         nome: recompensa.nome,
         descricao: recompensa.descricao,
-        pontos: String(recompensa.pontos),
-        estoque: String(recompensa.estoque),
-        foto: recompensa.foto,
-        fotoPreview: recompensa.foto,
+        custoPontos: String(recompensa.pontos),
+        quantidade: String(recompensa.quantidade ?? recompensa.estoque ?? 0),
+        imagem: recompensa.foto ?? "",
+        imagemPreview: recompensa.foto ?? "",
       });
+      setArquivoImagem(null);
       setEditandoId(recompensa.id);
     } else {
       setForm(FORM_VAZIO);
+      setArquivoImagem(null);
       setEditandoId(null);
     }
+
     setErros({});
+    setErro("");
     setModalAberto(true);
   };
 
@@ -91,56 +134,97 @@ export function useGerenciarRecompensa() {
     setForm(FORM_VAZIO);
     setErros({});
     setEditandoId(null);
+    setArquivoImagem(null);
   };
 
-  // ── Salvar (novo ou editar)
-  const handleSalvar = () => {
+  const enviarImagemAoBucket = async () => {
+    if (!arquivoImagem) {
+      return form.imagem ? truncarString(form.imagem.trim()) : "";
+    }
+
+    const nomeArquivo = gerarNomeArquivo(arquivoImagem);
+    const { error: uploadError } = await supabase.storage
+      .from("recompensa")
+      .upload(nomeArquivo, arquivoImagem);
+
+    if (uploadError) {
+      throw uploadError;
+    }
+
+    const { data } = supabase.storage.from("recompensa").getPublicUrl(nomeArquivo);
+    return data?.publicUrl ? truncarString(data.publicUrl.trim()) : "";
+  };
+
+  const montarPayload = async () => {
+    const imagem = await enviarImagemAoBucket();
+
+    const payload = {
+      nome: form.nome.trim(),
+      quantidade: Number(form.quantidade),
+      custoPontos: Number(form.custoPontos),
+      imagem,
+    };
+
+    if (form.descricao.trim()) {
+      payload.descricao = form.descricao.trim();
+    }
+
+    return payload;
+  };
+
+  const handleSalvar = async () => {
     if (!validar()) return;
 
-    if (editandoId !== null) {
-      setRecompensas((prev) =>
-        prev.map((r) =>
-          r.id === editandoId
-            ? {
-                ...r,
-                nome: form.nome,
-                descricao: form.descricao,
-                pontos: Number(form.pontos),
-                estoque: Number(form.estoque),
-                foto: form.fotoPreview,
-              }
-            : r
-        )
-      );
-    } else {
-      const nova = {
-        id: Date.now(),
-        nome: form.nome,
-        descricao: form.descricao,
-        pontos: Number(form.pontos),
-        estoque: Number(form.estoque),
-        foto: form.fotoPreview,
-        ativa: true,
-      };
-      setRecompensas((prev) => [nova, ...prev]);
+    setSalvando(true);
+    setErro("");
+
+    try {
+      const payload = await montarPayload();
+
+      if (editandoId) {
+        await atualizarRecompensa(editandoId, payload);
+      } else {
+        await criarRecompensa(payload);
+      }
+
+      await carregarRecompensas();
+      fecharModal();
+    } catch (error) {
+      setErro(normalizarErro(error));
+    } finally {
+      setSalvando(false);
     }
-    fecharModal();
   };
 
-  // ── Pausar / Reativar
-  const toggleAtiva = (id) => {
-    setRecompensas((prev) =>
-      prev.map((r) => (r.id === id ? { ...r, ativa: !r.ativa } : r))
-    );
+  const handleDeletar = async (id) => {
+    const confirmou = window.confirm("Tem certeza que deseja excluir esta recompensa?");
+    if (!confirmou) return;
+
+    setRemovendoId(id);
+    setErro("");
+
+    try {
+      await deletarRecompensa(id);
+      setRecompensas((prev) => prev.filter((recompensa) => recompensa.id !== id));
+    } catch (error) {
+      setErro(normalizarErro(error));
+    } finally {
+      setRemovendoId(null);
+    }
   };
 
-  // ── Upload de foto
   const handleFoto = (e) => {
-    const file = e.target.files[0];
+    const file = e.target.files?.[0];
     if (!file) return;
+
+    setArquivoImagem(file);
     const reader = new FileReader();
     reader.onload = (ev) => {
-      setForm((f) => ({ ...f, foto: file, fotoPreview: ev.target.result }));
+      const preview = ev.target?.result;
+      setForm((f) => ({
+        ...f,
+        imagemPreview: typeof preview === "string" ? preview : "",
+      }));
     };
     reader.readAsDataURL(file);
   };
@@ -155,7 +239,12 @@ export function useGerenciarRecompensa() {
     abrirModal,
     fecharModal,
     handleSalvar,
-    toggleAtiva,
+    handleDeletar,
     handleFoto,
+    carregando,
+    salvando,
+    removendoId,
+    erro,
+    setArquivoImagem,
   };
 }

@@ -1,103 +1,54 @@
-// Historico.jsx
-import { useState, useMemo } from "react";
-import "../styles/Historico.css";
-import { doacoes, STATUS, PERIODOS } from "../hooks/useHistorico";
+import { useMemo } from "react";
+import { Calendar, MapPin, Package, RefreshCw, Weight, AlertCircle } from "lucide-react";
 import { Navigation } from "../../../shared/components/Navigation/Navigation";
+import { useHistorico } from "../hooks/useHistorico";
+import "../styles/MinhasDoacoes.css";
+import "../styles/Historico.css";
 
 const IconBox = () => (
   <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
-    <polyline points="3.27 6.96 12 12.01 20.73 6.96"/>
-    <line x1="12" y1="22.08" x2="12" y2="12"/>
+    <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
+    <polyline points="3.27 6.96 12 12.01 20.73 6.96" />
+    <line x1="12" y1="22.08" x2="12" y2="12" />
   </svg>
 );
 
-const IconCalendar = () => (
-  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <rect x="3" y="4" width="18" height="18" rx="2"/>
-    <line x1="16" y1="2" x2="16" y2="6"/>
-    <line x1="8" y1="2" x2="8" y2="6"/>
-    <line x1="3" y1="10" x2="21" y2="10"/>
-  </svg>
-);
-
-const IconPin = () => (
-  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
-    <circle cx="12" cy="10" r="3"/>
-  </svg>
-);
-
-const IconWeight = () => (
-  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M6 2h12l1 6H5z"/>
-    <path d="M5 8l-2 13h18L19 8"/>
-    <line x1="12" y1="12" x2="12" y2="18"/>
-  </svg>
-);
-
-function getBadgeClass(status) {
-  if (status === STATUS.AGENDADA) return "badge badge-agendada";
-  if (status === STATUS.COLETADA) return "badge badge-coletada";
-  return "badge badge-cancelada";
-}
-
-function filtrarPorPeriodo(doacao, periodo) {
-  if (periodo === PERIODOS.TODOS) return true;
-
-  const [dia, mes, ano] = doacao.data.split("/").map(Number);
-  const dataDoacao = new Date(ano, mes - 1, dia);
-  const hoje = new Date();
-
-  if (periodo === PERIODOS.ULTIMO_MES) {
-    const ref = new Date(hoje);
-    ref.setMonth(hoje.getMonth() - 1);
-    return dataDoacao >= ref;
-  }
-
-  if (periodo === PERIODOS.ULTIMOS_3_MESES) {
-    const ref = new Date(hoje);
-    ref.setMonth(hoje.getMonth() - 3);
-    return dataDoacao >= ref;
-  }
-
-  if (periodo === PERIODOS.ESTE_ANO) {
-    return dataDoacao.getFullYear() === hoje.getFullYear();
-  }
-
-  return true;
+function getBadgeClass(statusLabel) {
+  if (statusLabel === "Coletada") return "badge badge-coletada";
+  if (statusLabel === "Cancelada") return "badge badge-cancelada";
+  return "badge badge-agendada";
 }
 
 function CardDoacao({ doacao, delay }) {
-  const temRodape = doacao.pontos !== null || doacao.coletor;
+  const temRodape = doacao.pontosGerados > 0 || doacao.coletorId;
 
   return (
-    <div className="coleta-card" style={{ animationDelay: `${delay}ms` }}>
+    <article className="coleta-card" style={{ animationDelay: `${delay}ms` }}>
       <div className="coleta-card-header">
         <div className="coleta-tipo-row">
           <div className="icone-material">
             <IconBox />
           </div>
-          <span className="coleta-tipo">{doacao.tipo}</span>
+          <span className="coleta-tipo">{doacao.doacao?.nome || "Doacao"}</span>
         </div>
 
-        <span className={getBadgeClass(doacao.status)}>{doacao.status}</span>
+        <span className={getBadgeClass(doacao.statusLabel)}>{doacao.statusLabel}</span>
       </div>
 
       <div className="coleta-detalhes">
         <div className="detalhe-row">
-          <IconCalendar />
-          {doacao.data} às {doacao.horario}
+          <Calendar size={13} />
+          {doacao.data}
         </div>
 
         <div className="detalhe-row">
-          <IconPin />
-          {doacao.endereco}
+          <MapPin size={13} />
+          {doacao.endereco?.completo || "Endereco nao informado"}
         </div>
 
         <div className="detalhe-row">
-          <IconWeight />
-          Peso estimado: {doacao.pesoEstimado} kg
+          <Weight size={13} />
+          Peso estimado: {doacao.doacao?.peso != null ? `${doacao.doacao.peso} kg` : "Nao informado"}
         </div>
       </div>
 
@@ -106,34 +57,45 @@ function CardDoacao({ doacao, delay }) {
           <div className="coleta-divider" />
 
           <div className="coleta-card-footer">
-            {doacao.pontos !== null ? (
-              <span className="pontos-badge">+{doacao.pontos} pontos</span>
+            {doacao.status === "CONCLUIDO" ? (
+              <span className="pontos-badge">+{doacao.pontosGerados} pontos</span>
             ) : (
               <span />
             )}
 
-            <span className="coletor-info">Coletor: {doacao.coletor}</span>
+            <span className="coletor-info">
+              {doacao.coletorId ? `Coletor: ${doacao.coletor?.nome || "Nao informado"}` : "Aguardando coletor"}
+            </span>
           </div>
         </>
       )}
-    </div>
+    </article>
   );
 }
 
 export default function Historico() {
-  const [statusFiltro, setStatusFiltro] = useState("Todos os status");
-  const [periodoFiltro, setPeriodoFiltro] = useState(PERIODOS.TODOS);
+  const {
+    statusFiltro,
+    setStatusFiltro,
+    periodoFiltro,
+    setPeriodoFiltro,
+    statusOptions,
+    historicoFiltrado,
+    contagens,
+    loading,
+    error,
+    recarregar,
+  } = useHistorico();
 
-  const doacoesFiltradas = useMemo(() => {
-    return doacoes.filter((d) => {
-      const passaStatus =
-        statusFiltro === "Todos os status" || d.status === statusFiltro;
-
-      const passaPeriodo = filtrarPorPeriodo(d, periodoFiltro);
-
-      return passaStatus && passaPeriodo;
-    });
-  }, [statusFiltro, periodoFiltro]);
+  const filtrosPeriodo = useMemo(
+    () => [
+      { value: "Todos os periodos", label: "Todos os periodos" },
+      { value: "Ultimo mes", label: "Ultimo mes" },
+      { value: "Ultimos 3 meses", label: "Ultimos 3 meses" },
+      { value: "Este ano", label: "Este ano" },
+    ],
+    []
+  );
 
   return (
     <div className="app-container">
@@ -142,45 +104,79 @@ export default function Historico() {
       <main className="historico-main">
         <div className="historico-container">
           <header className="historico-header">
-            <h1>Histórico</h1>
+            <div>
+              <p className="mc-kicker">Historico</p>
+              <h1>Historico de doacoes</h1>
+              <h5>Acompanhe o que ja foi agendado, aceito, concluido ou cancelado no seu perfil.</h5>
+            </div>
+
+            <button type="button" className="mc-recarregar-btn" onClick={recarregar}>
+              <RefreshCw size={14} />
+              Atualizar
+            </button>
           </header>
 
+          <section className="mc-abas" style={{ marginBottom: 18 }}>
+            <div className="mc-aba">
+              <span className="mc-aba-label">Total</span>
+              <span className="mc-aba-count mc-aba-count--ativa">{contagens.total}</span>
+            </div>
+            <div className="mc-aba">
+              <span className="mc-aba-label">Coletadas</span>
+              <span className="mc-aba-count mc-aba-count--ativa">{contagens.coletadas}</span>
+            </div>
+            <div className="mc-aba">
+              <span className="mc-aba-label">Em andamento</span>
+              <span className="mc-aba-count mc-aba-count--ativa">{contagens.emAndamento}</span>
+            </div>
+            <div className="mc-aba">
+              <span className="mc-aba-label">Canceladas</span>
+              <span className="mc-aba-count mc-aba-count--ativa">{contagens.canceladas}</span>
+            </div>
+          </section>
+
           <div className="filtros-wrapper">
-            <select
-              className="filtro-select"
-              value={statusFiltro}
-              onChange={(e) => setStatusFiltro(e.target.value)}
-            >
-              <option>Todos os status</option>
-              <option>{STATUS.AGENDADA}</option>
-              <option>{STATUS.COLETADA}</option>
-              <option>{STATUS.CANCELADA}</option>
+            <select className="filtro-select" value={statusFiltro} onChange={(e) => setStatusFiltro(e.target.value)}>
+              {statusOptions.map((status) => (
+                <option key={status}>{status}</option>
+              ))}
             </select>
 
-            <select
-              className="filtro-select"
-              value={periodoFiltro}
-              onChange={(e) => setPeriodoFiltro(e.target.value)}
-            >
-              {Object.values(PERIODOS).map((p) => (
-                <option key={p}>{p}</option>
+            <select className="filtro-select" value={periodoFiltro} onChange={(e) => setPeriodoFiltro(e.target.value)}>
+              {filtrosPeriodo.map((periodo) => (
+                <option key={periodo.value} value={periodo.value}>
+                  {periodo.label}
+                </option>
               ))}
             </select>
           </div>
 
-          {doacoesFiltradas.length === 0 ? (
+          {error && (
+            <div className="mc-alerta">
+              <AlertCircle size={16} />
+              <span>{error}</span>
+              <button type="button" className="mc-recarregar-btn" onClick={recarregar}>
+                <RefreshCw size={14} />
+                Tentar novamente
+              </button>
+            </div>
+          )}
+
+          {loading ? (
             <div className="empty-state">
-              <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
-                <polyline points="3.27 6.96 12 12.01 20.73 6.96"/>
-                <line x1="12" y1="22.08" x2="12" y2="12"/>
-              </svg>
-              <p>Nenhuma doação encontrada</p>
-              <span>Tente ajustar os filtros</span>
+              <Package size={60} strokeWidth={1.3} />
+              <p>Carregando historico.</p>
+              <span>Estamos buscando as doacoes do seu perfil.</span>
+            </div>
+          ) : historicoFiltrado.length === 0 ? (
+            <div className="empty-state">
+              <Package size={60} strokeWidth={1.3} />
+              <p>Nenhuma doacao encontrada</p>
+              <span>Ajuste os filtros ou aguarde novos agendamentos entrarem no sistema.</span>
             </div>
           ) : (
             <div className="historico-lista">
-              {doacoesFiltradas.map((d, i) => (
+              {historicoFiltrado.map((d, i) => (
                 <CardDoacao key={d.id} doacao={d} delay={i * 55} />
               ))}
             </div>

@@ -6,7 +6,13 @@ import { RenderIcon } from '../components/RenderIcon.jsx'
 import { Navigation } from '../../../shared/components/Navigation/Navigation.jsx'
 import '../styles/profile-page.css'
 
+// 1. IMPORTAÇÃO DO CONTEXTO ADICIONADA AQUI
+import { useAuth } from '../../../context/AuthContext'
+
 function ProfilePage() {
+  // 2. FUNÇÃO DE LOGOUT PUXADA AQUI
+  const { logout } = useAuth()
+
   const {
     usuario,
     tipoUsuario,
@@ -27,17 +33,30 @@ function ProfilePage() {
   
   // Mapeamento de ações
   const acoes = {
-  onMeusEnderecos: () => navigate('/meus-enderecos'),
-  onNovoEndereco: () => navigate('/novo-endereco'),
-  onMinhasAvaliacoes: () => navigate('/minhas-avaliacoes'),
-  onMinhasColetas: () => navigate('/minhas-coletas'),
-  onGerenciarRecompensas: () => navigate('/gerenciar-recompensa'),
-  onGerenciarUsuarios: () => alert('Gerenciar Usuários - em desenvolvimento'),
-  onValidarColetores: () => navigate('/validar-coletores'),
-}
+    onMeusEnderecos: () => navigate('/meus-enderecos'),
+    onNovoEndereco: () => navigate('/novo-endereco'),
+    onMinhasAvaliacoes: () => navigate('/minhas-avaliacoes'),
+    onMinhasColetas: () => navigate('/minhas-coletas'),
+    onGerenciarRecompensas: () => navigate('/gerenciar-recompensa'),
+    onGerenciarAssociacoes: () => navigate('/gerenciar-associacao'),
+  }
 
-  function handleLogout() { navigate('/login') }
-  function handleVoltar() { navigate('/') }
+  // 3. FUNÇÃO DE LOGOUT ATUALIZADA AQUI PARA MATAR O TOKEN
+  function handleLogout() { 
+    localStorage.removeItem('token') // Apaga o token de segurança
+    if (logout) logout()             // Limpa os dados do usuário da memória
+    navigate('/login')               // Manda para a tela de login
+  }
+
+  function handleVoltar() {
+    if (tipoUsuario === 'Administrador') {
+      navigate('/admin-dashboard');
+    } else if (tipoUsuario === 'Coletor') {
+      navigate('/dashboard-coletor');
+    } else {
+      navigate('/dashboard');
+    }
+  }
   function handleEditarPerfil() { navigate('/editar-perfil') }
 
   // Executa a ação baseado no nome armazenado
@@ -106,6 +125,12 @@ function ProfilePage() {
                 <div>
                   <p className="profile-painel__nome">{usuario.nome}</p>
                   <p className="profile-painel__tipo-usuario">{usuario.tipoUsuario}</p>
+                  {tipoUsuario === 'Coletor' && usuario.associacao?.nome && (
+                    <p className="profile-painel__associacao">
+                      Associacao: {usuario.associacao.nome}
+                      {usuario.associacao.cnpj ? ` • ${usuario.associacao.cnpj}` : ''}
+                    </p>
+                  )}
                   <p className="profile-painel__sub">{usuario.email}</p>
                   <p className="profile-painel__sub">{usuario.telefone}</p>
                 </div>
@@ -125,6 +150,24 @@ function ProfilePage() {
                     <span className="profile-painel__stat-valor">{usuario.coletas}</span>
                     <span className="profile-painel__stat-label">Coletas realizadas</span>
                   </div>
+                  <div className="profile-painel__stat">
+                    <span className="profile-painel__stat-valor">{usuario.totalAvaliacoes || 0}</span>
+                    <span className="profile-painel__stat-label">Avaliações recebidas</span>
+                  </div>
+                </div>
+
+                <div className="profile-painel__feedback">
+                  <span className="profile-painel__feedback-label">Última avaliação</span>
+                  <strong className="profile-painel__feedback-nota">
+                    {usuario.ultimaAvaliacao
+                      ? `${usuario.ultimaAvaliacao.nota}.0 ⭐`
+                      : "Sem avaliações ainda"}
+                  </strong>
+                  {usuario.ultimaAvaliacao?.comentario && (
+                    <p className="profile-painel__feedback-comentario">
+                      {usuario.ultimaAvaliacao.comentario}
+                    </p>
+                  )}
                 </div>
               </div>
             )}

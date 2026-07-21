@@ -184,6 +184,12 @@
   animation: cd-slideup 0.35s ease both;
 }
 
+.cd-alerta--sucesso {
+  background: #f0fdf4;
+  border-color: #bbf7d0;
+  color: #166534;
+}
+
 /* ─── BUSCA ─────────────────────────────────────────────── */
 .cd-search {
   background: #fff;
@@ -400,6 +406,12 @@
   animation: cd-status-neon 2.5s ease-in-out infinite;
 }
 
+.cd-status--pendente {
+  background: #eff6ff;
+  color: #2563eb;
+  border-color: rgba(37,99,235,.2);
+}
+
 @keyframes cd-status-neon {
   0%, 100% { box-shadow: 0 0 6px rgba(34,197,94,.3); }
   50%       { box-shadow: 0 0 14px rgba(34,197,94,.6); }
@@ -507,6 +519,14 @@
 .cd-btn:disabled { cursor: not-allowed; }
 .cd-btn--bloqueado { background: #e2e8f0; color: #94a3b8; }
 .cd-btn--aceitando { background: linear-gradient(135deg,#22c55e,#16a34a); box-shadow: 0 6px 20px rgba(34,197,94,.35); transform: scale(1.02); }
+.cd-btn--aceitar {
+  background: linear-gradient(135deg, #22c55e, #16a34a);
+  box-shadow: 0 4px 16px rgba(34,197,94,.3);
+}
+.cd-btn--aceitar:hover:not(:disabled) {
+  background: #17876a;
+  box-shadow: 0 0 24px rgba(29,158,117,.4), 0 6px 20px rgba(34,197,94,.25);
+}
 
 /* Spinner */
 .cd-spinner {
