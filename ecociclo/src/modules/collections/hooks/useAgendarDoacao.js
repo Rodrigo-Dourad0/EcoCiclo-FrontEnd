@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { api } from "/src/shared/services/api.js";
 import { supabase } from "/src/shared/services/supabase.js";
 import { useAuth } from "/src/context/AuthContext.jsx";
+import { toast } from "react-hot-toast"; 
 
 function formatarEndereco(endereco) {
   if (!endereco) return null;
@@ -204,7 +205,7 @@ export default function useAgendarDoacao() {
   async function handleSubmit() {
     if (!validar()) return;
     if (!user?.id) {
-      alert("Voce precisa estar logado para agendar uma doacao.");
+      toast.error("Voce precisa estar logado para agendar uma doacao.");
       return;
     }
 
@@ -238,7 +239,7 @@ export default function useAgendarDoacao() {
       };
 
       await api.post("/api/agendamentos", payload);
-      alert("Coleta agendada com sucesso!");
+      toast.success("Coleta agendada com sucesso!");
 
       setForm({
         tipoMaterial: "",
@@ -251,7 +252,7 @@ export default function useAgendarDoacao() {
       setFotos([]);
     } catch (error) {
       console.error("Erro ao agendar:", error);
-      alert("Ocorreu um erro ao agendar a doacao. Tente novamente.");
+      toast.error("Ocorreu um erro ao agendar a doacao. Tente novamente.");
     } finally {
       setLoading(false);
     }

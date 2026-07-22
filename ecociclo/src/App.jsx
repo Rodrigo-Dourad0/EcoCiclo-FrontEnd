@@ -1,5 +1,7 @@
 import './App.css';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { Toaster } from 'react-hot-toast'; // 1. Importação adicionada aqui
+
 import { Dashboard } from './modules/dashboard/pages/Dashboard.jsx';
 import { ColetorDashboard }  from './modules/dashboard/pages/ColetorDashboard.jsx';
 import Login from './modules/auth/pages/login.jsx';
@@ -30,6 +32,9 @@ import AdminDashboard from './modules/dashboard/pages/AdminDashboard.jsx';
 function App() {
   return (
     <BrowserRouter>
+      {/* 2. Container do Toast renderizado aqui */}
+      <Toaster position="top-right" reverseOrder={false} />
+
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/login" element={<Login />} />

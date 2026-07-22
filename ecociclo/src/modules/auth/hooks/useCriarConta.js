@@ -1,7 +1,11 @@
 import { useState } from "react";
 import { api } from "../../../shared/services/api";
+import { toast } from "react-hot-toast"; 
+import { useNavigate } from "react-router-dom"
+
 
 export default function useCriarConta() {
+  const navigate = useNavigate();
   const [tipo, setTipo] = useState("doador");
   const [form, setForm] = useState({
     nome: "",
@@ -145,12 +149,13 @@ export default function useCriarConta() {
 
         const response = await api.post('/api/usuarios', dadosCadastro);
 
-        alert(`Conta criada com sucesso!\nNome: ${response.data.nome || form.nome}\nPerfil: ${perfilUsuario}`);
+        toast.success(`Conta criada com sucesso`);
+        navigate('/login');
         
       } catch (error) {
         console.error("Erro ao criar conta:", error);
         const mensagemErro = error.response?.data?.message || 'Erro ao criar usuário no back-end';
-        alert(`Erro ao criar conta: ${mensagemErro}`);
+        toast.error(mensagemErro);
       }
     }
   }
