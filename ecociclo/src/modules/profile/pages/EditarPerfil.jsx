@@ -1,35 +1,31 @@
-import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useEditarPerfil } from '../hooks/useEditarPerfil'
 import '../styles/EditarPerfil.css'
 
 function EditarPerfil() {
-  const navigate = useNavigate()
+  const {
+    nome,
+    setNome,
+    email,
+    telefone,
+    setTelefone,
+    avatar,
+    loading,
+    saving,
+    error,
+    successMessage,
+    handleAvatarChange,
+    handleSave,
+    voltar,
+  } = useEditarPerfil()
 
-  const [nome, setNome] = useState('João Silva')
-  const [email, setEmail] = useState('joao.silva@gmail.com')
-  const [telefone, setTelefone] = useState('(11) 98765-4321')
-  const [avatar, setAvatar] = useState(null)
-
-  function formatarTelefone(valor) {
-    let v = valor.replace(/\D/g, '')
-    if (v.length > 11) v = v.slice(0, 11)
-    if (v.length > 6) {
-      v = `(${v.slice(0, 2)}) ${v.slice(2, 7)}-${v.slice(7)}`
-    } else if (v.length > 2) {
-      v = `(${v.slice(0, 2)}) ${v.slice(2)}`
-    } else if (v.length > 0) {
-      v = `(${v}`
-    }
-    return v
-  }
-
-  function handleAvatarChange() {
-    alert('Funcionalidade de upload em breve!')
-  }
-
-  function handleSave(event) {
-    event.preventDefault()
-    alert('Funcionalidade de salvar em breve!')
+  if (loading) {
+    return (
+      <main className="ep-page-wrapper">
+        <div className="ep-page-container">
+          <p>Carregando perfil...</p>
+        </div>
+      </main>
+    )
   }
 
   return (
@@ -47,7 +43,7 @@ function EditarPerfil() {
           <button
             type="button"
             className="ep-back-button"
-            onClick={() => navigate(-1)}
+            onClick={voltar}
           >
             <svg viewBox="0 0 24 24" aria-hidden="true">
               <polyline points="15 18 9 12 15 6" />
@@ -55,6 +51,18 @@ function EditarPerfil() {
             Voltar
           </button>
         </header>
+
+        {error && (
+          <div className="ep-alert ep-alert-error">
+            {error}
+          </div>
+        )}
+
+        {successMessage && (
+          <div className="ep-alert ep-alert-success">
+            {successMessage}
+          </div>
+        )}
 
         <div className="ep-grid-layout">
           <aside className="ep-summary-card">
@@ -132,6 +140,7 @@ function EditarPerfil() {
                   </div>
                 </div>
 
+
                 <div className="ep-field">
                   <label htmlFor="telefone">Telefone</label>
                   <div className="ep-input-wrap">
@@ -141,7 +150,7 @@ function EditarPerfil() {
                       placeholder="(00) 00000-0000"
                       value={telefone}
                       maxLength={15}
-                      onChange={(e) => setTelefone(formatarTelefone(e.target.value))}
+                      onChange={(e) => setTelefone(e.target.value)}
                     />
                     <svg viewBox="0 0 24 24" aria-hidden="true">
                       <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
@@ -151,13 +160,14 @@ function EditarPerfil() {
               </div>
 
               <div className="ep-actions">
-                <button type="submit" className="ep-btn-primary">
-                  Salvar alterações
+                <button type="submit" className="ep-btn-primary" disabled={saving}>
+                  {saving ? 'Salvando...' : 'Salvar alterações'}
                 </button>
                 <button
                   type="button"
                   className="ep-btn-secondary"
-                  onClick={() => navigate(-1)}
+                  onClick={voltar}
+                  disabled={saving}
                 >
                   Cancelar
                 </button>
