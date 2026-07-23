@@ -36,6 +36,12 @@ function Login() {
     }
   };
 
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      handleLogin();
+    }
+  };
+
 
   return (
     <>
@@ -69,6 +75,7 @@ function Login() {
                 value={email}
                 onChange={(e) => { setEmail(e.target.value); validarEmail(e.target.value); }}
                 onBlur={() => validarEmail(email)}
+                onKeyDown={handleKeyDown}
                 className={emailErro ? "input-erro" : ""}
                 autoComplete="off"
               />
@@ -95,6 +102,7 @@ function Login() {
                   value={senha}
                   onChange={(e) => { setSenha(e.target.value); validarSenha(e.target.value); }}
                   onBlur={() => validarSenha(senha)}
+                  onKeyDown={handleKeyDown}
                   className={senhaErro ? "input-erro" : ""}
                   autoComplete="new-password"
                 />
@@ -200,6 +208,7 @@ function Login() {
                 value={email}
                 onChange={(e) => { setEmail(e.target.value); validarEmail(e.target.value); }}
                 onBlur={() => validarEmail(email)}
+                onKeyDown={handleKeyDown}
                 className={emailErro ? "input-erro" : ""}
                 autoComplete="off"
               />
@@ -224,6 +233,7 @@ function Login() {
                   value={senha}
                   onChange={(e) => { setSenha(e.target.value); validarSenha(e.target.value); }}
                   onBlur={() => validarSenha(senha)}
+                  onKeyDown={handleKeyDown}
                   className={senhaErro ? "input-erro" : ""}
                   autoComplete="new-password"
                 />

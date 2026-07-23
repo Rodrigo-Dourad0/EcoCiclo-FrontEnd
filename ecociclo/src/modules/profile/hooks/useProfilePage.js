@@ -209,12 +209,6 @@ export function useProfilePage() {
       action: 'onGerenciarRecompensas'
     },
     {
-      id: 'gerenciar-usuarios',
-      label: 'Gerenciar Usuários',
-      icon: 'users',
-      action: 'onGerenciarUsuarios'
-    },
-    {
       id: 'gerenciar-associacoes',
       label: 'Gerenciar Associações',
       icon: 'users',
