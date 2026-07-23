@@ -1,7 +1,10 @@
-import { Calendar, CheckCircle2, Clock3, MapPin, Package, RefreshCw, Route, Star, User, Weight, AlertCircle } from "lucide-react";
+import { useEffect, useState } from "react";
+import { Calendar, CheckCircle2, Clock3, MapPin, Package, RefreshCw, Route, Star, User, Weight, AlertCircle, ChevronDown, ChevronUp } from "lucide-react";
 import { Navigation } from "../../../shared/components/Navigation/Navigation.jsx";
 import { useMinhasColetas } from "../hooks/useMinhasColetas.js";
 import "../styles/minhas-coletas.css";
+
+const LIMITE_VISIVEL = 3;
 
 function StatusIcon({ status }) {
   if (status === "CONCLUIDO") {
@@ -26,6 +29,18 @@ export default function MinhasColetas() {
     error,
     recarregar,
   } = useMinhasColetas();
+
+  const [mostrarTodas, setMostrarTodas] = useState(false);
+
+  // Sempre que trocar de aba, volta a exibir só as 3 primeiras
+  useEffect(() => {
+    setMostrarTodas(false);
+  }, [abaAtiva]);
+
+  const temMaisDoQueLimite = coletasFiltradas.length > LIMITE_VISIVEL;
+  const coletasExibidas = mostrarTodas
+    ? coletasFiltradas
+    : coletasFiltradas.slice(0, LIMITE_VISIVEL);
 
   return (
     <div className="mc-page">
@@ -108,7 +123,7 @@ export default function MinhasColetas() {
                 <span>As coletas aceitas e concluídas aparecerão aqui quando forem vinculadas ao seu usuário.</span>
               </div>
             ) : (
-              coletasFiltradas.map((coleta, index) => (
+              coletasExibidas.map((coleta, index) => (
                 <article className="mc-card" key={coleta.id} style={{ animationDelay: `${index * 60}ms` }}>
                   <div
                     className={`mc-card-stripe ${
@@ -184,6 +199,28 @@ export default function MinhasColetas() {
               ))
             )}
           </div>
+
+          {!loading && temMaisDoQueLimite && (
+            <div className="mc-ver-todas-wrap">
+              <button
+                type="button"
+                className="mc-ver-todas-btn"
+                onClick={() => setMostrarTodas((valor) => !valor)}
+              >
+                {mostrarTodas ? (
+                  <>
+                    <ChevronUp size={14} />
+                    Ver menos
+                  </>
+                ) : (
+                  <>
+                    <ChevronDown size={14} />
+                    Ver todas ({coletasFiltradas.length})
+                  </>
+                )}
+              </button>
+            </div>
+          )}
 
           <section className="mc-footer-note">
             <Star size={16} />

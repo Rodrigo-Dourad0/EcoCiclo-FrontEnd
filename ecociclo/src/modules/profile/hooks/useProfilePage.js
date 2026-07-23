@@ -1,6 +1,40 @@
 import { useState, useEffect } from 'react'
 import { useAuth } from '../../../context/AuthContext'
+import { api } from '../../../shared/services/api'
 import { listarAvaliacoes } from '../../feedback/services/avaliacaoService'
+
+async function contarColetasConcluidas(coletorId) {
+  const rotas = [
+    `/api/agendamentos/coletor/${coletorId}`,
+    `/api/agendamentos?coletorId=${coletorId}`,
+  ]
+
+  for (const rota of rotas) {
+    try {
+      const response = await api.get(rota)
+      const dados = Array.isArray(response.data) ? response.data : []
+      return dados.filter(
+        (item) =>
+          String(item?.coletorId) === String(coletorId) &&
+          item?.status === 'CONCLUIDO'
+      ).length
+    } catch {
+      // tenta a proxima rota
+    }
+  }
+
+  try {
+    const response = await api.get('/api/agendamentos')
+    const dados = Array.isArray(response.data) ? response.data : []
+    return dados.filter(
+      (item) =>
+        String(item?.coletorId) === String(coletorId) &&
+        item?.status === 'CONCLUIDO'
+    ).length
+  } catch {
+    return null
+  }
+}
 
 export function useProfilePage() {
   const { user } = useAuth()
@@ -106,6 +140,30 @@ export function useProfilePage() {
     }
 
     carregarAvaliacoesDoColetor();
+
+    return () => {
+      ativo = false;
+    };
+  }, [user?.id, user?.perfil]);
+
+  useEffect(() => {
+    let ativo = true;
+
+    async function carregarTotalColetas() {
+      if (!user?.id || mapearTipo(user.perfil) !== 'Coletor') {
+        return;
+      }
+
+      const total = await contarColetasConcluidas(user.id);
+      if (!ativo || total == null) return;
+
+      setUsuario((prev) => ({
+        ...prev,
+        coletas: total,
+      }));
+    }
+
+    carregarTotalColetas();
 
     return () => {
       ativo = false;

@@ -154,6 +154,10 @@ export function useMeusEnderecos() {
   }
 
   function handleConfirmarExcluir(id) {
+    if (enderecos.length <= 1) {
+      setErro("Você precisa ter pelo menos um endereço cadastrado.");
+      return;
+    }
     setModalExcluir(id);
   }
 
@@ -163,6 +167,12 @@ export function useMeusEnderecos() {
 
   async function handleExcluir() {
     if (!modalExcluir) return;
+
+    if (enderecos.length <= 1) {
+      setErro("Você precisa ter pelo menos um endereço cadastrado.");
+      setModalExcluir(null);
+      return;
+    }
 
     const enderecoAtual = enderecos.find((item) => String(item.id) === String(modalExcluir));
 

@@ -581,6 +581,9 @@
 .rw-card-info {
   flex: 1;
   margin-left: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
 }
 
 .rw-card-nome {

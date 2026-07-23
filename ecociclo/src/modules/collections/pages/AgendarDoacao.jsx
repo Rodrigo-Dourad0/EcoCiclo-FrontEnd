@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { HelpCircle, X, Package, Recycle, Star } from "lucide-react";
 import "../styles/AgendarDoacao.css";
 import useAgendarDoacao from "../hooks/useAgendarDoacao.js";
 import { Navigation } from "../../../shared/components/Navigation/Navigation.jsx";
@@ -41,6 +42,7 @@ function FotoPreview({ foto, index, onRemover }) {
 
 export default function AgendarDoacao() {
   const navigate = useNavigate();
+  const [mostrarAjuda, setMostrarAjuda] = useState(false);
   const {
     form,
     erros,
@@ -80,9 +82,94 @@ export default function AgendarDoacao() {
       <main className="ac-main">
         <section className="ac-header">
           <p className="ac-kicker">Doações</p>
-          <h1>Agendar Doação</h1>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '12px', marginBottom: '6px' }}>
+            <h1 style={{ marginBottom: 0 }}>Agendar Doação</h1>
+            <button
+              className="ac-help-button"
+              onClick={() => setMostrarAjuda(true)}
+              aria-label="Como funciona a pontuação"
+              title="Como funciona a pontuação?"
+            >
+              <HelpCircle size={24} />
+            </button>
+          </div>
           <p>Preencha os dados para agendar sua doação de recicláveis.</p>
         </section>
+
+        {mostrarAjuda && (
+          <div className="ac-modal-overlay" onClick={() => setMostrarAjuda(false)}>
+            <div className="ac-modal" onClick={(e) => e.stopPropagation()}>
+              <div className="ac-modal-header">
+                <div className="ac-modal-icone-titulo">
+                  <div className="ac-modal-icone">
+                    <Star size={22} color="#fff" />
+                  </div>
+                  <h3 className="ac-modal-titulo">Como funciona a pontuação?</h3>
+                </div>
+                <button
+                  className="ac-modal-fechar"
+                  onClick={() => setMostrarAjuda(false)}
+                  aria-label="Fechar modal"
+                >
+                  <X size={18} />
+                </button>
+              </div>
+
+              <div className="ac-modal-body">
+                <p className="ac-modal-descricao">
+                  Cada doação que você faz se transforma em pontos que podem ser trocados por recompensas exclusivas!
+                </p>
+
+                <div className="ac-modal-passos">
+                  <div className="ac-modal-passo">
+                    <div className="ac-modal-passo-numero">1</div>
+                    <div className="ac-modal-passo-conteudo">
+                      <div className="ac-modal-passo-icone">
+                        <Package size={20} />
+                      </div>
+                      <div>
+                        <strong>Agende a doação</strong>
+                        <span>Informe o tipo de material e o peso estimado da sua doação.</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="ac-modal-passo">
+                    <div className="ac-modal-passo-numero">2</div>
+                    <div className="ac-modal-passo-conteudo">
+                      <div className="ac-modal-passo-icone">
+                        <Recycle size={20} />
+                      </div>
+                      <div>
+                        <strong>Realize a coleta</strong>
+                        <span>Entregue o material para nossa equipe e aguarde a confirmação.</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="ac-modal-passo">
+                    <div className="ac-modal-passo-numero">3</div>
+                    <div className="ac-modal-passo-conteudo">
+                      <div className="ac-modal-passo-icone">
+                        <Star size={20} />
+                      </div>
+                      <div>
+                        <strong>Ganhe 10 pontos por kg!</strong>
+                        <span>Você recebe automaticamente 10 pontos para cada quilograma (kg) doado e confirmado.</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="ac-modal-footer">
+                <button className="ac-modal-btn-entendi" onClick={() => setMostrarAjuda(false)}>
+                  Entendi!
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
 
         <div className="ac-actions">
           <button

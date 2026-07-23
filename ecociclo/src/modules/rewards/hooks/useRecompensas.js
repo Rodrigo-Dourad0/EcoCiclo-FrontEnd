@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { useAuth } from "../../../context/AuthContext";
 import { api } from "../../../shared/services/api";
-import { listarRecompensas, resgatarRecompensa } from "../services/recompensaService";
+import { listarRecompensas, resgatarRecompensa, listarResgates } from "../services/recompensaService";
 
 function extrairPontos(usuario) {
   const valores = [
@@ -123,8 +123,23 @@ export function useRecompensas() {
 
         const usuarioAtual = usuarioResponse?.data || user || {};
         const pontos = extrairPontos(usuarioAtual);
+        
+        const resgatesResponse = usuarioAtual.id 
+          ? await listarResgates({ doadorId: usuarioAtual.id }).catch(() => []) 
+          : [];
+        
+        const resgatadosIds = new Set(
+          Array.isArray(resgatesResponse) ? resgatesResponse.map(r => r.recompensaId || r.recompensa?.id).filter(Boolean) : []
+        );
+
         const lista = Array.isArray(recompensasResponse)
-          ? recompensasResponse.map((item) => normalizarRecompensa(item, pontos))
+          ? recompensasResponse.map((item) => {
+              const norm = normalizarRecompensa(item, pontos);
+              if (resgatadosIds.has(norm.id)) {
+                norm.status = "resgatado";
+              }
+              return norm;
+            })
           : [];
 
         if (!ativo) return;
@@ -192,6 +207,8 @@ export function useRecompensas() {
     const termo = busca.trim().toLowerCase();
 
     return recompensas.filter((item) => {
+      if (item.status === "resgatado") return false;
+
       const passaCategoria =
         categoria === "Todas as categorias" || item.categoria === categoria;
 
@@ -205,8 +222,6 @@ export function useRecompensas() {
     });
   }, [busca, categoria, recompensas]);
 
-  const proximoNivel = useMemo(() => calcularProximoNivel(pontosAtuais), [pontosAtuais]);
-  const progresso = Math.min(100, Math.round((pontosAtuais / proximoNivel) * 100));
   const disponiveis = useMemo(
     () => recompensas.filter((item) => item.status === "disponivel").length,
     [recompensas]
@@ -214,8 +229,6 @@ export function useRecompensas() {
 
   return {
     pontosAtuais,
-    proximoNivel,
-    progresso,
     recompensas,
     recompensasFiltradas,
     categoriasDisponiveis,

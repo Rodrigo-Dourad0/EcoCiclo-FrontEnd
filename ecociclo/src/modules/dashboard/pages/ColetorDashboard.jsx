@@ -5,6 +5,8 @@ import '../styles/ColetorDashboard.css';
 import { Navigation } from '../../../shared/components/Navigation/Navigation.jsx';
 import { useColetorDashboard } from '../hooks/useColetorDashboard';
 
+const LIMITE_COLETAS_VISIVEIS = 3;
+
 export function ColetorDashboard() {
   const navigate = useNavigate();
   const [showNotifications, setShowNotifications] = useState(false);
@@ -133,7 +135,7 @@ export function ColetorDashboard() {
               ) : coletas.length === 0 ? (
                 <p>Nenhuma coleta encontrada.</p>
               ) : (
-                coletas.map((coleta) => (
+                coletas.slice(0, LIMITE_COLETAS_VISIVEIS).map((coleta) => (
                 <div key={coleta.id} className="coleta-card">
                   <div className="coleta-card-top">
                     <div className="coleta-tipo">

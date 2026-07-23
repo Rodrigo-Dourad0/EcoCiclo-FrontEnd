@@ -140,6 +140,12 @@ function MeusEnderecos() {
                     <button
                       className="me-btn-excluir"
                       onClick={() => handleConfirmarExcluir(end.id)}
+                      disabled={enderecos.length <= 1}
+                      title={
+                        enderecos.length <= 1
+                          ? "Você precisa ter pelo menos um endereço cadastrado"
+                          : "Excluir endereço"
+                      }
                     >
                       <svg
                         viewBox="0 0 24 24"

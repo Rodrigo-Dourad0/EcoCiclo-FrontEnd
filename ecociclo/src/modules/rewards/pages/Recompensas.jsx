@@ -23,8 +23,7 @@ function Recompensas() {
   const navigate = useNavigate();
   const {
     pontosAtuais,
-    proximoNivel,
-    progresso,
+    recompensas,
     recompensasFiltradas,
     categoriasDisponiveis,
     disponiveis,
@@ -41,11 +40,7 @@ function Recompensas() {
   } = useRecompensas();
   const [mostrarAjuda, setMostrarAjuda] = useState(false);
 
-  function calcularNivel(pontos) {
-    if (pontos >= 1500) return "Ouro";
-    if (pontos >= 500) return "Prata";
-    return "Bronze";
-  }
+  const todasResgatadas = recompensas.length > 0 && recompensas.every(item => item.status === "resgatado");
 
   function renderBadge(status, custo) {
     if (status === "disponivel") {
@@ -174,12 +169,6 @@ function Recompensas() {
               <span className="rw-pontos-valor">{pontosAtuais.toLocaleString("pt-BR")}</span>
               <span className="rw-pontos-label">Pontos acumulados</span>
             </div>
-            <div className="rw-pontos-extra">
-              <span className="rw-pontos-nivel">Nível {calcularNivel(pontosAtuais)}</span>
-              <span className="rw-pontos-proximo">
-                {Math.max(0, proximoNivel - pontosAtuais)} pts p/ Ouro
-              </span>
-            </div>
           </section>
 
           <section className="rw-status-sistema">
@@ -193,15 +182,7 @@ function Recompensas() {
             </div>
           </section>
 
-          <section className="rw-progresso">
-            <div className="rw-progresso-label">
-              <span className="rw-progresso-texto">Progresso para o nível Ouro</span>
-              <span className="rw-progresso-valor">{progresso}%</span>
-            </div>
-            <div className="rw-progresso-barra">
-              <div className="rw-progresso-preenchimento" style={{ width: `${progresso}%` }} />
-            </div>
-          </section>
+
 
           <section className="rw-recompensas">
             <div className="rw-recompensas-header">
@@ -248,6 +229,12 @@ function Recompensas() {
                   <strong>Carregando recompensas</strong>
                   <span>Buscando os itens cadastrados no sistema.</span>
                 </div>
+              ) : todasResgatadas ? (
+                <div className="rw-empty">
+                  <Check size={40} strokeWidth={1.2} color="#10b981" />
+                  <strong>Você já resgatou tudo!</strong>
+                  <span>Parabéns! Você já reivindicou todas as recompensas disponíveis no momento. Volte mais tarde para novidades.</span>
+                </div>
               ) : recompensasFiltradas.length === 0 ? (
                 <div className="rw-empty">
                   <Package size={40} strokeWidth={1.2} />
@@ -256,7 +243,7 @@ function Recompensas() {
                 </div>
               ) : (
                 recompensasFiltradas.map((item) => (
-                  <div key={item.id} className="rw-card">
+                  <div key={item.id} className="rw-card" onClick={() => navigate('/detalhes-recompensas', { state: { recompensa: item, pontosAtuais } })} style={{ cursor: 'pointer' }}>
                     <div className={`rw-card-icone ${item.cor}`}>{item.emoji}</div>
                     <div className="rw-card-info">
                       <span className="rw-card-nome">{item.nome}</span>
@@ -270,7 +257,10 @@ function Recompensas() {
                       <button
                         type="button"
                         className="rw-card-resgatar"
-                        onClick={() => resgatar(item)}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          resgatar(item);
+                        }}
                         disabled={item.status !== "disponivel" || resgatandoId === item.id}
                       >
                         {resgatandoId === item.id ? "Resgatando..." : "Resgatar"}

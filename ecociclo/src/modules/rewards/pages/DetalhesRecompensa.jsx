@@ -1,14 +1,40 @@
-import { Gift, Star, Calendar, Check, Tag, Info, AlertCircle } from "lucide-react";
+import { useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import { Gift, Star, Calendar, Check, Tag, Info, AlertCircle, ArrowLeft } from "lucide-react";
 import { Navigation } from "../../../shared/components/Navigation/Navigation.jsx";
-import { useDetalhesRecompensa } from "../hooks/useDetalhesRecompensa";
 import "../styles/DetalhesRecompensa.css";
 
 function DetalhesRecompensa() {
-  const { recompensa, resgatado, podeResgatar, handleResgatar } =
-    useDetalhesRecompensa();
+  const location = useLocation();
+  const navigate = useNavigate();
+  const state = location.state || {};
+  const rawRecompensa = state.recompensa || {};
+  const pontosUsuario = state.pontosAtuais || 0;
+
+  const recompensa = {
+    titulo: rawRecompensa.nome || "Recompensa não encontrada",
+    tipo: rawRecompensa.categoria || "Desconhecido",
+    descricao: rawRecompensa.desc || "Nenhuma descrição disponível.",
+    pontosNecessarios: rawRecompensa.custo || 0,
+    pontosUsuario: pontosUsuario,
+    sobre: rawRecompensa.sobre || rawRecompensa.desc || "Sem informações adicionais.",
+    validade: rawRecompensa.validade || "Sem validade informada.",
+    observacao: rawRecompensa.observacao || "Nenhuma observação.",
+    imagem: rawRecompensa.imagem || null,
+  };
+
+  const [resgatado, setResgatado] = useState(false);
+  const podeResgatar = recompensa.pontosUsuario >= recompensa.pontosNecessarios;
+  
+  const handleResgatar = () => {
+    if (podeResgatar) {
+      setResgatado(true);
+      // Aqui você poderia chamar a API de resgate real
+    }
+  };
 
   const progresso = Math.min(
-    (recompensa.pontosUsuario / recompensa.pontosNecessarios) * 100,
+    (recompensa.pontosNecessarios > 0 ? (recompensa.pontosUsuario / recompensa.pontosNecessarios) * 100 : 0),
     100
   );
 
@@ -17,20 +43,40 @@ function DetalhesRecompensa() {
       <Navigation />
 
       <main className="dr-main">
-        <section className="dr-header">
-          <p className="dr-kicker">Recompensas</p>
-          <h1>Detalhes da recompensa</h1>
-          <p>Confira os detalhes da sua recompensa e resgate agora mesmo.</p>
+        <section className="dr-header" style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+          <button 
+            onClick={() => navigate(-1)} 
+            style={{ background: 'none', border: 'none', cursor: 'pointer', padding: '8px', display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '50%', backgroundColor: '#f1f5f9' }}
+            aria-label="Voltar"
+          >
+            <ArrowLeft size={24} color="#64748b" />
+          </button>
+          <div>
+            <p className="dr-kicker">Recompensas</p>
+            <h1>Detalhes da recompensa</h1>
+            <p>Confira os detalhes da sua recompensa e resgate agora mesmo.</p>
+          </div>
         </section>
 
         <section className="dr-content">
 
           {/* ── Hero Banner ── */}
-          <div className="dr-hero">
-            <div className="dr-hero-bg" />
-            <div className="dr-hero-icon">
-              <Gift size={48} />
-            </div>
+          <div className="dr-hero" style={recompensa.imagem ? { padding: 0, backgroundColor: '#f1f5f9' } : {}}>
+            {recompensa.imagem ? (
+              <img 
+                src={recompensa.imagem} 
+                alt={recompensa.titulo} 
+                style={{ width: '100%', height: '100%', objectFit: 'contain', position: 'absolute', inset: 0, padding: '24px' }} 
+                onError={(e) => { e.target.style.display = 'none'; }}
+              />
+            ) : (
+              <>
+                <div className="dr-hero-bg" />
+                <div className="dr-hero-icon">
+                  <Gift size={48} />
+                </div>
+              </>
+            )}
             <span className="dr-tipo-badge">
               <Tag size={11} />
               {recompensa.tipo}
